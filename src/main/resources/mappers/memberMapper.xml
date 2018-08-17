@@ -14,6 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into member (userid,passwd,name,email,join_date) values
 		(#{userid}, #{passwd}, #{name}, #{email},sysdate )
 	</insert>
-	
+		<select id="login_check" 
+	parameterType=
+		"jun.st.ex.Persistence.DTO.MemberDTO"
+	resultType="String">
+		select * from member
+		where userid=#{userid} and passwd=#{passwd}	
+	</select>
 	
 </mapper>

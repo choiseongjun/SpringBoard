@@ -3,6 +3,7 @@ package jun.st.ex.Service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,18 @@ public class MemberServiceImpl implements MemberService {
 	public boolean checkPw(String userid, String passwd) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	
+	@Override
+	public void logout(HttpSession session) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String loginCheck(MemberDTO dto) {
+		return memberDao.loginCheck(dto);
 	}
 
 }

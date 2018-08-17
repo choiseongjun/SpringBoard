@@ -2,6 +2,8 @@ package jun.st.ex.Persistence.DAO;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -46,6 +48,19 @@ public class MemberDAOImpl implements MemberDAO {
 	public boolean checkPw(String userid, String passwd) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	@Override
+	public void logout(HttpSession session) {
+
+		
+	}
+
+	@Override
+	public String loginCheck(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("member.login_check",dto);
 	}
 
 }

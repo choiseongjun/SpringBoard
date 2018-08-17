@@ -1,4 +1,4 @@
-<%@ page session="true" %>
+
 <html>
 <head>
 	<title>Home</title>

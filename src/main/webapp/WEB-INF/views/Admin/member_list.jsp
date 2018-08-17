@@ -11,8 +11,6 @@
 <%@ include file="../Header.jsp"%>
 </head>
 <body>
-	<input type="button" value="회원등록"
-		onclick="location.href='${path}/member/write.do'">
 	<table class="table table-dark">
   <thead>
   <tr>
