@@ -13,19 +13,18 @@ import jun.st.ex.Persistence.DTO.BoardDTO;
 @Repository
 public class BoardDAOImpl implements BoardDAO {
 
-	@Inject //ÀÇÁ¸°ü°è ÁÖÀÔ(Dependency Injection, DI)
+	@Inject //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(Dependency Injection, DI)
 	SqlSession sqlSession;
 
 	@Override
 	public void create(BoardDTO dto) throws Exception {
-		// TODO Auto-generated method stub
+		sqlSession.insert("board.insert", dto); 
 		
 	}
 
 	@Override
 	public BoardDTO read(int bno) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("board.read", bno); 
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public void delete(int bno) throws Exception {
-		// TODO Auto-generated method stub
+		sqlSession.delete("board.delete", bno); 
 		
 	}
 

@@ -19,6 +19,23 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public void create(BoardDTO dto) throws Exception {
+		String title=dto.getTitle();
+		String content=dto.getContent();
+		String writer=dto.getWriter();
+		
+		//replace(A,B)A를 b로 변경
+		title=title.replace("<","&It");
+		title=title.replace("<","&gt");
+		writer=writer.replace("<","&It");
+		writer=writer.replace("<","&gt");
+		//공백 문자 처리
+		title=title.replace(" ", "&nbsp&nbsp;");
+		writer=writer.replace(" ", "&nbsp&nbsp;");
+		
+		dto.setTitle(title);
+		dto.setContent(content);
+		dto.setWriter(writer);
+		
 		boardDao.create(dto);
 	}
 
