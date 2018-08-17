@@ -25,8 +25,8 @@ public class BoardController {
 		List<BoardDTO> list=boardService.listAll();
 		
 		ModelAndView mav=new ModelAndView();
-		mav.setViewName("Board/BoardList");
-		mav.addObject("list",list);
+		mav.setViewName("Board/list");
+		mav.addObject("row",list);
 		return mav;
 	}
 	
@@ -59,6 +59,11 @@ public class BoardController {
 		boardService.create(dto);
 		//게시물 목록으로 이동
 		return "redirect:/board/list.do";
+	}
+	@RequestMapping("write.do")
+	public String write() {
+		// 글쓰기 폼 페이지로 이동
+		return "Board/write";
 	}
 	
 }

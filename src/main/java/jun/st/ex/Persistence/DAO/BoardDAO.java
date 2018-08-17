@@ -12,6 +12,6 @@ public interface BoardDAO {
 	public BoardDTO read(int bno) throws Exception;
 	public void update(BoardDTO dto) throws Exception;
 	public void delete(int bno) throws Exception;
-	public List<BoardDTO> listAll();
+	public List<BoardDTO> listAll() throws Exception;
 	public void increaseViewcnt(int bno, HttpSession session) throws Exception;
 }

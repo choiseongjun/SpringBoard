@@ -40,9 +40,9 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardDTO> listAll() {
+	public List<BoardDTO> listAll() throws Exception{
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("board.listAll");
 	}
 
 	@Override

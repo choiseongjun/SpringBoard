@@ -52,7 +52,7 @@ ${map.count}개의 게시물이 있습니다.
 		<th>조회수</th>
 	</tr>
 	<!-- forEach var="개별데이터" items="집합데이터" -->
-<c:forEach var="row" items="${map.list}">
+<c:forEach var="row" items="${row}">
 	<tr>
 		<td>${row.bno}</td>
 		<td>
