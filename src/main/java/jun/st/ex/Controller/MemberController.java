@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jun.st.ex.Persistence.DTO.MemberDTO;
@@ -24,5 +25,14 @@ public class MemberController {
 		//   WEB-INF/views/member/member_list.jsp로 포워딩
 		return "Admin/member_list";
 	}
-	
+	@RequestMapping("member/register.do") 
+	public String write() {
+		return "User/Register";
+	}
+	@RequestMapping("member/insert.do")
+	public String insert(@ModelAttribute MemberDTO dto) {
+		//System.out.println(dto);		
+		memberService.insertMember(dto);
+		return "redirect:/member/list.do";
+	}
 }

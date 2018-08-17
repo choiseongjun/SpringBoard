@@ -13,8 +13,9 @@
 <body>
 	<input type="button" value="회원등록"
 		onclick="location.href='${path}/member/write.do'">
-	<table border="1" width="700px" bgcolor="#00FF00">
-		<tr>
+	<table class="table table-dark">
+  <thead>
+  <tr>
 			<th>아이디</th>
 			<th>이름</th>
 			<th>이메일</th>
@@ -26,7 +27,7 @@
 				<td>${row.name}</td>
 				<td>${row.email}</td>
 				<td><fmt:formatDate value="${row.join_date}"
-						pattern="yyyy-MM-dd HH:mm:ss" /></td>
+						pattern="yyyy-MM-dd" /></td>
 			</tr>
 		</c:forEach>
 	</table>

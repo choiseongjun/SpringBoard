@@ -19,7 +19,7 @@
             <p class="mb-3">Every cup of our quality artisan coffee starts with locally sourced, hand picked ingredients. Once you try it, our coffee will be a blissful addition to your everyday morning routine - we guarantee it!
             </p>
             <div class="intro-button mx-auto">
-              <a class="btn btn-primary btn-xl" href="#">Visit Us Today!</a>
+              <a class="btn btn-primary btn-xl" href="${path}/member/register.do">회원가입하기</a>
             </div>
           </div>
         </div>

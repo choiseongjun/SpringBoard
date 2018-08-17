@@ -20,7 +20,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public void insertMember(MemberDTO dto) {
-		// TODO Auto-generated method stub
+		sqlSession.insert("member.insertMember", dto);
 
 	}
 
