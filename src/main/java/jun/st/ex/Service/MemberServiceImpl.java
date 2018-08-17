@@ -29,33 +29,24 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDTO viewMember(String userid) {
-		// TODO Auto-generated method stub
-		return null;
+		return memberDao.viewMember(userid);
 	}
 
 	@Override
 	public void deleteMember(String userid) {
-		// TODO Auto-generated method stub
+		memberDao.deleteMember(userid);
 
 	}
 
 	@Override
 	public void updateMember(MemberDTO dto) {
-		// TODO Auto-generated method stub
+		memberDao.updateMember(dto);
 
 	}
 
 	@Override
 	public boolean checkPw(String userid, String passwd) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
-	@Override
-	public void logout(HttpSession session) {
-		// TODO Auto-generated method stub
-		
+		return memberDao.checkPw(userid, passwd);
 	}
 
 	@Override

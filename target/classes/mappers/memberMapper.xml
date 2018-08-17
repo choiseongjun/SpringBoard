@@ -22,4 +22,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where userid=#{userid} and passwd=#{passwd}	
 	</select>
 	
+	 <select id="checkPw" resultType="int">
+  	select count(*) from member
+  	where  userid=#{userid} and passwd=#{passwd}
+  </select>
+   <select id="ViewUser"
+  resultType="jun.st.ex.Persistence.DTO.MemberDTO">
+  select userid,passwd,name,email
+  from member
+  where userid=#{userid}
+  </select>
+  
+  <update id="updateUser">
+  update member
+  set passwd=#{passwd},name=#{name},email=#{email}
+  where userid=#{userid}
+  </update>
+  <delete id="deleteMember">
+		delete from member
+		where userid=#{userid}
+	</delete>
 </mapper>

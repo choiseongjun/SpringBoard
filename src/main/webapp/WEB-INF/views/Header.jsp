@@ -67,7 +67,7 @@
 							href="${path}/member/Login.do">로그인</a></li>
 						<li class="nav-item px-lg-4"><a
 							class="nav-link text-uppercase text-expanded"
-							href="products.html">게시판</a></li>
+							href="${path}/member/list.do">게시판</a></li>
 						<li class="nav-item px-lg-4"><a
 							class="nav-link text-uppercase text-expanded"
 							href="${path}/member/list.do">회원목록</a></li>
@@ -99,10 +99,13 @@
 							href="${path}/member/logout.do">로그아웃</a></li>
 						<li class="nav-item px-lg-4"><a
 							class="nav-link text-uppercase text-expanded"
+							href="${path}/member/view.do?userid=${userid}">회원정보보기</a></li>
+						<li class="nav-item px-lg-4"><a
+							class="nav-link text-uppercase text-expanded"
 							href="products.html">게시판</a></li>
 						<li class="nav-item px-lg-4"><a
 							class="nav-link text-uppercase text-expanded"
-							href="${path}/member/list.do">로그아웃하기</a></li>
+							href="${path}/member/list.do">회원목록</a></li>
 					</ul>
 				</div>
 			</div>

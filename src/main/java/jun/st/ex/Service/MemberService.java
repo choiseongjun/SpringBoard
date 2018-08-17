@@ -14,5 +14,5 @@ public interface MemberService {
 	public void updateMember(MemberDTO dto);
 	public boolean checkPw(String userid, String passwd);
 	public String loginCheck(MemberDTO dto);
-	public void logout(HttpSession session);
+	
 }
