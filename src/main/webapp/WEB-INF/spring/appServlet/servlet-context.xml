@@ -4,9 +4,13 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:lang="http://www.springframework.org/schema/lang"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
@@ -33,9 +37,12 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="jun.st.ex" />
-		
+	
 		<beans:bean id="loginInterceptor"
-class="jun.st.ex.Controller.LoginInterceptor">	
+class="jun.st.ex.Controller.LoginInterceptor">
+	
+
+		        
 </beans:bean>
 	<interceptors>
 		<interceptor>
@@ -44,6 +51,7 @@ class="jun.st.ex.Controller.LoginInterceptor">
 			<mapping path="/board/update.do" />
 			<mapping path="/board/delete.do" />
 			<beans:ref bean="loginInterceptor"/>
+			
 		</interceptor>
 	</interceptors>	
 </beans:beans>

@@ -1,8 +1,10 @@
 package jun.st.ex.Controller;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.omg.CORBA.Request;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jun.st.ex.Persistence.DTO.MemberDTO;
 import jun.st.ex.Service.MemberService;
+import jun.st.ex.Service.SesssionEventListener;
 
 @Controller
 public class MemberController {
@@ -45,11 +48,17 @@ public class MemberController {
 	}
 	@RequestMapping("member/login_check.do")
 	public ModelAndView login_check(
-			MemberDTO dto, HttpSession session,ModelAndView mav) {
+			MemberDTO dto, HttpSession session,ModelAndView mav,MemberDTO param,HttpServletRequest request) {
 		
 		String name = memberService.loginCheck(dto);
 		
 		if (name != null) {
+			request.getSession().setAttribute("TAATLoginId", param.getUserid());
+            
+			SesssionEventListener listener = new SesssionEventListener();
+            request.getSession().setAttribute(param.getUserid(), listener);                
+ 
+
 			session.setAttribute("userid", dto.getUserid());
 			session.setAttribute("name", name);
 			mav.setViewName("redirect:/");
