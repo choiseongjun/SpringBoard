@@ -16,6 +16,9 @@ function list(page){
 	location.href="${path}/board/list.do?curPage="+page;
 }
 </script>
+<style>
+ 
+</style>
 </head>
 <body>
 <h2>게시판</h2>
@@ -43,7 +46,7 @@ function list(page){
 
 <button type="button" id="btnWrite">글쓰기</button>
 ${map.count}개의 게시물이 있습니다.
-  <table class="table table-striped table-hover">
+ <table class="table table-dark">
 	<tr>
 		<th>번호</th>
 		<th>제목</th>
@@ -52,7 +55,7 @@ ${map.count}개의 게시물이 있습니다.
 		<th>조회수</th>
 	</tr>
 	<!-- forEach var="개별데이터" items="집합데이터" -->
-<c:forEach var="row" items="${row}">
+<c:forEach var="row" items="${map.list}">
 	<tr>
 		<td>${row.bno}</td>
 		<td>

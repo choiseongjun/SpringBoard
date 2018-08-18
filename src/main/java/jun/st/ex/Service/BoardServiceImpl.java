@@ -55,8 +55,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardDTO> listAll() throws Exception{
-		return boardDao.listAll();
+	public List<BoardDTO> listAll(String search_option, String keyword,int start, int end) throws Exception{
+		return boardDao.listAll(search_option, keyword, start, end);
 	}
 
 	@Override
@@ -75,6 +75,11 @@ public class BoardServiceImpl implements BoardService {
 				//조회수를 올린 시간 저장
 				session.setAttribute("update_time_"+bno, current_time);
 			}
+	}
+
+	@Override
+	public int countArticle(String search_option, String keyword) throws Exception {
+		return boardDao.countArticle(search_option,keyword);
 	}
 
 	

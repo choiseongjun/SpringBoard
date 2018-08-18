@@ -1,6 +1,8 @@
 package jun.st.ex.Persistence.DAO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -13,7 +15,7 @@ import jun.st.ex.Persistence.DTO.BoardDTO;
 @Repository
 public class BoardDAOImpl implements BoardDAO {
 
-	@Inject //�������� ����(Dependency Injection, DI)
+	@Inject
 	SqlSession sqlSession;
 
 	@Override
@@ -38,15 +40,30 @@ public class BoardDAOImpl implements BoardDAO {
 		
 	}
 
-	@Override
-	public List<BoardDTO> listAll() throws Exception{
-		// TODO Auto-generated method stub
-		return sqlSession.selectList("board.listAll");
-	}
+
 
 	@Override
 	public void increaseViewcnt(int bno, HttpSession session) throws Exception {
 		sqlSession.update("board.increaseViewcnt", bno);
+	}
+
+	@Override
+	public List<BoardDTO> listAll(String search_option, String keyword, int start, int end) throws Exception {
+		Map<String,Object> map=new HashMap<>();
+		map.put("search_option", search_option);
+		map.put("keyword", "%"+keyword+"%");
+		map.put("start", start); //맵에 자료 저장
+		map.put("end", end);
+// mapper에는 2개 이상의 값을 전달할 수 없음(dto 또는 map 사용)		
+		return sqlSession.selectList("board.listAll",map); 
+	}
+
+	@Override
+	public int countArticle(String search_option, String keyword) throws Exception {
+		Map<String,String> map=new HashMap<>();
+		map.put("search_option", search_option);
+		map.put("keyword", "%"+keyword+"%");
+		return sqlSession.selectOne("board.countArticle",map);
 	}
 	
 

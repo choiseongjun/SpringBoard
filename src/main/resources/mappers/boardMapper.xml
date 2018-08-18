@@ -9,20 +9,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into board (bno,title,content,writer) values
 		( board_seq.nextval, #{title}, #{content}, #{writer} )
 	</insert>
-	<select id="listAll" resultType="jun.st.ex.Persistence.DTO.BoardDTO">
-		select
-			bno,
-			title,
-			content,
-			writer,
-			regdate,
-			viewcnt
-		from
-			board
-		order by
-			bno desc,
-			regdate desc
+	
+	<select id="listAll"
+resultType="jun.st.ex.Persistence.DTO.BoardDTO">
+		<include refid="paging_header" />
+			select bno,title,writer,name,regdate,viewcnt,show					
+			from board b, member m
+			<include refid="search" />
+			order by bno desc   
+		<include refid="paging_footer" />
 	</select>
+	<sql id="paging_header">
+		select *
+		from (
+		    select rownum as rn, A.*
+		    from (	
+	</sql>
+	<sql id="paging_footer">
+		    ) A
+		) where rn between #{start} and #{end}	
+	</sql>
+	
+	<!-- 레코드 갯수 계산 -->	
+	<select id="countArticle" resultType="int">
+		select count(*)
+		from board b,member m	
+		<include refid="search" />
+	</select>
+	
+	<sql id="search">
+		<choose>
+			<when test="search_option != 'all' ">
+				where b.writer=m.userid 
+				    and show='Y'
+				    and ${search_option} like #{keyword}			
+			</when>
+			<otherwise>
+				where b.writer=m.userid 
+				    and show='Y'
+				    and (name like #{keyword} 
+				        or title like #{keyword}
+				        or content like #{keyword} )			
+			</otherwise>
+		</choose>
+	</sql>
+	
+	
 	<select id="read" resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 		select *
 		from board
@@ -39,8 +71,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		content=#{content}
 	where bno=#{bno} 
 	</update>
-	<delete id="delete">
-		delete from board
-		where bno=#{bno}
+		<delete id="delete">
+ 		update board
+ 		 set show='N' 
+ 		 where bno=#{bno} 
 	</delete>
+	
+	
 </mapper>
