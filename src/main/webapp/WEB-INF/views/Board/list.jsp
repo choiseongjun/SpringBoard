@@ -43,7 +43,7 @@ function list(page){
 
 <button type="button" id="btnWrite">글쓰기</button>
 ${map.count}개의 게시물이 있습니다.
-<table border="1" width="600px">
+  <table class="table table-striped table-hover">
 	<tr>
 		<th>번호</th>
 		<th>제목</th>

@@ -61,8 +61,20 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void increaseViewcnt(int bno, HttpSession session) throws Exception {
-		// TODO Auto-generated method stub
-		
+			long update_time=0;
+			if(session.getAttribute("update_time_"+bno)!=null) {
+				//최근에 조회수를 올린 시간
+				update_time=
+						(long)session.getAttribute("update_time_"+bno);
+			}
+			long current_time=System.currentTimeMillis();
+			//일정 시간이 경과한 후 조회수 증가 처리
+			if(current_time - update_time > 5*1000) {
+				//조회수 증가 처리
+				boardDao.increaseViewcnt(bno, session);
+				//조회수를 올린 시간 저장
+				session.setAttribute("update_time_"+bno, current_time);
+			}
 	}
 
 	

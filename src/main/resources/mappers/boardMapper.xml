@@ -23,4 +23,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			bno desc,
 			regdate desc
 	</select>
+	<select id="read" resultType="jun.st.ex.Persistence.DTO.BoardDTO">
+		select *
+		from board
+		where bno=#{bno}
+	</select>
+	<update id="increaseViewcnt">
+		update board
+		set viewcnt=viewcnt+1
+		where bno=#{bno}
+	</update>
+	<update id="update">
+	update board
+		set title=#{title},
+		content=#{content}
+	where bno=#{bno} 
+	</update>
+	<delete id="delete">
+		delete from board
+		where bno=#{bno}
+	</delete>
 </mapper>

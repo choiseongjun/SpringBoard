@@ -46,7 +46,7 @@ public class BoardController {
 		// 수정 완료 후 목록으로 이동
 		//return "redirect:/board/list.do";
 		// 상세 화면으로 되돌아감
-		return "redirect:/board/view.do?bno="+dto.getBno();
+		return "redirect:/board/list.do";
 	}
 	@RequestMapping("insert.do")
 	public String insert(@ModelAttribute BoardDTO dto
@@ -65,5 +65,15 @@ public class BoardController {
 		// 글쓰기 폼 페이지로 이동
 		return "Board/write";
 	}
+	@RequestMapping("view.do")
+	public ModelAndView view(int bno, HttpSession session)
+		throws Exception {
+		//조회수 증가 처리
+		boardService.increaseViewcnt(bno, session); 
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("Board/view"); //포워딩할 뷰의 이름
+		mav.addObject("dto", boardService.read(bno)); //자료 저장
+		return mav; //  views/board/view.jsp로 넘어가서 출력됨
+	} 
 	
 }
