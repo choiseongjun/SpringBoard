@@ -65,6 +65,31 @@ public class BoardDAOImpl implements BoardDAO {
 		map.put("keyword", "%"+keyword+"%");
 		return sqlSession.selectOne("board.countArticle",map);
 	}
+
+	@Override
+	public void deleteFile(String fullName) {
+		sqlSession.delete("board.deleteFile",fullName);
+		
+	}
+
+	@Override
+	public List<String> getAttach(int bno) {
+
+		return sqlSession.selectList("board.getAttach",bno);
+	}
+
+	@Override
+	public void addAttach(String fullName) {
+		sqlSession.insert("board.addAttach",fullName);
+	}
+
+	@Override
+	public void updateAttach(String fullName, int bno) {
+		Map<String, Object> map=new HashMap<>();
+		map.put("fullname", fullName);//첨부파일 이름
+		map.put("bno", bno);//게시물 번호
+		sqlSession.insert("board.updateAttach",map);
+	}
 	
 
 

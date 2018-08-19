@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jun.st.ex.Persistence.DAO.BoardDAO;
 import jun.st.ex.Persistence.DTO.BoardDTO;
@@ -17,26 +18,17 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	BoardDAO boardDao;
 	
+	
 	@Override
+	@Transactional
 	public void create(BoardDTO dto) throws Exception {
-		String title=dto.getTitle();
-		String content=dto.getContent();
-		String writer=dto.getWriter();
-		
-		//replace(A,B)A를 b로 변경
-		title=title.replace("<","&It");
-		title=title.replace("<","&gt");
-		writer=writer.replace("<","&It");
-		writer=writer.replace("<","&gt");
-		//공백 문자 처리
-		title=title.replace(" ", "&nbsp&nbsp;");
-		writer=writer.replace(" ", "&nbsp&nbsp;");
-		
-		dto.setTitle(title);
-		dto.setContent(content);
-		dto.setWriter(writer);
-		
 		boardDao.create(dto);
+		
+		String[] files=dto.getFiles(); //첨부파일 이름 배열
+		if(files==null) return;
+		for(String name : files) {
+			boardDao.addAttach(name);
+		}
 	}
 
 	@Override
@@ -44,11 +36,21 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.read(bno);
 	}
 
+	@Transactional
 	@Override
 	public void update(BoardDTO dto) throws Exception {
-		boardDao.update(dto);
+		 boardDao.update(dto);//board 테이블 수정
+		 //attach 테이블 수정
+		 String[] files=dto.getFiles();
+		 if(files==null) return;
+		 for(String name : files) {
+			 boardDao.updateAttach(name, dto.getBno());
+		 }
 	}
 
+
+
+	@Transactional
 	@Override
 	public void delete(int bno) throws Exception {
 		boardDao.delete(bno);
@@ -81,6 +83,19 @@ public class BoardServiceImpl implements BoardService {
 	public int countArticle(String search_option, String keyword) throws Exception {
 		return boardDao.countArticle(search_option,keyword);
 	}
+
+	@Override
+	public void deleteFile(String fullName) {
+		boardDao.deleteFile(fullName);
+	}
+
+	@Override
+	public List<String> getAttach(int bno) {
+		return boardDao.getAttach(bno);
+	}
+
+
+	
 
 	
 }

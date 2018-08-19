@@ -16,4 +16,6 @@ public interface BoardService {
 	public void increaseViewcnt(int bno, HttpSession session) throws Exception;
 	public int countArticle(
 			String search_option, String keyword) throws Exception;
+	public void deleteFile(String fullName);//첨부파일 삭제
+	public List<String> getAttach(int bno);//첨부파일 정보
 }

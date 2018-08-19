@@ -45,73 +45,82 @@
 			Bootstrap 4 Business Theme</span> <span class="site-heading-lower">Business
 			Casual</span>
 	</h1>
-	<c:if test="${empty sessionScope.userid }">
+	<%-- <c:choose>
+		<c:when test="${sessionScope.userid!=null}"> --%>
+	<c:choose>
+		<c:when test="${sessionScope.userid==null||sessionScope.admin_userid==null}">
+			<nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+				<div class="container">
+					<a
+						class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none"
+						href="#">Start Bootstrap</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarResponsive" aria-controls="navbarResponsive"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarResponsive">
+						<ul class="navbar-nav mx-auto">
+							<li class="nav-item active px-lg-4"><a
+								class="nav-link text-uppercase text-expanded" href="${path}">Home
+									<span class="sr-only">(current)</span>
+							</a></li>
+							<li class="nav-item px-lg-4"><a
+								class="nav-link text-uppercase text-expanded"
+								href="${path}/member/Login.do">로그인</a></li>
+							
+							<li class="nav-item px-lg-4"><a
+								class="nav-link text-uppercase text-expanded"
+								href="${path}/board/list.do">게시판</a></li>
+							<li class="nav-item px-lg-4">
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</c:when>
+		
+		<%-- <c:when
+			test="${sessionScope.admin_userid==null||sessionScope.userid==null}"> --%>
+			<c:otherwise>
 		<!-- Navigation -->
-		<nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
-			<div class="container">
-				<a
-					class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none"
-					href="#">Start Bootstrap</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarResponsive" aria-controls="navbarResponsive"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<ul class="navbar-nav mx-auto">
-						<li class="nav-item active px-lg-4"><a
-							class="nav-link text-uppercase text-expanded" href="${path}">Home
-								<span class="sr-only">(current)</span>
-						</a></li>
-						<li class="nav-item px-lg-4"><a
-							class="nav-link text-uppercase text-expanded"
-							href="${path}/member/Login.do">로그인</a></li>
-						<li class="nav-item px-lg-4"><a
-							class="nav-link text-uppercase text-expanded"
-							href="${path}/board/list.do">게시판</a></li>
-						<li class="nav-item px-lg-4"><a
-							class="nav-link text-uppercase text-expanded"
-							href="${path}/member/list.do">회원목록</a></li>
-					</ul>
+			<nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+				<div class="container">
+					<a
+						class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none"
+						href="#">Start Bootstrap</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarResponsive" aria-controls="navbarResponsive"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarResponsive">
+						<ul class="navbar-nav mx-auto">
+							<li class="nav-item active px-lg-4"><a
+								class="nav-link text-uppercase text-expanded" href="${path}">Home
+									<span class="sr-only">(current)</span>
+							</a></li>
+							<li class="nav-item px-lg-4"><a
+								class="nav-link text-uppercase text-expanded"
+								href="${path}/member/logout.do">로그아웃</a></li>
+							<li class="nav-item px-lg-4"><a
+								class="nav-link text-uppercase text-expanded"
+								href="${path}/board/list.do">게시판</a></li>
+								<li class="nav-item px-lg-4"><a
+								class="nav-link text-uppercase text-expanded"
+								href="${path}/member/view.do?userid=${userid}">회원정보보기</a></li>
+							<c:if test="${sessionScope.admin_userid!=null&&sessionScope.admin_name!=null}">
+							<li class="nav-item px-lg-4">
+								<a
+								class="nav-link text-uppercase text-expanded"
+								href="${path}/member/list.do">회원목록</a></li>
+							</c:if>
+								
+						</ul>
+					</div>
 				</div>
-			</div>
-		</nav>
-	</c:if>
-	<c:if test="${not empty sessionScope.userid }">
-
-		<nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
-			<div class="container">
-				<a
-					class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none"
-					href="#">Start Bootstrap</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarResponsive" aria-controls="navbarResponsive"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<ul class="navbar-nav mx-auto">
-						<li class="nav-item active px-lg-4"><a
-							class="nav-link text-uppercase text-expanded" href="${path}">Home
-								<span class="sr-only">(current)</span>
-						</a></li>
-						<li class="nav-item px-lg-4"><a
-							class="nav-link text-uppercase text-expanded"
-							href="${path}/member/logout.do">로그아웃</a></li>
-						<li class="nav-item px-lg-4"><a
-							class="nav-link text-uppercase text-expanded"
-							href="${path}/member/view.do?userid=${userid}">회원정보보기</a></li>
-						<li class="nav-item px-lg-4"><a
-							class="nav-link text-uppercase text-expanded"
-							href="${path}/board/list.do">게시판</a></li>
-						<li class="nav-item px-lg-4"><a
-							class="nav-link text-uppercase text-expanded"
-							href="${path}/member/list.do">회원목록</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</c:if>
+			</nav>
+		</c:otherwise>
+	</c:choose>
 </body>
 
 </html>

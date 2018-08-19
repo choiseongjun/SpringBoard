@@ -18,6 +18,7 @@ public class SessionLoginPreventor {
 	            String key = (String) e.nextElement();
 	            if (key.equals(loginId)){
 	                loginUsers.get(key).invalidate();
+	        
 	            }
 	        }
 	    }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import jun.st.ex.Persistence.DAO.AdminDAO;
 import jun.st.ex.Persistence.DTO.MemberDTO;
 import jun.st.ex.Service.MemberService;
 import jun.st.ex.Service.SesssionEventListener;
@@ -25,6 +26,8 @@ public class MemberController {
 
 	@Inject
 	MemberService memberService;
+	@Inject
+	AdminDAO adminDao;
 	
 	@RequestMapping("member/list.do") //url mapping
 	public String memberList(Model model) {
@@ -51,16 +54,23 @@ public class MemberController {
 			MemberDTO dto, HttpSession session,ModelAndView mav,MemberDTO param,HttpServletRequest request) {
 		
 		String name = memberService.loginCheck(dto);
+		String admin=adminDao.loginCheck(dto);
 		
-		if (name != null) {
+		if (name != null || admin!=null) {
 			request.getSession().setAttribute("TAATLoginId", param.getUserid());
             
 			SesssionEventListener listener = new SesssionEventListener();
             request.getSession().setAttribute(param.getUserid(), listener);                
  
-
+            session.setAttribute("admin_userid", dto.getUserid());
+			session.setAttribute("admin_name", admin);
+			
 			session.setAttribute("userid", dto.getUserid());
 			session.setAttribute("name", name);
+			
+			System.out.println(dto.getUserid());
+			
+			
 			mav.setViewName("redirect:/");
 		}else {
 			mav.setViewName("User/Login");

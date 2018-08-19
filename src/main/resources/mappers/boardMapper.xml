@@ -9,11 +9,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into board (bno,title,content,writer) values
 		( board_seq.nextval, #{title}, #{content}, #{writer} )
 	</insert>
-	
+	<!-- 첨부파일 정보 저장 -->	
+	<insert id="addAttach">
+		insert into attach (fullName, bno) values
+		( #{fullName}, board_seq.currval ) 
+	</insert>
 	<select id="listAll"
 resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 		<include refid="paging_header" />
-			select bno,title,writer,name,regdate,viewcnt,show					
+			select bno,title,writer,name,regdate,viewcnt,show
+  				<!-- ,(select count(*) from reply where bno=b.bno) cnt	 -->				
 			from board b, member m
 			<include refid="search" />
 			order by bno desc   
@@ -30,7 +35,7 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 		) where rn between #{start} and #{end}	
 	</sql>
 	
-	<!-- 레코드 갯수 계산 -->	
+<!-- 레코드 갯수 계산 -->	
 	<select id="countArticle" resultType="int">
 		select count(*)
 		from board b,member m	
@@ -54,7 +59,6 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 		</choose>
 	</sql>
 	
-	
 	<select id="read" resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 		select *
 		from board
@@ -76,6 +80,22 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
  		 set show='N' 
  		 where bno=#{bno} 
 	</delete>
-	
+   <!-- 첨부파일 목록 -->
+	<select id="getAttach" 	resultType="String">
+		select fullName 
+		from attach
+		where bno=#{bno}
+		order by regdate desc	
+	</select>
+
+    <delete id="deleteFile">
+  	delete from attach
+  	where fullname=${fullname}
+  </delete>
+  
+  <insert id="updateAttach">
+  	insert into attach (fullName,bno) values
+  	(#{fullName},#{bno})
+  </insert>
 	
 </mapper>

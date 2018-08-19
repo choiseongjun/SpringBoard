@@ -76,7 +76,9 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		throws Exception {
 		// 세션에서 사용자아이디를 가져옴
 		String writer=(String)session.getAttribute("userid");
-		dto.setWriter(writer); 
+		String adminwriter=(String)session.getAttribute("admin_userid");
+		dto.setWriter(writer);
+		dto.setWriter(adminwriter);
 		//레코드 저장
 		boardService.create(dto);
 		//게시물 목록으로 이동
