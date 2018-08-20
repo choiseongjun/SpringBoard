@@ -36,4 +36,9 @@ public class ReplyServiceImpl implements ReplyService {
 		replyDao.delete(rno);
 	}
 
+	@Override
+	public ReplyDTO detail(Integer rno) {
+		return replyDao.detail(rno);
+	}
+
 }

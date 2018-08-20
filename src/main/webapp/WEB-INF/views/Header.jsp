@@ -105,9 +105,7 @@
 							<li class="nav-item px-lg-4"><a
 								class="nav-link text-uppercase text-expanded"
 								href="${path}/board/list.do">게시판</a></li>
-								<li class="nav-item px-lg-4"><a
-								class="nav-link text-uppercase text-expanded"
-								href="${path}/member/view.do?userid=${userid}">회원정보보기</a></li>
+								
 							<c:if test="${sessionScope.admin_userid!=null&&sessionScope.admin_name!=null}">
 							<li class="nav-item px-lg-4">
 								<a

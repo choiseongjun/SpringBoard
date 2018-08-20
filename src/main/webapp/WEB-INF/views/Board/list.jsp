@@ -16,9 +16,7 @@ function list(page){
 	location.href="${path}/board/list.do?curPage="+page;
 }
 </script>
-<stlye>
-h2{color:red;}
-</stlye>
+
 </head>
 <body>
 <h2 color="red" align="middle">게시판</h2>

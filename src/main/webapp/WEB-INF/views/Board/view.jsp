@@ -13,8 +13,7 @@
 <script>
 $(function(){ //자동으로 실행되는 코드
 	//댓글 목록 출력
-	listReply2();
-	
+listReply();
 	//댓글 쓰기
 	$("#btnReply").click(function(){
 		var replytext=$("#replytext").val(); //댓글 내용
@@ -27,7 +26,7 @@ $(function(){ //자동으로 실행되는 코드
 			data: param,
 			success: function(){
 				alert("댓글이 등록되었습니다.");
-				listReply2(); //댓글 목록 출력
+				listReply(); //댓글 목록 출력
 			}
 		});
 	});
@@ -153,7 +152,7 @@ function changeDate(date){
 	return strDate;
 }
 
-function listReply2(){
+/* function listReply2(){
 	$.ajax({
 		type: "get",
 		contentType: "application/json",
@@ -177,7 +176,7 @@ function listReply2(){
 			$("#listReply").html(output);
 		}
 	});
-}
+} */
 
 //첨부파일 리스트를 출력하는 함수
 function listAttach(){
@@ -258,10 +257,12 @@ CKEDITOR.replace("content",{
 	 		placeholder="댓글을 작성하세요"></textarea>
 	 	<br>
 	 	<button type="button" id="btnReply">댓글쓰기</button>
+	 	
 	 </c:if>
 </div>
 <!-- 댓글 목록 -->
 <div id="listReply"></div>
+
 </center>
 </body>
 </html>

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,12 +48,12 @@ public class ReplyController {
 		replyService.create(dto);
 		//jsp 페이지로 가거나 데이터를 리턴하지 않음
 	}
-	@RequestMapping(value="/delete/{rno}")
+	@RequestMapping("delete/{rno}")
 	public ResponseEntity<String> replyDelete(@PathVariable("rno") Integer rno){
 		ResponseEntity<String> entity=null;
+		
 		try {
 			replyService.delete(rno);
-			
 			entity=new ResponseEntity<String>("success",HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -59,6 +61,13 @@ public class ReplyController {
 		}
 		return entity;
 	}
+	/*@RequestMapping(value="/detail/{rno}",method=RequestMethod.GET)
+	public ModelAndView replyDetail(@PathVariable("rno") Integer rno,ModelAndView mav) {
+		ReplyDTO vo=replyService.detail(rno);
+		mav.setViewName("Board/reply_list");
+		mav.addObject("vo",vo);
+		return mav;
+	}*/
 }
 
 

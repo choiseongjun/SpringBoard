@@ -9,4 +9,5 @@ public interface ReplyService {
 	public int count(int bno);//댓글 갯수
 	public void create(ReplyDTO dto);//댓글 입력
 	public void delete(Integer rno);
+	public ReplyDTO detail(Integer rno);//상세보기
 }

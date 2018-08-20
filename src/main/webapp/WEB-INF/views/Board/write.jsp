@@ -10,6 +10,7 @@
 <script src="${path}/ckeditor/ckeditor.js"></script>
 <script src="${path}/resources/common.js"></script>
 <script>
+
 $(function(){
 	$("#btnSave").click(function(){
 		var str="";

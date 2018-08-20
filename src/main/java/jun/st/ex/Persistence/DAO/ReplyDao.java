@@ -9,4 +9,5 @@ public interface ReplyDao {
 	public int count(int bno);
 	public void create(ReplyDTO dto);
 	public void delete(Integer rno);
+	public ReplyDTO detail(Integer rno);//상세보기
 }

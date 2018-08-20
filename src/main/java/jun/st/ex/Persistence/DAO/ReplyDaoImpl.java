@@ -35,4 +35,9 @@ public class ReplyDaoImpl implements ReplyDao{
 		sqlSession.delete("reply.deleteReply",rno);
 	}
 
+	@Override
+	public ReplyDTO detail(Integer rno) {
+		return sqlSession.selectOne("reply.detailReply",rno);
+	}
+
 }

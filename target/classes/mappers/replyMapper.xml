@@ -18,4 +18,9 @@ insert into reply (rno,bno,replytext,replyer) values
   		DELETE FROM reply
   		where rno=#{rno}
   	</delete>
+  	<select id="detailReply" resultType="jun.st.ex.Persistence.DTO.ReplyDTO">
+  	select rno,bno,replytext,replyer,regdate,updatedate
+  	from reply
+  	where rno=#{rno}
+  	</select>
   </mapper>
