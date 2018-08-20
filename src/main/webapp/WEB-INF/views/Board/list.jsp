@@ -16,12 +16,12 @@ function list(page){
 	location.href="${path}/board/list.do?curPage="+page;
 }
 </script>
-<style>
- 
-</style>
+<stlye>
+h2{color:red;}
+</stlye>
 </head>
 <body>
-<h2>게시판</h2>
+<h2 color="red" align="middle">게시판</h2>
 
 <!-- 검색폼 -->
 <form name="form1" method="post"
@@ -45,7 +45,7 @@ function list(page){
 </form>
 
 <button type="button" id="btnWrite">글쓰기</button>
-${map.count}개의 게시물이 있습니다.
+<table class="table table-dark"><th>${map.count}개의 게시물이 있습니다.</th></table>
  <table class="table table-dark">
 	<tr>
 		<th>번호</th>

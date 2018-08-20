@@ -64,13 +64,14 @@ $(function(){
 .fileDrop {
 	width: 600px;
 	height: 100px;
-	border: 1px dotted gray;
-	background-color: gray;
+	border: 1px dotted white;
+	background-color: white;
 }
 </style>
 
 </head>
 <body>
+<center>
 <h2>글쓰기</h2>
 <form id="form1" name="form1" method="post"
 action="${path}/board/insert.do">
@@ -95,5 +96,6 @@ CKEDITOR.replace("content",{
 		<button type="button" id="btnSave">확인</button>
 	</div>
 </form>
+</center>
 </body>
 </html>

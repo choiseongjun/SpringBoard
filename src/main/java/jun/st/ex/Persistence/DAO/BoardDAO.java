@@ -17,8 +17,8 @@ public interface BoardDAO {
 	public void increaseViewcnt(int bno, HttpSession session) throws Exception;
 	public int countArticle(
 			String search_option, String keyword) throws Exception;
-	public void deleteFile(String fullName);//첨부파일 삭제
+	public void deleteFile(String fullname);//첨부파일 삭제
 	public List<String> getAttach(int bno);//첨부파일 정보
-	public void addAttach(String fullName);//첨부파일 저장
-	public void updateAttach(String fullName,int bno);//첨부파일 수정
+	public void addAttach(String fullname);//첨부파일 저장
+	public void updateAttach(String fullname,int bno);//첨부파일 수정
 }

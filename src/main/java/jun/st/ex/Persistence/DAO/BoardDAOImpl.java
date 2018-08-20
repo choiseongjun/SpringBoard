@@ -67,8 +67,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public void deleteFile(String fullName) {
-		sqlSession.delete("board.deleteFile",fullName);
+	public void deleteFile(String fullname) {
+		sqlSession.delete("board.deleteFile",fullname);
 		
 	}
 
@@ -79,14 +79,14 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public void addAttach(String fullName) {
-		sqlSession.insert("board.addAttach",fullName);
+	public void addAttach(String fullname) {
+		sqlSession.insert("board.addAttach",fullname);
 	}
 
 	@Override
-	public void updateAttach(String fullName, int bno) {
+	public void updateAttach(String fullname, int bno) {
 		Map<String, Object> map=new HashMap<>();
-		map.put("fullname", fullName);//첨부파일 이름
+		map.put("fullname", fullname);//첨부파일 이름
 		map.put("bno", bno);//게시물 번호
 		sqlSession.insert("board.updateAttach",map);
 	}

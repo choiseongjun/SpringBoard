@@ -41,13 +41,14 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	@Override
 	public void update(BoardDTO dto) throws Exception {
-		 boardDao.update(dto);//board 테이블 수정
-		 //attach 테이블 수정
-		 String[] files=dto.getFiles();
-		 if(files==null) return;
-		 for(String name : files) {
-			 boardDao.updateAttach(name, dto.getBno());
-		 }
+		boardDao.update(dto); //board 테이블 수정
+		//attach 테이블 수정
+		String[] files=dto.getFiles();
+		if(files==null) return;
+		for(String name : files) {
+			System.out.println("첨부파일 이름:"+name);
+			boardDao.updateAttach(name, dto.getBno()); 
+		}
 	}
 
 
@@ -87,8 +88,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void deleteFile(String fullName) {
-		boardDao.deleteFile(fullName);
+	public void deleteFile(String fullname) {
+		boardDao.deleteFile(fullname);
 	}
 
 	@Override

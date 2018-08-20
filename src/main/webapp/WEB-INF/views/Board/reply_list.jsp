@@ -30,10 +30,10 @@ value="${fn:replace(str,newLineChar,'<br>') }" />
 			( <fmt:formatDate value="${row.regdate}"
 				 pattern="yyyy-MM-dd a HH:mm:ss" /> )<br>
 			${str}
+		</td>
+		<td>
 			<button type="button" id="btnReplyDelete">삭제</button>
 		</td>
-		
-		
 	</tr>
 </c:forEach>	
 </table>

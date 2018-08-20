@@ -11,8 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<!-- 첨부파일 정보 저장 -->	
 	<insert id="addAttach">
-		insert into attach (fullName, bno) values
-		( #{fullName}, board_seq.currval ) 
+		insert into attach (fullname, bno) values
+		( #{fullname}, board_seq.currval ) 
 	</insert>
 	<select id="listAll"
 resultType="jun.st.ex.Persistence.DTO.BoardDTO">
@@ -81,19 +81,19 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 	</delete>
    <!-- 첨부파일 목록 -->
 	<select id="getAttach" 	resultType="String">
-		select fullName 
+		select fullname 
 		from attach
 		where bno=#{bno}
 		order by regdate desc	
 	</select>
 
     <delete id="deleteFile">
-  	delete from attach
-  	where fullname=${fullname}
+	  	delete from attach
+	  	where fullname=#{fullname}
   </delete>
   
    <insert id="updateAttach">
-  	insert into attach (fullName,bno) values
-  	(#{fullName},#{bno})
+  	insert into attach (fullname,bno) values
+  	(#{fullname},#{bno})
   </insert>
 </mapper>

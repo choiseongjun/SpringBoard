@@ -70,7 +70,8 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		// 수정 완료 후 목록으로 이동
 		//return "redirect:/board/list.do";
 		// 상세 화면으로 되돌아감
-		return "redirect:/board/list.do";
+		/*return "redirect:/board/list.do";*/
+		return "redirect:/board/view.do?bno="+dto.getBno();
 	}
 	@RequestMapping("insert.do")
 	public String insert(@ModelAttribute BoardDTO dto
