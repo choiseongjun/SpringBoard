@@ -18,18 +18,20 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	BoardDAO boardDao;
 	
-	
-	@Override
-	@Transactional
-	public void create(BoardDTO dto) throws Exception {
-		boardDao.create(dto);
-		
-		String[] files=dto.getFiles(); //첨부파일 이름 배열
-		if(files==null) return;
-		for(String name : files) {
-			boardDao.addAttach(name);
+	// 1.글쓰기 - 게시물 번호 생성
+	// 2.첨부파일 등록-게시물 번호 사용	
+		@Transactional
+		@Override
+		public void create(BoardDTO dto) throws Exception {
+			//board 테이블에 레코드 추가
+			boardDao.create(dto); 
+			//attach 테이블에 레코드 추가
+			String[] files=dto.getFiles(); //첨부파일 이름 배열
+			if(files==null) return;  //첨부파일이 없으면 skip
+			for(String name : files) {
+				boardDao.addAttach(name);
+			}
 		}
-	}
 
 	@Override
 	public BoardDTO read(int bno) throws Exception {
@@ -71,7 +73,7 @@ public class BoardServiceImpl implements BoardService {
 			}
 			long current_time=System.currentTimeMillis();
 			//일정 시간이 경과한 후 조회수 증가 처리
-			if(current_time - update_time > 5*1000) {
+			if(current_time - update_time > 5*100000) {
 				//조회수 증가 처리
 				boardDao.increaseViewcnt(bno, session);
 				//조회수를 올린 시간 저장

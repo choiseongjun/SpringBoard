@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 		<include refid="paging_header" />
 			select bno,title,writer,name,regdate,viewcnt,show
-  				<!-- ,(select count(*) from reply where bno=b.bno) cnt	 -->				
+  			 ,(select count(*) from reply where bno=b.bno) cnt			
 			from board b, member m
 			<include refid="search" />
 			order by bno desc   
@@ -69,12 +69,11 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 		set viewcnt=viewcnt+1
 		where bno=#{bno}
 	</update>
-	<update id="update">
-	update board
-		set title=#{title},
-		content=#{content}
-	where bno=#{bno} 
-	</update>
+ <update id="update">
+  	update board
+  	set title=#{title},content=#{content}
+  	where bno=#{bno}
+  </update>
 		<delete id="delete">
  		update board
  		 set show='N' 
@@ -93,9 +92,8 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
   	where fullname=${fullname}
   </delete>
   
-  <insert id="updateAttach">
+   <insert id="updateAttach">
   	insert into attach (fullName,bno) values
   	(#{fullName},#{bno})
   </insert>
-	
 </mapper>

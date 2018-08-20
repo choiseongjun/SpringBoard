@@ -33,7 +33,7 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-	<tx:annotation-driven/>
+	<tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
 	
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

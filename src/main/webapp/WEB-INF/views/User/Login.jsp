@@ -28,6 +28,7 @@ $(function(){
 		document.form1.submit();
 	});
 });
+
 </script>
 <form name="form1" method="post">
   <div class="form-group">

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="../Header.jsp" %>
-<script src="common.js"></script>
+<script src="${path }/resources/common.js"></script>
 <!-- ckeditor의 라이브러리 -->
 <script src="${path}/ckeditor/ckeditor.js"></script>
 <script>
@@ -201,12 +201,8 @@ function listAttach(){
 		}
 	});
 }
-	
-	
-
 
 </script>
-
 <style>
 .fileDrop {
 	width: 600px;
@@ -218,6 +214,7 @@ function listAttach(){
 
 </head>
 <body>
+<center>
 <h2>게시물 보기</h2>
 <form id="form1" name="form1" method="post"
 action="${path}/board/insert.do">
@@ -264,7 +261,8 @@ CKEDITOR.replace("content",{
 	 </c:if>
 </div>
 <!-- 댓글 목록 -->
-<div id="listReply2"></div>
+<div id="listReply"></div>
+</center>
 </body>
 </html>
 

@@ -9,8 +9,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import jun.st.ex.Persistence.DTO.BoardDTO;
@@ -92,12 +94,17 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 	@RequestMapping("view.do")
 	public ModelAndView view(int bno, HttpSession session)
 		throws Exception {
-		//조회수 증가 처리
+		//조회수 증가 처리 
 		boardService.increaseViewcnt(bno, session); 
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("Board/view"); //포워딩할 뷰의 이름
 		mav.addObject("dto", boardService.read(bno)); //자료 저장
 		return mav; //  views/board/view.jsp로 넘어가서 출력됨
 	} 
+	@RequestMapping("getAttach/{bno}")
+	@ResponseBody // view가 아닌 데이터 자체를 리턴 
+	public List<String> getAttach(@PathVariable int bno){
+		return boardService.getAttach(bno);
+	}
 	
 }
