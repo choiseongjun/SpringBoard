@@ -99,13 +99,13 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 			//회원정보 수정
 			memberService.updateMember(dto);
 			//수정 후 목록으로 이동
-			return "redirect:/member/list.do"; //redirect
+			return "User/UpdateUser";
 		}else { //비밀번호가 틀리면
 			model.addAttribute("dto", dto);
 			model.addAttribute("join_date"
 , memberService.viewMember(dto.getUserid()).getJoin_date());
 			model.addAttribute("message", "비밀번호를 확인하세요.");
-			return "member/view"; //forward
+			return "User/UpdateUser"; //forward
 		}
 	}
 	@RequestMapping("member/delete.do")
@@ -122,4 +122,5 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 			return "member/view";
 		}
 	}
+
 }

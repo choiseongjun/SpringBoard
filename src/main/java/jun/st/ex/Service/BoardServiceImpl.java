@@ -74,8 +74,8 @@ public class BoardServiceImpl implements BoardService {
 			}
 			long current_time=System.currentTimeMillis();
 			//일정 시간이 경과한 후 조회수 증가 처리
-			if(current_time - update_time > 5*100000) {
-				//조회수 증가 처리
+			if(current_time - update_time > 60*60*1000) {
+				//조회수 증가 처리 뒤에 밀리 세컨드 60*60*1000 한시간
 				boardDao.increaseViewcnt(bno, session);
 				//조회수를 올린 시간 저장
 				session.setAttribute("update_time_"+bno, current_time);
@@ -95,6 +95,21 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<String> getAttach(int bno) {
 		return boardDao.getAttach(bno);
+	}
+
+	@Override
+	public BoardDTO replyForm(int bno) {
+		return boardDao.replyForm(bno);
+	}
+
+	@Override
+	public void replyUpdate(BoardDTO dto) {
+		boardDao.replyUpdate(dto);
+	}
+
+	@Override
+	public void replyInsert(BoardDTO dto) {
+		boardDao.replyInsert(dto);
 	}
 
 

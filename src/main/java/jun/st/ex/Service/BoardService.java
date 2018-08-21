@@ -18,4 +18,7 @@ public interface BoardService {
 			String search_option, String keyword) throws Exception;
 	public void deleteFile(String fullname);//첨부파일 삭제
 	public List<String> getAttach(int bno);//첨부파일 정보
+	public BoardDTO replyForm(int bno);
+	public void replyUpdate(BoardDTO dto);
+	public void replyInsert(BoardDTO dto); 
 }

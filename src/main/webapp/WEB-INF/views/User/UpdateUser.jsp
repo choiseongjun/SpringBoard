@@ -14,7 +14,7 @@
  	$(function(){
  	 $(document).ready(function(){
  		 $("#btnUpdate").click(function(){
- 				document.form1.action="${path}/member/update.do"
+ 				document.form1.action="${path}/member/update.do";
  				document.form1.submit();
  			});
  		 $("#btnDelete").click(function(){

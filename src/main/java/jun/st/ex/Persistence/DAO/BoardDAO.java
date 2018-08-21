@@ -21,4 +21,8 @@ public interface BoardDAO {
 	public List<String> getAttach(int bno);//첨부파일 정보
 	public void addAttach(String fullname);//첨부파일 저장
 	public void updateAttach(String fullname,int bno);//첨부파일 수정
+	
+	public BoardDTO replyForm(int bno);
+	public void replyUpdate(BoardDTO dto);
+	public void replyInsert(BoardDTO dto); 
 }

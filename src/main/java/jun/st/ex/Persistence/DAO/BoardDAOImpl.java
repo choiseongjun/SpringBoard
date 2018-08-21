@@ -90,6 +90,22 @@ public class BoardDAOImpl implements BoardDAO {
 		map.put("bno", bno);//게시물 번호
 		sqlSession.insert("board.updateAttach",map);
 	}
+
+	@Override
+	public BoardDTO replyForm(int bno) {
+		return sqlSession.selectOne("board.replyFormData",bno);
+	}
+
+	@Override
+	public void replyUpdate(BoardDTO dto) {
+		sqlSession.update("board.replyUpdateData",dto);
+	}
+
+	@Override
+	public void replyInsert(BoardDTO dto) {
+		sqlSession.insert("board.replyInsertData",dto);
+		
+	}
 	
 
 

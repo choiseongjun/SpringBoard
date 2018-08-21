@@ -257,7 +257,7 @@ CKEDITOR.replace("content",{
 	 		placeholder="댓글을 작성하세요"></textarea>
 	 	<br>
 	 	<button type="button" id="btnReply">댓글쓰기</button>
-	 	
+	 	<input type="button" value="답글쓰기"  onclick="location.href='reply.b?ref=${dto.ref}&re_step=${dto.re_step}&re_level=${dto.re_level}'">
 	 </c:if>
 </div>
 <!-- 댓글 목록 -->

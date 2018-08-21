@@ -14,6 +14,28 @@ public class BoardDTO {
 	private int cnt;//댓글 갯수
 	private String show; 
 	private String[] files; 
+	private int ref;//groups
+	private int re_step;
+	private int re_level;
+	
+	public int getRef() {
+		return ref;
+	}
+	public void setRef(int ref) {
+		this.ref = ref;
+	}
+	public int getRe_step() {
+		return re_step;
+	}
+	public void setRe_step(int re_step) {
+		this.re_step = re_step;
+	}
+	public int getRe_level() {
+		return re_level;
+	}
+	public void setRe_level(int re_level) {
+		this.re_level = re_level;
+	}
 	public int getBno() {
 		return bno;
 	}
@@ -76,9 +98,11 @@ public class BoardDTO {
 	}
 	@Override
 	public String toString() {
-		return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + ", viewcnt=" + viewcnt + ", name=" + name + ", cnt=" + cnt + ", show=" + show + ", files="
-				+ Arrays.toString(files) + "]";
+		return "BoardDTO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer
+				+ ", regdate=" + regdate + ", viewcnt=" + viewcnt + ", name=" + name + ", cnt=" + cnt + ", show=" + show
+				+ ", files=" + Arrays.toString(files) + ", ref=" + ref + ", re_step=" + re_step + ", re_level="
+				+ re_level + "]";
 	}
+
 	    
 }

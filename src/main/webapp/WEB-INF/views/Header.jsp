@@ -48,7 +48,7 @@
 	<%-- <c:choose>
 		<c:when test="${sessionScope.userid!=null}"> --%>
 	<c:choose>
-		<c:when test="${sessionScope.userid==null||sessionScope.admin_userid==null}">
+		<c:when test="${sessionScope.userid==null&&sessionScope.admin_userid==null}">
 			<nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
 				<div class="container">
 					<a
@@ -65,6 +65,9 @@
 								class="nav-link text-uppercase text-expanded" href="${path}">Home
 									<span class="sr-only">(current)</span>
 							</a></li>
+							<li class="nav-item px-lg-4"><a
+								class="nav-link text-uppercase text-expanded"
+								href="${path}/member/register.do">회원가입하기</a></li>
 							<li class="nav-item px-lg-4"><a
 								class="nav-link text-uppercase text-expanded"
 								href="${path}/member/Login.do">로그인</a></li>
@@ -105,6 +108,13 @@
 							<li class="nav-item px-lg-4"><a
 								class="nav-link text-uppercase text-expanded"
 								href="${path}/board/list.do">게시판</a></li>
+							<%-- 	<c:if test="${sessionScope.userid!=null&&sessionScope.admin_name==null}"> --%>
+							<c:if test="${sessionScope.userid!=null||sessionScope.admin_username==null&&sessionScope.admin_userid==null}">
+							<li class="nav-item px-lg-4">
+								<a
+								class="nav-link text-uppercase text-expanded"
+								href="${path}/member/view.do?userid=${userid}">회원정보보기</a></li>
+							</c:if>
 								
 							<c:if test="${sessionScope.admin_userid!=null&&sessionScope.admin_name!=null}">
 							<li class="nav-item px-lg-4">

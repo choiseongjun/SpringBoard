@@ -58,6 +58,9 @@ function list(page){
 		<td>${row.bno}</td>
 		<td>
 <a href="${path}/board/view.do?bno=${row.bno}">
+ <c:forEach var="a" begin="1" end="${row.re_level}" step="1">
+re: 
+</c:forEach>
 ${row.title}
 </a>
 			<c:if test="${row.cnt > 0}">
