@@ -25,6 +25,7 @@ $(function(){
 		//폼에 hidden 태그들을 붙임
 		$("#form1").append(str);
 		document.form1.submit();
+		/* alert("등록 완료"); */
 	});
 	$(".fileDrop").on("dragenter dragover",function(e){
 		//기본 효과 막음

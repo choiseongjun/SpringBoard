@@ -42,8 +42,7 @@
 
 	<h1 class="site-heading text-center text-white d-none d-lg-block">
 		<span class="site-heading-upper text-primary mb-3">A Free
-			Bootstrap 4 Business Theme</span> <span class="site-heading-lower">Business
-			Casual</span>
+			Bootstrap 4 Business Theme</span> <span class="site-heading-lower"></span>
 	</h1>
 	<%-- <c:choose>
 		<c:when test="${sessionScope.userid!=null}"> --%>

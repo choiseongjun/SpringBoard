@@ -97,11 +97,7 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
   	(#{fullname},#{bno})
   </insert>
 
-  <!-- 답변글 -->
-  <select id="replyFormData" parameterType="Integer" resultType="jun.st.ex.Persistence.DTO.BoardDTO">
-select * from board where bno=#{bno}
-</select>
-
+ 
 <insert id="replyInsertData">
 insert into board (bno,title,content,writer,ref,re_step,re_level) values
 ( board_seq.nextval, #{title}, #{content}, #{writer},#{ref},#{re_step},#{re_level} )
