@@ -33,7 +33,28 @@ $(".btnReplyDelete").click(function(){
 		});
 	}
 });
+function showReplyModify(rno){
+	$.ajax({
+		type:"get",
+		url:"${path}/reply/detail/"+rno,
+		success:function(result){
+			$("#modifyReply").html(result);
+			//x태그.css("속성","값")
+			$("#modifyReply").css("visibility","visible");
+		}
+	})
+}
 </script>
+<style>
+#modifyReply{
+	width:600px;
+	height:130px;
+	background-color:gray;
+	padding:10px;
+	z-index:10;
+	visibility:hidden;
+}
+</style>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
  <table class="table table-dark">
 <c:forEach var="row" items="${list}">   
@@ -58,12 +79,14 @@ value="${fn:replace(str,newLineChar,'<br>') }" />
 		<c:if test="${sessionScope.userid == row.replyer}">
 		<td>
 			<button type="button" class="btnReplyDelete" data-rno="${row.rno}">삭제</button>
+			<input type="button" id="btnModify" value="수정" onclick="showReplyModify('${row.rno}')">
 		</td>
+
 		</c:if>
 	</tr>
 </c:forEach>	
 </table>
-
+<div id="modifyReply"></div>
 </body>
 </html>
 

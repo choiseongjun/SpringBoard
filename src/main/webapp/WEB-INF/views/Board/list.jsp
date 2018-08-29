@@ -147,7 +147,7 @@ function makeNextPage(){
 }
 
 $(function(){
-	
+	 
 	list(1);
 	
 	var str = "";
@@ -175,7 +175,7 @@ $(function(){
 
 <style>
 #pageBlock td a{
-	margin:0 0 0 10px;
+	margin:0 0 0 30px;
 	cursor:pointer;
 }
 </style>

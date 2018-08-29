@@ -23,4 +23,10 @@ insert into reply (rno,bno,replytext,replyer) values
   	from reply
   	where rno=#{rno}
   	</select>
+  	
+  	<select id="updateReply">
+  		update reply
+  		set replytext=#{replytext}
+  		where rno=#{rno}
+  	</select>
   </mapper>

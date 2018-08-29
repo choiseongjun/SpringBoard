@@ -99,7 +99,7 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 			//회원정보 수정
 			memberService.updateMember(dto);
 			//수정 후 목록으로 이동
-			return "User/UpdateUser";
+			return "redirect:/member/view.do";
 		}else { //비밀번호가 틀리면
 			model.addAttribute("dto", dto);
 			model.addAttribute("join_date"
@@ -110,11 +110,12 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 	}
 	@RequestMapping("member/delete.do")
 	public String delete(
-			String userid, String passwd, Model model) {
+			String userid, String passwd, Model model,HttpSession session) {
 		boolean result=memberService.checkPw(userid, passwd);
-		if(result) { //비번이 맞으면 삭제 => 목록으로 이동
+		if(result) { //비번이 맞으면 삭제 =>세션 끊고=> 목록으로 이동
 			memberService.deleteMember(userid);
-			return "redirect:/member/list.do";
+			session.invalidate();
+			return "redirect:/";
 		}else { //비번이 틀리면 되돌아감
 			model.addAttribute("message","비밀번호를 확인하세요.");
 			model.addAttribute(

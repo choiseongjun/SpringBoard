@@ -40,4 +40,9 @@ public class ReplyDaoImpl implements ReplyDao{
 		return sqlSession.selectOne("reply.detailReply",rno);
 	}
 
+	@Override
+	public void update(ReplyDTO vo) {
+	sqlSession.update("reply.updateReply",vo);
+	}
+
 }

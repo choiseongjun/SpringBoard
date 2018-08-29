@@ -41,4 +41,10 @@ public class ReplyServiceImpl implements ReplyService {
 		return replyDao.detail(rno);
 	}
 
+	@Override
+	public void update(ReplyDTO vo) {
+		replyDao.update(vo);
+		
+	}
+
 }

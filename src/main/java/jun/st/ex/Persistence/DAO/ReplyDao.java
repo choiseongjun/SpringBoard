@@ -10,4 +10,5 @@ public interface ReplyDao {
 	public void create(ReplyDTO dto);
 	public void delete(Integer rno);
 	public ReplyDTO detail(Integer rno);//상세보기
+	public void update(ReplyDTO vo);
 }

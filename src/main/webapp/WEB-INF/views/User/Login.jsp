@@ -35,7 +35,7 @@ $(function(){
     <input  class="form-control" id="userid" name="userid" aria-describedby="emailHelp" placeholder="Enter ID">
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" id="passwd" name="passwd" placeholder="Password">
+    <input type="password" class="form-control" id="passwd" name="passwd" >
 
   	<input type="button" id="btnLogin" class="btn btn-primary" value="로그인하기">
 </form>

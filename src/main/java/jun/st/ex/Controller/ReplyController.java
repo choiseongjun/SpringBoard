@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,13 +62,27 @@ public class ReplyController {
 		}
 		return entity;
 	}
-	/*@RequestMapping(value="/detail/{rno}",method=RequestMethod.GET)
+	@RequestMapping(value="/detail/{rno}",method=RequestMethod.GET)
 	public ModelAndView replyDetail(@PathVariable("rno") Integer rno,ModelAndView mav) {
 		ReplyDTO vo=replyService.detail(rno);
-		mav.setViewName("Board/reply_list");
+		mav.setViewName("Board/replyDetail");
 		mav.addObject("vo",vo);
 		return mav;
-	}*/
+	}
+	@RequestMapping(value="/update/{rno}",method= {RequestMethod.PUT,RequestMethod.PATCH})
+	public ResponseEntity<String> replyUpdate(@PathVariable("rno")Integer rno,@RequestBody ReplyDTO vo) {
+		ResponseEntity<String> entity=null;
+		try {
+			vo.setRno(rno);
+			replyService.update(vo);
+			entity=new ResponseEntity<String>("success",HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity=new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+		
+	}
 }
 
 
