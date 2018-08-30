@@ -85,5 +85,16 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.update("member.update_pw", member);
 	}*/
 
+	@Override
+	public int checkMemberByUserIdAndEmail(MemberDTO dto) {
+		
+		return sqlSession.selectOne("member.checkMemberByUserIdAndEmail",dto);
+	}
+
+	@Override
+	public int MailUpdateUserPw(MemberDTO dto) {
+		return sqlSession.update("member.MailUpdateUserPw",dto);
+	}
+
 
 }

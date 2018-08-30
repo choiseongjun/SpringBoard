@@ -77,6 +77,16 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.getUser(userid);
 	}
 
+	@Override
+	public int checkMemberByUserIdAndEmail(MemberDTO dto) {
+		return memberDao.checkMemberByUserIdAndEmail(dto);
+	}
+
+	@Override
+	public int MailUpdateUserPw(MemberDTO dto) {
+		return memberDao.MailUpdateUserPw(dto);
+	}
+
 	/*@Override
 	public int update_pw(MemberDTO member) throws Exception {
 		return memberDao.update_pw(member);

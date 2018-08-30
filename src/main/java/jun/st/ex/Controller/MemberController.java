@@ -2,7 +2,9 @@ package jun.st.ex.Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import jun.st.ex.Persistence.DAO.AdminDAO;
+import jun.st.ex.Persistence.DTO.Email;
 import jun.st.ex.Persistence.DTO.MemberDTO;
 import jun.st.ex.Service.MemberService;
 import jun.st.ex.Service.SesssionEventListener;
@@ -70,15 +73,24 @@ public class MemberController {
 	public ModelAndView login_check(
 			MemberDTO dto, HttpSession session,
 			ModelAndView mav,MemberDTO param,
-			HttpServletRequest request,HttpServletResponse response) {
+			HttpServletRequest request,HttpServletResponse response) throws IOException {
 		
-	
 		request.getSession().setAttribute("TAATLoginId", param.getUserid());
 		
 		SesssionEventListener listener = new SesssionEventListener();
         request.getSession().setAttribute(param.getUserid(), listener);  
 		
         MemberDTO user = memberService.loginCheck(dto);
+        
+        if(user == null) {//로그인 시도하려는 아이디가 존재하지 않으면..
+        
+        	response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('로그인 정보를 확인해주세요.');</script>");
+			out.flush();
+			out.close();
+			mav.setViewName("User/Login");
+        }else {//로그인 시도하려는 아이디가 존재하면..
 		
       //암호화되지 않은 비밀번호(클라이언트에서 넘어온 값)
 		String userPasswd = dto.getPasswd();
@@ -87,25 +99,30 @@ public class MemberController {
 		//비밀번호 일치 검사, 일치하면  true
 		boolean loginResult = passwordEncoder.matches(userPasswd, userHashedPasswd);
 		
-		//로그인 시도하려는 아이디가 존재하면..
-		 if(user!=null) {
+		//비밀번호 일치 시(로그인성공)
+		if(loginResult) {
+			session.setAttribute("userid", dto.getUserid());
+			session.setAttribute("name", user.getName());
 			
-			//비밀번호 일치 시(로그인성공)
-			if(loginResult) {
-				session.setAttribute("userid", dto.getUserid());
-				session.setAttribute("name", user.getName());
-				mav.setViewName("redirect:/");
-			}else {
-				mav.setViewName("User/Login");
-				/*response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('로그인 정보를 확인해주세요.');</script>");
-				out.flush();
-				*/
+			String savePage = (String)session.getAttribute("savePage");
+			System.out.println("@#$%^&*()@#$%^&*세이브페이지"+savePage);
+			if(savePage!=null) {
+				mav.setViewName("redirect:/"+savePage);
+				session.setAttribute("savePage", null);
+				return mav;
 			}
+			mav.setViewName("redirect:/");
+		}else {
+			mav.setViewName("User/Login");
+			/*response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('로그인 정보를 확인해주세요.');</script>");
+			out.flush();
+			*/
+		}
           /*  session.setAttribute("admin_userid", dto.getUserid());
 			session.setAttribute("admin_name", admin);*/
-		}	
+        }
 		return mav;	
 	}
 	@RequestMapping("member/logout.do")
@@ -190,5 +207,68 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 		return String.valueOf(result).trim();
         
 	}
+	
+	@Autowired
+	private EmailSender emailSender;
+	@Autowired
+	private Email email;
+	@ResponseBody
+	@RequestMapping("member/sendpw.do")
+	public Map<String,Object> sendEmailAction (MemberDTO dto) throws Exception {
+		
+		Map<String,Object> resultData = new HashMap<String,Object>();
+		
+		String userid=dto.getUserid();
+		String u_email=dto.getEmail();
+		
+		System.out.println("오징어@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+userid);
+		System.out.println("오징어@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+u_email);
+		
+		//아이디, 이메일 일치 시..
+		if(memberService.checkMemberByUserIdAndEmail(dto)==1) {//아이디, 이메일 일치확인
+			String newPw=getNewPw();//새로 생성된 비밀번호10자리
+			String encryptNewPassword=passwordEncoder.encode(newPw);
+			dto.setPasswd(encryptNewPassword);
+			
+			if(memberService.MailUpdateUserPw(dto)==1) {//새로생성된 비밀번호 db 업데이트 성공 시..
+				System.out.println(newPw);
+				email.setContent("비밀번호는 "+newPw+" 입니다.");
+				email.setReceiver(u_email);
+				email.setSubject(userid+"님 비밀번호 찾기 메일입니다.");
+				emailSender.SendEmail(email);
+				
+				resultData.put("code", "1");
+				resultData.put("message", "새로운 비밀번호 이메일로 전송되었습니다.");
+				
+			}else {
+				//여기는 혹시라도 db에 update가 실패 했을경우 처리코드..
+			}
+				
+		}else {//아이디, 이메일 불 일치 시..
+			resultData.put("code", "0");
+			resultData.put("message", "아이디 또는 이메일을 확인해주세요.");
+		
+		}
+		return resultData;
+			
+	}
+	    
+	//임시비밀번호 생성기
+	public String getNewPw() {
+		String pw = "";
+	
+		String tokenArray[] = {
+				"A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+				"K", "L", "M", "O", "P", "R", "S", "T", "U", "X",
+				"Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7",
+				"8", "9"
+		};
+		for (int i = 0; i < 10; i++) {
+			int idx = (int) (Math.random() * tokenArray.length);
+			pw += (tokenArray[idx]);
+		}
+		return pw;
+	}
+	
 	
 }

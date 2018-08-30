@@ -58,4 +58,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--   <update id="update_pw" parameterType="member">
 		update member set pw = #{pw} where id = #{id}
 	</update> -->
+	<select id="checkMemberByUserIdAndEmail"
+	parameterType="jun.st.ex.Persistence.DTO.MemberDTO"
+	resultType="Integer">
+		select count(*)
+		from member
+		where userid=#{userid} and email=#{email}
+	</select>
+	
+	<update id="MailUpdateUserPw" parameterType="jun.st.ex.Persistence.DTO.MemberDTO">
+		update member
+  		set passwd=#{passwd}
+  		where userid=#{userid} and email=#{email}
+	</update>
+	
 </mapper>

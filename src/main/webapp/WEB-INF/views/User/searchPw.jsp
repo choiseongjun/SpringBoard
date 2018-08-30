@@ -12,14 +12,20 @@
 	$(function(){
 		$("#findBtn").click(function(){
 			$.ajax({
-				url : "{path}/member/find_pw.do",
+				url : "${path}/member/sendpw.do",
 				type : "POST",
 				data : {
-					id : $("#userid").val(),
+					userid : $("#userid").val(),
 					email : $("#email").val()
 				},
 				success : function(result) {
-					alert(result);
+					
+					if(result.code == "1"){
+						alert(result.message);
+						location.href = "${path}/member/Login.do";
+					}else{
+						alert(result.message);
+					}
 				},
 			})
 		});

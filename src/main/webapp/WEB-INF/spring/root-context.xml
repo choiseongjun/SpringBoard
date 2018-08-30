@@ -40,8 +40,8 @@
         <property name="host" value="smtp.gmail.com" />
         <property name="port" value="587" />
         <property name="defaultEncoding" value="utf-8"/>
-        <property name="username" value="구글이메일@gmail.com" />
-        <property name="password" value="구글비밀번호" />
+        <property name="username" value="choisjjunjun2702@gmail.com" />
+        <property name="password" value="tjdwns2702!" />
         
         <property name="javaMailProperties">
             <props>
@@ -54,7 +54,7 @@
      
     <bean id="email" class="jun.st.ex.Persistence.DTO.Email">
     </bean>
-    <bean id="emailSender" class="jun.st.ex.Util.EmailSender">
-    </bean>
+  <!--   <bean id="emailSender" class="jun.st.ex.Controller.EmailSender">
+    </bean> -->
 
 </beans>

@@ -17,4 +17,6 @@ public interface MemberService {
 	public String findId(String name,String email);
 	public boolean getUser(String userid);
 	/*public int update_pw(MemberDTO member) throws Exception;*/
+	public int checkMemberByUserIdAndEmail(MemberDTO dto);
+	public int MailUpdateUserPw(MemberDTO dto);
 }

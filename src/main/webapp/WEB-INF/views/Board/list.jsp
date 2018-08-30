@@ -179,9 +179,9 @@ $(function(){
 	$('#pageBlock td a').eq(0).css('color','red');//처음 페이지1 글자색 빨간색 초기화
 	
 });
-function HaveLogin(){
+/* function HaveLogin(){
 	alert("로그인을 해야만 이용가능합니다");
-}
+} */
 </script>
 
 <style>
@@ -288,12 +288,9 @@ function HaveLogin(){
 	</tfoot>
 
 </table>
-<c:if test="${sessionScope.userid ==null }">
-<button type="button" id="btnWrite" align="right" onclick="HaveLogin()">글쓰기</button>
-</c:if>
-<c:if test="${sessionScope.userid !=null }">
-<input type="button" class="btn btn-primary" id="btnWrite" align="right">글쓰기</button>
-</c:if>
+
+<input type="button" class="btn btn-primary" id="btnWrite" align="center" value="글쓰기"></button>
+
 
 <table id = "totalCount" class="table table-dark"><th>${map.count}개의 게시물이 있습니다.</th></table> 
 

@@ -23,14 +23,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			HttpSession session=request.getSession();
 			
 		String path = request.getRequestURI().substring(request.getContextPath().length());
-			//세션이 없으면(로그인되지 않은 상태)
+		System.out.println("!@#$%^&*()!@#$%^&*(!@#$%^&*"+path);	
+		//세션이 없으면(로그인되지 않은 상태)
 			if(session.getAttribute("userid") == null) {
-	
-				//login 페이지로 이동
 				
+				session.setAttribute("savePage", path);//로그인 후  가야할 요청 페이지 저장.
+				
+				//login 페이지로 이동 
 				response.sendRedirect(request.getContextPath()
 						+"/member/Login.do?message=nologin");
-				
+					
 				return false; //메인 액션으로 가지 않음
 			}else {
 				
