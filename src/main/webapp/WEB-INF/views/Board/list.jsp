@@ -10,14 +10,23 @@
 
 $(function(){
 	$("#btnWrite").click(function(){
+		
 		location.href="${path}/board/write.do";
 	});
+	
+	//검색버튼클릭
+	$("#searchButton").click(function(){
+		var search_option = $('#searchOption').val();//현재검색옵션
+		var keyword = $('#keyword').val();//현재검색키워드
+		list(1,search_option,keyword);//리스트 호출
+	});
 });
-function list(curPage){
+function list(curPage,search_option,keyword){
 //	location.href="${path}/board/list.do?curPage="+page;
 	$.ajax({
 		  method: "GET",
-		  url: "${path}/board/ajaxList.do?curPage="+curPage,
+		  url: "${path}/board/ajaxList.do?curPage="+curPage+"&search_option="
+				  +search_option+"&keyword="+keyword,
 		  success : function(data) {
 			  
 				$("#ajaxTest").empty();
@@ -46,6 +55,7 @@ function list(curPage){
 				  
 			  });
 			  $("#ajaxTest").append(str);
+			  $("#totalCount th").html(data.count+"개의 게시물이 있습니다.");
 			  
 		  },
 		  fail : function(e) {
@@ -73,14 +83,9 @@ format = function date2str(x, y) {
 }
 
 
-var curpage = 1;
 var totalBoardCount = ${map.count}; //현재 게시글 총 개수
 /* var pageSize = 10; //페이지블럭개수  */
 var totalPage = Math.ceil(totalBoardCount/10);
-//전체페이지수 
-  
-
-pageSize=Math.ceil(curpage/totalBoardCount);
 var p = 1;//다음에 뿌릴 페이지 시작
 
 function changePageClickEvent(){
@@ -89,10 +94,13 @@ function changePageClickEvent(){
 		$(this).css('color','red');//선택한 페이지 번호 빨간색으로 바꿔주기.
 		
 		var pageNumber = $(this).attr('data-pageNumber');//선택한 페이지 번호 가져오기
-		list(pageNumber);//리스트 호출
+		var search_option = $('#searchOption').val();//현재검색옵션
+		var keyword = $('#keyword').val();
+		
+		list(pageNumber,search_option,keyword);//리스트 호출
 	});
 	
-}
+} 
 function makeBeforePage(){
 	p = p-10;
 	
@@ -147,8 +155,8 @@ function makeNextPage(){
 }
 
 $(function(){
-	 
-	list(1);
+	
+	list(1,'','');//처음페이지는모든글
 	
 	var str = "";
 	str += "<td colspan='5' align='center'>";
@@ -171,6 +179,9 @@ $(function(){
 	$('#pageBlock td a').eq(0).css('color','red');//처음 페이지1 글자색 빨간색 초기화
 	
 });
+function HaveLogin(){
+	alert("로그인을 해야만 이용가능합니다");
+}
 </script>
 
 <style>
@@ -184,9 +195,9 @@ $(function(){
 <h2 color="red" align="middle">게시판</h2>
 
 <!-- 검색폼 -->
-<form name="form1" method="post"
-	action="${path}/board/list.do">
-	<select name="search_option">
+<%-- <form name="form1" method="post"
+	action="${path}/board/ajaxList.do"> --%>
+	<select id = "searchOption" name="search_option">
 		<option value="name"
 <c:if test="${map.search_option == 'name'}">selected</c:if>
 		>이름</option>
@@ -200,9 +211,9 @@ $(function(){
 <c:if test="${map.search_option == 'all'}">selected</c:if>
 		>이름+내용+제목</option>
 	</select>
-	<input name="keyword" value="${map.keyword}">
-	<input type="submit" value="조회">
-</form>
+	<input id = "keyword" value="${map.keyword}">
+	<input type="button" id = "searchButton" value="조회">
+<!-- </form> -->
 
 
  <table class="table table-dark">
@@ -277,8 +288,14 @@ $(function(){
 	</tfoot>
 
 </table>
-<button type="button" id="btnWrite" align="right">글쓰기</button>
-<table class="table table-dark"><th>${map.count}개의 게시물이 있습니다.</th></table> 
+<c:if test="${sessionScope.userid ==null }">
+<button type="button" id="btnWrite" align="right" onclick="HaveLogin()">글쓰기</button>
+</c:if>
+<c:if test="${sessionScope.userid !=null }">
+<input type="button" class="btn btn-primary" id="btnWrite" align="right">글쓰기</button>
+</c:if>
+
+<table id = "totalCount" class="table table-dark"><th>${map.count}개의 게시물이 있습니다.</th></table> 
 
 </body>
 </html>

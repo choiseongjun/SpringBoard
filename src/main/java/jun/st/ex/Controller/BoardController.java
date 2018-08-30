@@ -28,7 +28,7 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-	@RequestMapping("list.do") //세부적인 url pattern
+	/*@RequestMapping("list.do") //세부적인 url pattern
 	public ModelAndView list(
 @RequestParam(defaultValue="name") String search_option,
 @RequestParam(defaultValue="") String keyword,
@@ -54,6 +54,19 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		
 		mav.setViewName("Board/list"); //포워딩할 뷰의 이름
 		mav.addObject("map", map); //ModelAndView에 map을 저장
+		return mav; // board/list.jsp로 이동
+	}*/
+	
+	@RequestMapping("list.do") //세부적인 url pattern
+	public ModelAndView list() throws Exception{
+		ModelAndView mav=new ModelAndView();
+		//레코드 갯수 계산
+		int count=boardService.countArticle("name","");
+		HashMap<String,Object> map=new HashMap<>();
+		map.put("count", count);
+		mav.addObject("map", map); //ModelAndView에 map을 저장
+		mav.setViewName("Board/list"); //포워딩할 뷰의 이름
+		
 		return mav; // board/list.jsp로 이동
 	}
 	
@@ -113,7 +126,7 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		String writer=(String)session.getAttribute("userid");
 		String adminwriter=(String)session.getAttribute("admin_userid");
 		dto.setWriter(writer);
-		dto.setWriter(adminwriter);
+		/*dto.setWriter(adminwriter);*/
 		//레코드 저장
 		boardService.create(dto);
 		//게시물 목록으로 이동

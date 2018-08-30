@@ -1,19 +1,23 @@
 package jun.st.ex.Controller;
 
-import java.lang.reflect.Member;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.Request;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import jun.st.ex.Persistence.DAO.AdminDAO;
@@ -28,6 +32,16 @@ public class MemberController {
 	MemberService memberService;
 	@Inject
 	AdminDAO adminDao;
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
+	
+	/*@RequestMapping(value = "/find_pw.do", method = RequestMethod.POST)
+	public void find_pw(@ModelAttribute MemberDTO member, HttpServletResponse response) throws Exception{
+		service.find_pw(response, member);
+	}*/
+
+	
+	
 	
 	@RequestMapping("member/list.do") //url mapping
 	public String memberList(Model model) {
@@ -46,37 +60,53 @@ public class MemberController {
 	}
 	@RequestMapping("member/insert.do")
 	public String insert(@ModelAttribute MemberDTO dto) {		
+		
+		
 		memberService.insertMember(dto);
 		return "redirect:/member/list.do";
 	}
+	
 	@RequestMapping("member/login_check.do")
 	public ModelAndView login_check(
-			MemberDTO dto, HttpSession session,ModelAndView mav,MemberDTO param,HttpServletRequest request) {
+			MemberDTO dto, HttpSession session,
+			ModelAndView mav,MemberDTO param,
+			HttpServletRequest request,HttpServletResponse response) {
 		
-		String name = memberService.loginCheck(dto);
-		String admin=adminDao.loginCheck(dto);
+	
+		request.getSession().setAttribute("TAATLoginId", param.getUserid());
 		
-		if (name != null || admin!=null) {
-			request.getSession().setAttribute("TAATLoginId", param.getUserid());
-            
-			SesssionEventListener listener = new SesssionEventListener();
-            request.getSession().setAttribute(param.getUserid(), listener);                
- 
-            session.setAttribute("admin_userid", dto.getUserid());
-			session.setAttribute("admin_name", admin);
+		SesssionEventListener listener = new SesssionEventListener();
+        request.getSession().setAttribute(param.getUserid(), listener);  
+		
+        MemberDTO user = memberService.loginCheck(dto);
+		
+      //암호화되지 않은 비밀번호(클라이언트에서 넘어온 값)
+		String userPasswd = dto.getPasswd();
+		//암호화된비밀번호(db에 저장되어진 값)
+		String userHashedPasswd = user.getPasswd();
+		//비밀번호 일치 검사, 일치하면  true
+		boolean loginResult = passwordEncoder.matches(userPasswd, userHashedPasswd);
+		
+		//로그인 시도하려는 아이디가 존재하면..
+		 if(user!=null) {
 			
-			session.setAttribute("userid", dto.getUserid());
-			session.setAttribute("name", name);
-			
-			System.out.println(dto.getUserid());
-			
-			
-			mav.setViewName("redirect:/");
-		}else {
-			mav.setViewName("User/Login");
-			mav.addObject("message", "error");
-		}
-		return mav;
+			//비밀번호 일치 시(로그인성공)
+			if(loginResult) {
+				session.setAttribute("userid", dto.getUserid());
+				session.setAttribute("name", user.getName());
+				mav.setViewName("redirect:/");
+			}else {
+				mav.setViewName("User/Login");
+				/*response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('로그인 정보를 확인해주세요.');</script>");
+				out.flush();
+				*/
+			}
+          /*  session.setAttribute("admin_userid", dto.getUserid());
+			session.setAttribute("admin_name", admin);*/
+		}	
+		return mav;	
 	}
 	@RequestMapping("member/logout.do")
 	public String logout(HttpSession session) {
@@ -92,19 +122,30 @@ public class MemberController {
 	}
 	@RequestMapping("member/update.do")
 	public String update(MemberDTO dto, Model model) {
+		
+		MemberDTO db = memberService.loginCheck(dto);
+		//암호화되지 않은 비밀번호(클라이언트에서 넘어온 값)
+		String userPasswd = dto.getPasswd();
+		//암호화된비밀번호(db에 저장되어진 값)
+		String userHashedPasswd = db.getPasswd();
+		//비밀번호 일치 검사, 일치하면  true
+		boolean loginResult = passwordEncoder.matches(userPasswd, userHashedPasswd);
+		
 		//비밀번호 체크
-		boolean result=
+/*		boolean result=
 memberService.checkPw(dto.getUserid(), dto.getPasswd());
-		if(result) { //비밀번호가 맞으면
+*/		
+		
+		if(loginResult) { //비밀번호가 맞으면
 			//회원정보 수정
 			memberService.updateMember(dto);
 			//수정 후 목록으로 이동
-			return "redirect:/member/view.do";
-		}else { //비밀번호가 틀리면
+			return "redirect:/";
+		}else  { //비밀번호가 틀리면
 			model.addAttribute("dto", dto);
 			model.addAttribute("join_date"
 , memberService.viewMember(dto.getUserid()).getJoin_date());
-			model.addAttribute("message", "비밀번호를 확인하세요.");
+			model.addAttribute("message", "회원정보가 수정되었습니다.");
 			return "User/UpdateUser"; //forward
 		}
 	}
@@ -123,5 +164,31 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 			return "member/view";
 		}
 	}
+	@RequestMapping("member/findid.do")
+	public String findid() {
+		return "User/find";
+	}
+	@RequestMapping("member/findpw.do")
+	public String findpw() {
+		return "User/searchPw";
+	}
+	@RequestMapping(value="member/findidimpl.do",method = RequestMethod.POST)
+		public @ResponseBody String findidImpl(String name,String email)throws Exception {
 
+		System.out.println(name+email);
+	String idlist = (String) memberService.findId(name,email);
+	
+		return idlist;
+		}
+	@ResponseBody
+    @RequestMapping(value="member/checkId.do",method = RequestMethod.POST)
+	 public String checkSignup(String userid, Model model) {
+		
+      System.out.println("아이디는ㄴ"+userid);
+        boolean result=memberService.getUser(userid);
+        System.out.println(result);
+		return String.valueOf(result).trim();
+        
+	}
+	
 }

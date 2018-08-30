@@ -1,10 +1,13 @@
 package jun.st.ex.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jun.st.ex.Persistence.DAO.MemberDAO;
@@ -15,14 +18,19 @@ public class MemberServiceImpl implements MemberService {
 	@Inject
 	MemberDAO memberDao;
 	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
+	
 	@Override
 	public List<MemberDTO> memberList() {
-		// TODO Auto-generated method stub
 		return memberDao.memberList();
 	}
 
 	@Override
 	public void insertMember(MemberDTO dto) {
+		String encryptPassword=passwordEncoder.encode(dto.getPasswd());
+		dto.setPasswd(encryptPassword);
+	
 		memberDao.insertMember(dto);
 
 	}
@@ -40,6 +48,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void updateMember(MemberDTO dto) {
+		//비번 바꿀때에도 해싱처리
+		String encryptPassword=passwordEncoder.encode(dto.getPasswd());
+		dto.setPasswd(encryptPassword);
 		memberDao.updateMember(dto);
 
 	}
@@ -50,8 +61,26 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String loginCheck(MemberDTO dto) {
+	public MemberDTO loginCheck(MemberDTO dto) {
+	
 		return memberDao.loginCheck(dto);
 	}
 
+	@Override
+	public String findId(String name, String email) {
+		return memberDao.findId(name, email);
+		
+	}
+
+	@Override
+	public boolean getUser(String userid) {
+		return memberDao.getUser(userid);
+	}
+
+	/*@Override
+	public int update_pw(MemberDTO member) throws Exception {
+		return memberDao.update_pw(member);
+	}*/
+
+	
 }

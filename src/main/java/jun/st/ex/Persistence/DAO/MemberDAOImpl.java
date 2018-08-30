@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import jun.st.ex.Persistence.DTO.MemberDTO;
 @Repository
@@ -57,9 +58,32 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public String loginCheck(MemberDTO dto) {
-		// TODO Auto-generated method stub
+	public MemberDTO loginCheck(MemberDTO dto) {
 		return sqlSession.selectOne("member.login_check",dto);
 	}
+
+	@Override
+	public String findId(String name, String email) {
+		Map<String,String> map=new HashMap<>();
+		map.put("name", name);
+		map.put("email",email);
+		return sqlSession.selectOne("member.findid",map);
+	}
+
+	@Override
+	public boolean getUser(String userid) {
+		boolean result=false;
+		Map<String,String> map=new HashMap<>();
+		map.put("id", userid);
+		int count=sqlSession.selectOne("member.getCheakId",userid);
+		if(count==1) result=true;
+		return result;
+	}
+	/*@Transactional
+	@Override
+	public int update_pw(MemberDTO member) throws Exception {
+		return sqlSession.update("member.update_pw", member);
+	}*/
+
 
 }

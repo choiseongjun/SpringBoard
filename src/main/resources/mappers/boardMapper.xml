@@ -99,12 +99,12 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 
  
 <insert id="replyInsertData">
-insert into board (bno,title,content,writer,ref,re_step,re_level) values
-( board_seq.nextval, #{title}, #{content}, #{writer},#{ref},#{re_step},#{re_level} )
+	insert into board (bno,title,content,writer,ref,re_step,re_level) values
+	( board_seq.nextval, #{title}, #{content}, #{writer},#{ref},#{re_step},#{re_level} )
 </insert>
 
 <update id="replyUpdateData" parameterType="jun.st.ex.Persistence.DTO.BoardDTO">
-update board set re_step=re_step+1 where ref=#{ref} and re_step > #{re_step}
+	update board set re_step=re_step+1 where ref=#{ref} and re_step > #{re_step}
 </update>
 
 </mapper>

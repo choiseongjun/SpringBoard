@@ -17,15 +17,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<select id="login_check" 
 	parameterType=
 		"jun.st.ex.Persistence.DTO.MemberDTO"
-	resultType="String">
+	resultType="jun.st.ex.Persistence.DTO.MemberDTO">
 		select * from member
-		where userid=#{userid} and passwd=#{passwd}	
+		where userid=#{userid}
 	</select>
 	
-	 <select id="checkPw" resultType="int">
-  	select count(*) 
-  	from member
-  	where  userid=#{userid} and passwd=#{passwd}
+	 <select id="checkPw" parameterType=
+		"jun.st.ex.Persistence.DTO.MemberDTO"
+	resultType="jun.st.ex.Persistence.DTO.MemberDTO">
+  select * from member
+		where userid=#{userid}
   </select>
    <select id="ViewUser"
   resultType="jun.st.ex.Persistence.DTO.MemberDTO">
@@ -43,4 +44,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from member
 		where userid=#{userid}
 	</delete>
+	<select id="findid" resultType="String" parameterType="java.util.Map" >
+		select userid
+		from member 
+		where name=#{name} and email=#{email}
+	</select>
+	 <select id="getCheakId" parameterType="String" resultType="Integer">
+        SELECT count(*) 
+        FROM member 
+        WHERE userid=#{userid}
+    </select>
+  
+<!--   <update id="update_pw" parameterType="member">
+		update member set pw = #{pw} where id = #{id}
+	</update> -->
 </mapper>

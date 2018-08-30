@@ -9,6 +9,13 @@
 </head>
 <body>
 <script>
+function findid(){
+	location.href = "${path}/member/findid.do";
+}
+function findPw(){
+	var win = window.open("${path}/member/findpw.do", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+	location.href = "${path}/member/findpw.do";
+}
 $(function(){
 	$("#btnLogin").click(function(){
 		var userid=$("#userid").val(); //태그의 value 속성값
@@ -31,13 +38,26 @@ $(function(){
 
 </script>
 <form name="form1" method="post">
-  <div class="form-group">
-    <input  class="form-control" id="userid" name="userid" aria-describedby="emailHelp" placeholder="Enter ID">
-  </div>
-  <div class="form-group">
-    <input type="password" class="form-control" id="passwd" name="passwd" >
-
-  	<input type="button" id="btnLogin" class="btn btn-primary" value="로그인하기">
+ <table width="400" border="0" bordercolor="gray" align="center" >
+ <tr height="40">
+						<td width="150"><font face="궁서체">아이디</font>
+						<input type="hidden" name="idDuplication" value="IdUncheck"></td>
+						<td width="250">
+								<input class="form-control" type="text" name="userid" id="userid" >	
+						</td>
+					</tr>
+						<tr height="40">
+						<td width="150"><font face="궁서체">패스워드</font></td>
+						<td width="250"><input class="form-control" type="password" name="passwd"  id="passwd" ></td>
+					</tr>
+					<tr height="40">
+						<td colspan="2">	
+					<input type="button" id="btnLogin" class="btn btn-primary" value="로그인하기">
+  					<input type="button" class="btn btn-primary" onclick="findid()"  value="id찾기">
+  					<input type="button" class="btn btn-primary" onclick="findPw()"  value="비번찾기">
+  						</td>
+  					</tr>
+</table>
 </form>
 </body>
 </html>

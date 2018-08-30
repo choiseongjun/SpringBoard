@@ -1,8 +1,8 @@
 package jun.st.ex.Service;
 
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 
 import jun.st.ex.Persistence.DTO.MemberDTO;
 
@@ -13,6 +13,8 @@ public interface MemberService {
 	public void deleteMember(String userid);
 	public void updateMember(MemberDTO dto);
 	public boolean checkPw(String userid, String passwd);
-	public String loginCheck(MemberDTO dto);
-	
+	public MemberDTO loginCheck(MemberDTO dto);
+	public String findId(String name,String email);
+	public boolean getUser(String userid);
+	/*public int update_pw(MemberDTO member) throws Exception;*/
 }
