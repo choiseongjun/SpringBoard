@@ -71,5 +71,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		set passwd=#{passwd}
   		where userid=#{userid} and email=#{email}
 	</update>
-	
+	<select id="getUserPw"
+	parameterType="String"
+	resultType="String">
+		select passwd
+		from member
+		where userid=#{userid}
+	</select>
+	<update id="UpdateNewPassword" parameterType="hashmap">
+		update member
+  		set passwd=#{newPW}
+  		where userid=#{userid}
+	</update>
 </mapper>

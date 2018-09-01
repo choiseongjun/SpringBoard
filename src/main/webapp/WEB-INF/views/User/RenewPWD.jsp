@@ -29,8 +29,27 @@ function passwordCheckFunction(){
 
 	 $(document).ready(function(){
 		 $("#btnUpdate").click(function(){
-				document.form1.action="${path}/member/update.do";
-				document.form1.submit();
+			 var beforePW = $('#passwd').val();
+			 var newPW = $('#passwd1').val();
+			 
+			 $.ajax({
+				 url:'${path}/member/update.do',//날릴주소
+				 type:'post',//post get 등등 타입
+				 data:{'beforePW':beforePW,'newPW':newPW},//서버로 날려줄 데이터
+				 success:function(data){//서버에서 요청 잘 처리되면 return되는 것이 data에 꽃힘
+					 if(data==1){
+						 //alert(data.message);
+						 window.close();//이거 왜 안먹지;
+					 }else{
+						 alert(data.message);
+					 }
+				 },
+				 error:function(e){//ajax통신하다가 에러나면 이 자식이 실행 됨
+
+				 }
+			 });
+				/* document.form1.action="${path}/member/update.do";
+				document.form1.submit(); */
 			})
 		 });
 

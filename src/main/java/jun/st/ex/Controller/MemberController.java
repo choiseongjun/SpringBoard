@@ -144,10 +144,33 @@ public class MemberController {
 		// view.jsp에 포워딩
 		return "User/RenewPWD";
 	}
+	
+	@ResponseBody
 	@RequestMapping("member/update.do")
-	public String update(MemberDTO dto, Model model) {
+	public Map<String,String> update(String beforePW, String newPW,HttpSession session) {
+		Map<String,String> returnData = new HashMap<String,String>();
+				
+		String userid=(String)session.getAttribute("userid");
+		String dbPW = memberService.getUserPW(userid);
+		boolean result = passwordEncoder.matches(beforePW, dbPW);
 		
-		MemberDTO db = memberService.loginCheck(dto);
+		
+		if(result) {//이전 암호가 일치하면
+			Map<String,String> data = new HashMap<String,String>();
+			data.put("userid", userid);
+			data.put("newPW", passwordEncoder.encode(newPW));
+			memberService.UpdateNewPassword(data);//비밀번호 업데이트
+			
+			returnData.put("code", "1");
+			returnData.put("message", "비밀번호가 변경되었습니다 :)");
+		}else {// 이전 암호와 일치하지 않으면
+			returnData.put("code", "0");
+			returnData.put("message", "비밀번호를 확인해주세요 :(");
+		}
+		
+		return returnData;
+		
+	/*	MemberDTO db = memberService.loginCheck(dto);
 		//암호화되지 않은 비밀번호(클라이언트에서 넘어온 값)
 		String userPasswd = dto.getPasswd();
 		//암호화된비밀번호(db에 저장되어진 값)
@@ -155,9 +178,9 @@ public class MemberController {
 		//비밀번호 일치 검사, 일치하면  true
 		boolean loginResult = passwordEncoder.matches(userPasswd, userHashedPasswd);
 		//비밀번호 체크
-/*		boolean result=
+		boolean result=
 memberService.checkPw(dto.getUserid(), dto.getPasswd());
-*/		
+		
 	if(db!=null) {
 		if(loginResult) { //비밀번호가 맞으면
 			//회원정보 수정
@@ -172,7 +195,7 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 			return "User/UpdateUser"; //forward
 		}
 	}
-	return userHashedPasswd;
+	return userHashedPasswd;*/
 }
 	@RequestMapping("member/delete.do")
 	public String delete(String userid,

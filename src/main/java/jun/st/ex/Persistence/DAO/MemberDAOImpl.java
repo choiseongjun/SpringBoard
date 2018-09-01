@@ -96,5 +96,15 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.update("member.MailUpdateUserPw",dto);
 	}
 
+	@Override
+	public String getUserPW(String userid) {
+		return sqlSession.selectOne("member.getUserPw",userid);
+	}
+
+	@Override
+	public int UpdateNewPassword(Map<String, String> data) {
+			return sqlSession.update("member.UpdateNewPassword",data);
+	}
+
 
 }

@@ -69,18 +69,25 @@ return false;
 	document.form1.submit();
 	alert("회원 가입 완료하였습니다");
 }
-
+document.duplicate=function(e){
+	var act=document.duplicate.idDuplication;
+	if(!idDuplication.onclick){
+		alert("버튼을 눌러주세요");
+		act.focus();
+		return false;
+	}
+}
 </script>
 <body>
-<form name="form1" method="post" onsubmit="emailCheck();"
+<form name="form1" method="post" onsubmit="emailCheck();" name="duplicate"
 	>
   <table width="400" border="0" bordercolor="gray" align="center" >
 					<tr height="40">
-						<td width="150"><font face="궁서체">아이디</font><button type="button"  class="btn btn-default" id="checkbtn" >중복확인</button>
-						<input type="hidden" name="idDuplication" value="IdUncheck"></td>
+						<td width="150"><font face="궁서체">아이디</font><button type="button"  class="btn btn-default" id="checkbtn"  >중복확인</button>
+						</td>
 						<td width="250">
 								<input class="form-control" type="text" name="userid" id="userid" >	
-						</td>
+						</td><input type="hidden" name="idDuplication" value="IdUncheck">
 					</tr>
 						<tr height="40">
 						<td width="150"><font face="궁서체">패스워드</font></td>
@@ -100,12 +107,11 @@ return false;
 					</tr>
 						<tr height="40">
 						<td colspan="2">	
-						<input type="submit" class="btn btn-primary" value="가입하기">
+						<input type="submit" class="btn btn-primary" id="checkbtn" value="가입하기">
 					</td>
 					</tr>
 					<tr>
-				
-				
+			
 				<div id = "showdata" style = "text-align: center"></div>
 			</tr>
 						<td style="text-align:left" colspan="3"><h5 style="color:red;" id="passwordCheckMessage"></h5></td>

@@ -39,24 +39,33 @@ $(document).on('click','#findId',function(){
 <body>
 <div id="content">
 <center>
-
-<table border="1" width="400px" style="margin-top: 100px">
-	<tr>
-		<td>이름</td>
-		<td><input type="text" name="name" id="name" ></td>
-		</tr>
-		<tr>
-			<td>휴대폰번호</td>
-			<td><input type="text" name="email" id="email"></td>
-		</tr>
-	<tr>
-	<td colspan="2"><button id="findId">아이디 찾기</button></td>
-	</tr>
+<div class="w3-content w3-container w3-margin-top">
+		<div class="w3-container w3-card-4">
+			<div class="w3-center w3-large w3-margin-top">
+				<h3>아이디 찾기</h3>
+			</div>
+			<div>
+				<p>
+					<label>ID</label>
+					<input class="w3-input" type="text" id="name" name="name" required>
+				</p>
+				<p>
+					<label>Email</label>
+					<input class="w3-input" type="text" id="email" name="email" required>
+				</p>
+			</div>
+		</div>
+	</div>
+			<button id="findId">아이디 찾기</button></td>
+	
 	<td>${udto.userid }</td>
 	<span id="useridlist"></span>
 		</table>
 		</center>
 		</div>
+	</div>
+		</div>
+	
 </body>
 
 </html>

@@ -38,7 +38,7 @@ function list(curPage,search_option,keyword){
 				str+='<td>';
 				str+='<a href="${path}/board/view.do?bno=' + e.bno + '">';
 				 
-				for(var i = 1;i<=e.level;i++){
+				for(var i = 1;i<e.depth;i++){
 					str+='re: '
 				}
 				str+=e.title;

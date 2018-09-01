@@ -20,14 +20,14 @@ public class EmailSender  {
      
     public void SendEmail(Email email) throws Exception {
     	
-    	if(mailSender == null) {
+    	/*if(mailSender == null) {
     		System.out.println("널널널널널널널널널널널널널널널널@#$%^)$%^&*(널널널널널널");
     	}else {
     		System.out.println("나는 메일 센더다@#$%^&*()"+mailSender);
     	}
     	
     	
-        System.out.println(email);
+        System.out.println(email);*/
         MimeMessage msg = mailSender.createMimeMessage();//에러지점
         try {
              

@@ -87,6 +87,16 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.MailUpdateUserPw(dto);
 	}
 
+	@Override
+	public String getUserPW(String userid) {
+		return memberDao.getUserPW(userid);
+	}
+
+	@Override
+	public int UpdateNewPassword(Map<String, String> data) {
+		return memberDao.UpdateNewPassword(data);
+	}
+
 	/*@Override
 	public int update_pw(MemberDTO member) throws Exception {
 		return memberDao.update_pw(member);

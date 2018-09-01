@@ -20,4 +20,6 @@ public interface MemberDAO {
 	/* public int update_pw(MemberDTO member) throws Exception;*/
 	 public int checkMemberByUserIdAndEmail(MemberDTO dto);
 	 public int MailUpdateUserPw(MemberDTO dto);
+	 public String getUserPW(String userid);
+	 public int UpdateNewPassword(Map<String, String> data);
 }
