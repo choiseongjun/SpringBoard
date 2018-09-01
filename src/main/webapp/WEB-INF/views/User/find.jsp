@@ -23,7 +23,6 @@ $(document).on('click','#findId',function(){
        data:postData,
         success:function(data){
         	var useridlist = data.userid;
-       
         	var useridfind = useridlist;
        	 		 $("#useridlist").append("<h1>"+"회원님의 정보로 등록된 아이디는 : "+data+" 입니다.</h1>")
 				alert("회원님의 아이디는"+data);

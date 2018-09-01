@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
 <mapper namespace="board">
 	<insert id="insert">
-		insert into board (bno,title,content,writer,ref,re_step,re_level) values
-		( board_seq.nextval, #{title}, #{content}, #{writer},board_seq.nextval,0,0 )
+		insert into board (bno,title,content,writer,ref,ref_group) values
+		( board_seq.nextval, #{title}, #{content}, #{writer},0,board_seq.nextval )
 	</insert>
 	<!-- 첨부파일 정보 저장 -->	
 	<insert id="addAttach">
@@ -17,11 +17,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listAll"
 resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 		<include refid="paging_header" />
-			select bno,title,writer,name,regdate,viewcnt,show,ref,re_step,re_level
+			select bno,title,writer,name,regdate,viewcnt,show,ref,ref_group
   			 ,(select count(*) from reply where bno=b.bno) cnt			
 			from board b, member m
 			<include refid="search" />
-			order by  ref desc, re_step asc
+			
 		<include refid="paging_footer" />
 	</select>
 	<sql id="paging_header">
@@ -32,7 +32,12 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 	</sql>
 	<sql id="paging_footer">
 		    ) A
-		) where rn between #{start} and #{end} 	
+		) 
+		where rn between #{start} and #{end} 
+			 start with ref= 0
+			 connect by prior bno=ref 
+			 order siblings by ref_group desc
+		 	
 	</sql>
 	
 <!-- 레코드 갯수 계산 -->	
@@ -99,12 +104,12 @@ resultType="jun.st.ex.Persistence.DTO.BoardDTO">
 
  
 <insert id="replyInsertData">
-	insert into board (bno,title,content,writer,ref,re_step,re_level) values
-	( board_seq.nextval, #{title}, #{content}, #{writer},#{ref},#{re_step},#{re_level} )
+	insert into board (bno,title,content,writer,ref,ref_group) values
+	( board_seq.nextval, #{title}, #{content}, #{writer},#{ref},#{ref_group} )
 </insert>
 
 <update id="replyUpdateData" parameterType="jun.st.ex.Persistence.DTO.BoardDTO">
-	update board set re_step=re_step+1 where ref=#{ref} and re_step > #{re_step}
+	update board set ref_group=ref_group+1 where ref=#{ref}
 </update>
 
 </mapper>

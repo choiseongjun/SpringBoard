@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -153,26 +155,18 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		return boardService.getAttach(bno);
 	}
 	@RequestMapping(value="/reply.b",method=RequestMethod.GET)
-	public String replyForm(int ref,int re_step,int re_level,Model model) {
+	public String replyForm(int ref,int ref_group,Model model) {
 		//BoardDTO board = boardService.replyForm(num);이거 필요 없음
 		model.addAttribute("ref",ref);
-		model.addAttribute("re_step",re_step);
-		model.addAttribute("re_level",re_level);
+		model.addAttribute("ref_group",ref_group);
 		return "Board/replyForm";
 	}
 	@RequestMapping(value="/replyInsert.b",method=RequestMethod.POST)
 	public String replyForm(BoardDTO dto, HttpSession session) {
-		boardService.replyUpdate(dto);
-		dto.setRe_step(dto.getRe_step()+1);
-		dto.setRe_level(dto.getRe_level()+1);
+		//boardService.replyUpdate(dto);//나중에 서비스부터 해서 다 날려버릴 것..
+		
 		String writer=(String)session.getAttribute("userid");
 		dto.setWriter(writer);
-		System.out.println("!@#$%^&*()알이에프"+dto.getRef());
-		System.out.println("!@#$%^&*()스텝"+dto.getRe_step());
-		System.out.println("!@#$%^&*()레벨"+dto.getRe_level());
-		System.out.println("!@#$%^&*()타이틀"+dto.getTitle());
-		System.out.println("!@#$%^&*()콘텐츠"+dto.getContent());
-		System.out.println("!@#$%^&*()라이터"+dto.getWriter());
 		boardService.replyInsert(dto);
 		return "redirect:/board/list.do";
 	}

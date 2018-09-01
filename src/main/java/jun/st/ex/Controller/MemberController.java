@@ -137,6 +137,13 @@ public class MemberController {
 		// view.jsp에 포워딩
 		return "User/UpdateUser";
 	}
+	@RequestMapping("member/viewPWD.do")
+	public String viewuserPassword(@RequestParam String userid, Model model) {
+		// 모델에 저장
+		model.addAttribute("dto", memberService.viewMember(userid));
+		// view.jsp에 포워딩
+		return "User/RenewPWD";
+	}
 	@RequestMapping("member/update.do")
 	public String update(MemberDTO dto, Model model) {
 		
@@ -147,30 +154,38 @@ public class MemberController {
 		String userHashedPasswd = db.getPasswd();
 		//비밀번호 일치 검사, 일치하면  true
 		boolean loginResult = passwordEncoder.matches(userPasswd, userHashedPasswd);
-		
 		//비밀번호 체크
 /*		boolean result=
 memberService.checkPw(dto.getUserid(), dto.getPasswd());
 */		
-		
+	if(db!=null) {
 		if(loginResult) { //비밀번호가 맞으면
 			//회원정보 수정
 			memberService.updateMember(dto);
 			//수정 후 목록으로 이동
 			return "redirect:/";
-		}else  { //비밀번호가 틀리면
+		}else  { //비밀번호가 틀리면 
 			model.addAttribute("dto", dto);
 			model.addAttribute("join_date"
-, memberService.viewMember(dto.getUserid()).getJoin_date());
+					,memberService.viewMember(dto.getUserid()).getJoin_date());
 			model.addAttribute("message", "회원정보가 수정되었습니다.");
 			return "User/UpdateUser"; //forward
 		}
 	}
+	return userHashedPasswd;
+}
 	@RequestMapping("member/delete.do")
-	public String delete(
-			String userid, String passwd, Model model,HttpSession session) {
-		boolean result=memberService.checkPw(userid, passwd);
-		if(result) { //비번이 맞으면 삭제 =>세션 끊고=> 목록으로 이동
+	public String delete(String userid,
+			MemberDTO dto, Model model,HttpSession session) {
+		/*boolean result=memberService.checkPw(userid, passwd);*/
+		 //암호화되지 않은 비밀번호(클라이언트에서 넘어온 값)
+		   MemberDTO user = memberService.loginCheck(dto);
+		String userPasswd = dto.getPasswd();
+		//암호화된비밀번호(db에 저장되어진 값)
+		String userHashedPasswd = user.getPasswd();
+		//비밀번호 일치 검사, 일치하면  true
+		boolean loginResult = passwordEncoder.matches(userPasswd, userHashedPasswd);
+		if(loginResult) { //비번이 맞으면 삭제 =>세션 끊고=> 목록으로 이동
 			memberService.deleteMember(userid);
 			session.invalidate();
 			return "redirect:/";
@@ -178,7 +193,7 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 			model.addAttribute("message","비밀번호를 확인하세요.");
 			model.addAttribute(
 					"dto", memberService.viewMember(userid));
-			return "member/view";
+			return "User/UpdateUser";
 		}
 	}
 	@RequestMapping("member/findid.do")
@@ -221,8 +236,6 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 		String userid=dto.getUserid();
 		String u_email=dto.getEmail();
 		
-		System.out.println("오징어@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+userid);
-		System.out.println("오징어@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+u_email);
 		
 		//아이디, 이메일 일치 시..
 		if(memberService.checkMemberByUserIdAndEmail(dto)==1) {//아이디, 이메일 일치확인
@@ -238,7 +251,7 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 				emailSender.SendEmail(email);
 				
 				resultData.put("code", "1");
-				resultData.put("message", "새로운 비밀번호 이메일로 전송되었습니다.");
+				resultData.put("message", "새로운 임시 비밀번호가 이메일로 전송되었습니다.");
 				
 			}else {
 				//여기는 혹시라도 db에 update가 실패 했을경우 처리코드..

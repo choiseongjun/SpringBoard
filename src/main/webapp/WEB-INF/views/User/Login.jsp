@@ -24,7 +24,7 @@ $(function(){
 			alert("아이디를 입력하세요.");
 			$("#userid").focus(); //입력 포커스 이동
 			return; //함수 종료
-		}
+		} 
 		if(passwd==""){
 			alert("비밀번호를 입력하세요.");
 			$("#passwd").focus();

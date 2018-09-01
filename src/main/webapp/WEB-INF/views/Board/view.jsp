@@ -255,9 +255,8 @@ CKEDITOR.replace("content",{
 	 <c:if test="${sessionScope.userid != null }">
 	 	<textarea rows="5" cols="80" id="replytext"
 	 		placeholder="댓글을 작성하세요"></textarea>
-	 	<br>
-	 	<button type="button" id="btnReply">댓글쓰기</button>
-	 	<input type="button" value="답글쓰기"  onclick="location.href='reply.b?ref=${dto.ref}&re_step=${dto.re_step}&re_level=${dto.re_level}'">
+기</button>
+	 	<input type="button" value="답글쓰기"  onclick="location.href='reply.b?ref=${dto.bno}&ref_group=${dto.ref_group}'">
 	 </c:if>
 </div>
 <!-- 댓글 목록 -->

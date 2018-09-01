@@ -38,7 +38,7 @@ function list(curPage,search_option,keyword){
 				str+='<td>';
 				str+='<a href="${path}/board/view.do?bno=' + e.bno + '">';
 				 
-				for(var i = 1;i<=e.re_level;i++){
+				for(var i = 1;i<=e.level;i++){
 					str+='re: '
 				}
 				str+=e.title;
@@ -179,9 +179,9 @@ $(function(){
 	$('#pageBlock td a').eq(0).css('color','red');//처음 페이지1 글자색 빨간색 초기화
 	
 });
-/* function HaveLogin(){
+ function HaveLogin(){
 	alert("로그인을 해야만 이용가능합니다");
-} */
+} 
 </script>
 
 <style>
@@ -288,8 +288,12 @@ $(function(){
 	</tfoot>
 
 </table>
-
+<c:if test="${sessionScope.userid==null }">
+<input type="button" class="btn btn-primary" id="btnWrite" align="center" value="글쓰기" onclick="HaveLogin()"></button>
+</c:if>
+<c:if test="${sessionScope.userid!=null }">
 <input type="button" class="btn btn-primary" id="btnWrite" align="center" value="글쓰기"></button>
+</c:if>
 
 
 <table id = "totalCount" class="table table-dark"><th>${map.count}개의 게시물이 있습니다.</th></table> 

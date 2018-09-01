@@ -7,7 +7,7 @@
 		<td align="center" width="1000">
 		<%@ include file="../Header.jsp" %></td>
 		</tr>
- <script src="Register.js"></script>
+<!--  <script src="Register.js"></script> -->
  <script type="text/javascript">
  
  	
@@ -25,7 +25,9 @@
  		 })
  		 });
  	});
-
+ 	function btnPassUpdate(){
+ 		var win = window.open("${path}/member/viewPWD.do?userid=${userid}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=800,height=800");
+ 	}
 
  </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -34,7 +36,7 @@
 <body>
  <div id="container">
 	<center>
-		<h2 style="margin-top: 200px">회원 가입 </h2>
+		<h2 style="margin-top: 200px">회원 정보 수정 </h2>
 		<form  method="post" name="form1">
 			<table width="400" border="1" bordercolor="gray">
 					<tr height="40">
@@ -45,7 +47,7 @@
 						</td>
 					</tr>
 						<tr height="40">
-						<td width="150">패스워드</td>
+						<td width="150">패스워드<input type="button" value="비밀번호 수정하기" onclick="btnPassUpdate()"></td>
 						<td width="250"><input class="form-control" type="password" name="passwd"  id="passwd"  onkeyup="passwordCheckFunction();" ></td>
 					</tr>
 						<tr height="40">

@@ -74,7 +74,7 @@ $(function(){
 <div align="center">
      <h1>답글쓰기</h1>
  <form id="form1" name="form1" method="post"
-action="${path}/board/replyInsert.b?ref=${ref}&re_step=${re_step}&re_level=${re_level}">
+action="${path}/board/replyInsert.b?ref=${ref}&ref_group=${ref_group}">
 
 	<div>제목 <input name="title" id="title" size="80"
 					placeholder="제목을 입력하세요">
