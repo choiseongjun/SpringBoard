@@ -14,7 +14,7 @@
  	$(function(){
  	 $(document).ready(function(){
  		 $("#btnUpdate").click(function(){
- 				document.form1.action="${path}/member/update.do";
+ 				document.form1.action="${path}/member/updatememberinfo.do";
  				document.form1.submit();
  			});
  		 $("#btnDelete").click(function(){
@@ -62,7 +62,7 @@
 						<td colspan="2"><input type="button" value="수정하기" id="btnUpdate"><input type="button" value="탈퇴하기" id="btnDelete">
 					<%-- 	<div style="color:red">${message}</div> --%></td>
 					</tr>
-						<td style="text-align:left" colspan="3"><h5 style="color:black;" id="passwordCheckMessage">${message}</h5></td>
+						<td style="text-align:left" colspan="3"><h5 style="color:red;" id="passwordCheckMessage">${message}</h5></td>
 				</table>
 		</form>
 	</center>

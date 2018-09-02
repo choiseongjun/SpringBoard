@@ -91,6 +91,11 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		ModelAndView mav=new ModelAndView();
 		HashMap<String,Object> map=new HashMap<>();
+		
+		for (BoardDTO boardDTO : list) {
+			boardDTO.setTitle(cleanXSS(boardDTO.getTitle()));//SXX
+		}
+		
 		map.put("list", list); //map에 자료 저장
 		map.put("count", count);
 		map.put("pager", pager); //페이지 네비게이션을 위한 변수
@@ -146,7 +151,11 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		boardService.increaseViewcnt(bno, session); 
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("Board/view"); //포워딩할 뷰의 이름
-		mav.addObject("dto", boardService.read(bno)); //자료 저장
+		
+		BoardDTO boardDTO = boardService.read(bno);
+		boardDTO.setTitle(cleanXSS(boardDTO.getTitle()));//SXX
+		
+		mav.addObject("dto", boardDTO); //자료 저장
 		return mav; //  views/board/view.jsp로 넘어가서 출력됨
 	} 
 	@RequestMapping("getAttach/{bno}")
@@ -170,4 +179,15 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		boardService.replyInsert(dto);
 		return "redirect:/board/list.do";
 	}
+	private String cleanXSS(String value) {
+			        //You'll need to remove the spaces from the html entities below
+			value = value.replaceAll("&", "&amp;");
+			value = value.replaceAll("<", "&lt;");
+			value = value.replaceAll(">", "&gt;");
+			value = value.replaceAll("\"", "&quot;");
+			value = value.replaceAll("\'", "&apos;");
+			value = value.replaceAll(" ","&nbsp;");
+			value = value.replaceAll("\n","<br>");
+			return value;
+		}
 }

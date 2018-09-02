@@ -48,9 +48,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void updateMember(MemberDTO dto) {
-		//비번 바꿀때에도 해싱처리
-		String encryptPassword=passwordEncoder.encode(dto.getPasswd());
-		dto.setPasswd(encryptPassword);
 		memberDao.updateMember(dto);
 
 	}

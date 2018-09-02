@@ -35,9 +35,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   where userid=#{userid}
   </select>
   
-  <update id="updateUser">
+  <update id="updateUser" parameterType="jun.st.ex.Persistence.DTO.MemberDTO">
   update member
-  set passwd=#{passwd},name=#{name},email=#{email}
+  set name=#{name},email=#{email}
   where userid=#{userid}
   </update>
   <delete id="deleteMember">

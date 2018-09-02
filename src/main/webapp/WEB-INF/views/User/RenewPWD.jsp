@@ -39,12 +39,12 @@ function passwordCheckFunction(){
 				 success:function(data){//서버에서 요청 잘 처리되면 return되는 것이 data에 꽃힘
 					 if(data==1){
 						 //alert(data.message);
-						 window.close();//이거 왜 안먹지;
+						 window.close();//수정하기
 					 }else{
 						 alert(data.message);
 					 }
 				 },
-				 error:function(e){//ajax통신하다가 에러나면 이 자식이 실행 됨
+				 error:function(e){
 
 				 }
 			 });

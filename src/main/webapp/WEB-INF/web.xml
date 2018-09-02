@@ -7,7 +7,7 @@
 		and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml
+		<param-value>/WEB-INF/spring/root-context.xml 
 					/WEB-INF/spring/spring-security.xml
 		</param-value>
 	</context-param>
@@ -46,8 +46,14 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-
-
+	<!-- <filter>
+	    <filter-name>XSS</filter-name>
+	    <filter-class>jun.st.ex.Util.CrossScriptingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>XSS</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping> -->
 
 	<error-page>
 		<error-code>404</error-code>

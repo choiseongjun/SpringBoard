@@ -51,7 +51,7 @@ public class AjaxUploadController {
 		method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
 		public ResponseEntity<String> uploadAjax(MultipartFile file) throws Exception {
 			// 업로드한 파일 정보와 Http 상태 코드를 함께 리턴
-			System.out.println("file");
+		
 			return new ResponseEntity<String>(
 					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()), HttpStatus.OK);
 		}

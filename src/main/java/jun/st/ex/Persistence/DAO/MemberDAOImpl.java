@@ -19,7 +19,7 @@ public class MemberDAOImpl implements MemberDAO {
 	SqlSession sqlSession;
 	@Override
 	public List<MemberDTO> memberList() {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.selectList("member.memberList");
 	}
 

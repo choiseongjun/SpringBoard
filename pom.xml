@@ -47,7 +47,12 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-
+<!-- lucy xss  -->
+<dependency>
+    <groupId>com.navercorp.lucy</groupId>
+    <artifactId>lucy-xss</artifactId>
+    <version>1.6.3</version> 
+</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>

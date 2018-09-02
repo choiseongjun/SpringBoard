@@ -73,7 +73,8 @@ public class MemberController {
 	public ModelAndView login_check(
 			MemberDTO dto, HttpSession session,
 			ModelAndView mav,MemberDTO param,
-			HttpServletRequest request,HttpServletResponse response) throws IOException {
+			HttpServletRequest request,HttpServletResponse response
+			) throws IOException {
 		
 		request.getSession().setAttribute("TAATLoginId", param.getUserid());
 		
@@ -105,7 +106,7 @@ public class MemberController {
 			session.setAttribute("name", user.getName());
 			
 			String savePage = (String)session.getAttribute("savePage");
-			System.out.println("@#$%^&*()@#$%^&*세이브페이지"+savePage);
+			
 			if(savePage!=null) {
 				mav.setViewName("redirect:/"+savePage);
 				session.setAttribute("savePage", null);
@@ -113,6 +114,7 @@ public class MemberController {
 			}
 			mav.setViewName("redirect:/");
 		}else {
+			mav.addObject("message","로그인 정보를 확인하세요");
 			mav.setViewName("User/Login");
 			/*response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -145,9 +147,37 @@ public class MemberController {
 		return "User/RenewPWD";
 	}
 	
+	@RequestMapping("member/updatememberinfo.do")
+	public String updatememberinfo(MemberDTO dto, Model model,MemberDTO param,
+			HttpSession session,HttpServletRequest request) {
+			MemberDTO db = memberService.loginCheck(dto);
+		//암호화되지 않은 비밀번호(클라이언트에서 넘어온 값)
+		String userPasswd = dto.getPasswd();
+		//암호화된비밀번호(db에 저장되어진 값)
+		String userHashedPasswd = db.getPasswd();
+		//비밀번호 일치 검사, 일치하면  true
+		boolean loginResult = passwordEncoder.matches(userPasswd, userHashedPasswd);
+		
+	if(db!=null) {
+		if(loginResult) { //비밀번호가 맞으면
+			//회원정보 수정
+			memberService.updateMember(dto);
+			//수정 후 목록으로 이동
+			return "redirect:/";
+		}else  { //비밀번호가 틀리면 
+			model.addAttribute("dto", dto);
+			model.addAttribute("join_date"
+					,memberService.viewMember(dto.getUserid()).getJoin_date());
+			model.addAttribute("message", "회원정보가 수정되었습니다.");
+			return "User/UpdateUser"; //forward
+		}
+	}
+	return userHashedPasswd;
+	}
+	
 	@ResponseBody
 	@RequestMapping("member/update.do")
-	public Map<String,String> update(String beforePW, String newPW,HttpSession session) {
+	public Map<String,String> updatememberpw(String beforePW, String newPW,HttpSession session) {
 		Map<String,String> returnData = new HashMap<String,String>();
 				
 		String userid=(String)session.getAttribute("userid");
@@ -239,9 +269,7 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
     @RequestMapping(value="member/checkId.do",method = RequestMethod.POST)
 	 public String checkSignup(String userid, Model model) {
 		
-      System.out.println("아이디는ㄴ"+userid);
         boolean result=memberService.getUser(userid);
-        System.out.println(result);
 		return String.valueOf(result).trim();
         
 	}
