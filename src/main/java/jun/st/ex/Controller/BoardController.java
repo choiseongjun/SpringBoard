@@ -30,7 +30,7 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-	/*@RequestMapping("list.do") //세부적인 url pattern
+	@RequestMapping("list.do") //세부적인 url pattern
 	public ModelAndView list(
 @RequestParam(defaultValue="name") String search_option,
 @RequestParam(defaultValue="") String keyword,
@@ -53,13 +53,13 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		map.put("pager", pager); //페이지 네비게이션을 위한 변수
 		map.put("search_option", search_option);
 		map.put("keyword",keyword); 
-		
 		mav.setViewName("Board/list"); //포워딩할 뷰의 이름
 		mav.addObject("map", map); //ModelAndView에 map을 저장
 		return mav; // board/list.jsp로 이동
-	}*/
+	}
 	
-	@RequestMapping("list.do") //세부적인 url pattern
+
+	/*@RequestMapping("list.do") //세부적인 url pattern
 	public ModelAndView list() throws Exception{
 		ModelAndView mav=new ModelAndView();
 		//레코드 갯수 계산
@@ -71,8 +71,8 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		
 		return mav; // board/list.jsp로 이동
 	}
-	
-
+	*/
+/*
 	@RequestMapping("ajaxList.do") //세부적인 url pattern
 	public @ResponseBody HashMap ajaxList(
 @RequestParam(defaultValue="name") String search_option,
@@ -104,7 +104,7 @@ boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		
 		return map; // board/list.jsp로 이동
 	}
-	
+	*/
 	
 	@RequestMapping("delete.do")
 	public String delete(int bno) throws Exception {
