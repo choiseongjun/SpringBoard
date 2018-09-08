@@ -56,7 +56,7 @@ function showReplyModify(rno){
 }
 </style>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
- <table class="table table-dark">
+ <table class="table table-dark" width="100%">
 <c:forEach var="row" items="${list}">   
 	<c:set var="str"
 value="${fn:replace(row.replytext,'<','&lt;') }" />
@@ -78,7 +78,7 @@ value="${fn:replace(str,newLineChar,'<br>') }" />
 		</td>
 		<c:if test="${sessionScope.userid == row.replyer}">
 		<td>
-			<button type="button" class="btnReplyDelete" data-rno="${row.rno}">삭제</button>
+			<input type="button" class="btnReplyDelete" data-rno="${row.rno}" value="삭제">
 			<input type="button" id="btnModify" value="수정" onclick="showReplyModify('${row.rno}')">
 		</td>
 

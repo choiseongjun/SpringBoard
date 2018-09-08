@@ -12,6 +12,6 @@ window.onpopstate = function () {
 </script>
 <%@ include file="Header.jsp" %>
 <%@ include file="Center.jsp" %>
-<%-- <%@ include file="Footer.jsp" %> --%>
+ <%@ include file="Footer.jsp" %>
 </body>
 </html>

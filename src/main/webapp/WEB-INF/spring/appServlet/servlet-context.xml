@@ -23,7 +23,7 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/assets/css/**" location="/resources/assets/css/" />
-	<resources mapping="/assets/vendor/**" location="/resources/assets/vendor/" />
+	<resources mapping="/assets/vendors/**" location="/resources/assets/vendors/" />
 	<resources mapping="/assets/images/**" location="/resources/assets/images/" />
 	<resources mapping="/assets/js/**" location="/resources/assets/js/" />
 	<resources mapping="/assets/fonts/**" location="/resources/assets/fonts/" />

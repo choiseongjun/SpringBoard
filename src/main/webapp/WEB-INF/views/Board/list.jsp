@@ -46,7 +46,7 @@ function list(page){
 <button type="button" id="btnWrite" class="btn btn-success">글쓰기</button>
 </center>
 <h1>${map.count}개의 게시물이 있습니다.</h1>
- <table class="table table-bordered table-striped">
+ <table width="100%" class="table table-bordered table-striped" align="middle">
 	<tr>
 		<th>번호</th>
 		<th>제목</th>
@@ -60,6 +60,9 @@ function list(page){
 		<td class="success">${row.bno}</td>
 		<td>
 <a href="${path}/board/view.do?bno=${row.bno}">
+ <c:forEach var="a" begin="1" end="${row.level}" step="1">
+					re: 
+					</c:forEach>
 ${row.title}
 </a>
 			<c:if test="${row.cnt > 0}">

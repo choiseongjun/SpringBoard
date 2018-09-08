@@ -34,11 +34,10 @@
 <title>Insert title here</title>
 </head>
 <body>
- <div id="container">
 	<center>
 		<h2 style="margin-top: 200px">회원 정보 수정 </h2>
 		<form  method="post" name="form1">
-			<table width="400" border="1" bordercolor="gray">
+			<table width="900" class="table table-bordered"  border="none" bordercolor="gray">
 					<tr height="40">
 						<td width="150">아이디
 						<input type="hidden" name="idDuplication" value="IdUncheck" ></td>
@@ -47,7 +46,7 @@
 						</td>
 					</tr>
 						<tr height="40">
-						<td width="150">패스워드<input type="button" value="비밀번호 수정하기" onclick="btnPassUpdate()"></td>
+						<td width="150">패스워드<input type="button" class="btn btn-primary" value="비밀번호 수정하기" onclick="btnPassUpdate()"></td>
 						<td width="250"><input class="form-control" type="password" name="passwd"  id="passwd"  onkeyup="passwordCheckFunction();" ></td>
 					</tr>
 						<tr height="40">
@@ -59,7 +58,7 @@
 						<td width="250"><input class="form-control" type="text" name="email" value="${dto.email}"></td>
 					</tr>
 						<tr height="40">
-						<td colspan="2"><input type="button" value="수정하기" id="btnUpdate"><input type="button" value="탈퇴하기" id="btnDelete">
+						<td colspan="2"><input type="button" class="btn btn-success" value="수정하기" id="btnUpdate"><input type="button" class="btn btn-danger" value="탈퇴하기" id="btnDelete">
 					<%-- 	<div style="color:red">${message}</div> --%></td>
 					</tr>
 						<td style="text-align:left" colspan="3"><h5 style="color:red;" id="passwordCheckMessage">${message}</h5></td>

@@ -13,8 +13,8 @@ function findid(){
 	location.href = "${path}/member/findid.do";
 }
 function findPw(){
-	var win = window.open("${path}/member/findpw.do", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
-	location.href = "${path}/member/findpw.do";
+/* 	var win = window.open("${path}/member/findpw.do", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+ */	location.href = "${path}/member/findpw.do";
 }
 $(function(){
 	$("#btnLogin").click(function(){

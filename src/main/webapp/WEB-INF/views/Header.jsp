@@ -49,6 +49,8 @@
                            <a class="navbar-brand logo-biss" href="${path}"> <img src="${pageContext.request.contextPath}/assets/images/logo_img.png"></a>
                         </div>
                      </div>
+                     <c:choose>
+		<c:when test="${sessionScope.userid==null}">
                      <!-- Collect the nav links, forms, and other content for toggling -->
                      <div class="col-md-8 p0">
                         <div class="collapse navbar-collapse" id="min_navbar">
@@ -60,13 +62,40 @@
                            <a href="${path}/member/register.do" class="">회원가입</a>
                         </li>
                         <li class="dropdown submenu">
+                           <a href="${path}/member/Login.do" class="">로그인하기</a>
+                        </li>
+                        <li class="dropdown submenu">
                            <a href="${path}/board/list.do" class="">게시판</a> 
                         </li>
                         <li class="dropdown submenu">
-                           <a href="${path}/Message/echo-ws" class="">임시</a>
+                           <a href="${path}/message.do" class="">임시</a>
                         </li>
                         <li class="dropdown submenu">
-                           <a href="${path}" class="">Elements</a>
+                           <a href="${path}" class="">Contact</a>
+                        </li>
+                      
+                     </ul>
+                        </div>
+                       </div>
+                   </c:when>
+                  <c:otherwise>
+                    <div class="col-md-8 p0">
+                        <div class="collapse navbar-collapse" id="min_navbar">
+                          <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown submenu">
+                           <a href="${path}" class="">Home</a>
+                        </li>
+                         <li class="dropdown submenu">
+                           <a href="${path}/member/view.do?userid=${userid}" class="">회원정보보기</a>
+                        </li>
+                        <li class="dropdown submenu">
+                           <a href="${path}/member/logout.do" class="">로그아웃하기</a>
+                        </li>
+                        <li class="dropdown submenu">
+                           <a href="${path}/board/list.do" class="">게시판</a> 
+                        </li>
+                        <li class="dropdown submenu">
+                           <a href="${path}/message.do" class="">임시</a>
                         </li>
                         <li class="dropdown submenu">
                            <a href="${path}" class="">Contact</a>
@@ -76,6 +105,8 @@
                         </div>
                         <!-- /.navbar-collapse -->
                      </div>
+                     </c:otherwise>
+                    </c:choose>
                   </div>
                   <!-- /.container -->
                </nav>

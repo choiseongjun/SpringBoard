@@ -206,8 +206,8 @@ function listAttach(){
 .fileDrop {
 	width: 600px;
 	height: 100px;
-	border: 1px dotted white;
-	background-color: white;
+	border: 3px dotted gray;
+	background-color: gray;
 }
 </style>
 
@@ -255,7 +255,7 @@ CKEDITOR.replace("content",{
 	 <c:if test="${sessionScope.userid != null }">
 	 	<textarea rows="5" cols="80" id="replytext"
 	 		placeholder="댓글을 작성하세요"></textarea><br>
-<button type="button" id="btnReply">댓글쓰기</button>
+<input type="button" id="btnReply" value="댓글 쓰기" />
 	 	<input type="button" value="답글쓰기"  onclick="location.href='reply.b?ref=${dto.bno}&ref_group=${dto.ref_group}'">
 	 </c:if>
 </div>

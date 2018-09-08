@@ -124,7 +124,7 @@ a:before, a:after, .btn:before, .btn:after, button:before, button:after {
 
 
 a {
-      color: #fff !important;
+      color: #ff0000!important;
     text-decoration: none !important;
 }
 
@@ -698,7 +698,7 @@ select {
     border: 1px solid #d1d1d1;
     font-size: 14px;
     padding: 8px 15px;
-    width: 100%;
+    width: 50%;
     margin: 0 0 15px 0;
     max-width: 100%;
     resize: none;
