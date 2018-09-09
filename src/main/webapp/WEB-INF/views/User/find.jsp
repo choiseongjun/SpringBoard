@@ -24,8 +24,12 @@ $(document).on('click','#findId',function(){
         success:function(data){
         	var useridlist = data.userid;
         	var useridfind = useridlist;
-       	 		 $("#useridlist").append("<h1>"+"회원님의 정보로 등록된 아이디는 : "+data+" 입니다.</h1>")
-				alert("회원님의 아이디는"+data);
+        	if(useridlist=null){
+       	 		alert("아이디가 존재하지 않습니다")
+        	}else{
+        		 $("#useridlist").append("<h1>"+"회원님의 정보로 등록된 아이디는 : "+data+" 입니다.</h1>")
+
+        	}
         },
         error: function (XMLHttpRequest, textStatus, errorThrown){
 
@@ -46,7 +50,7 @@ $(document).on('click','#findId',function(){
 			</div>
 			<div>
 				<p>
-					<label>ID</label>
+					<label>이름</label>
 					<input class="w3-input" type="text" id="name" name="name" required>
 				</p>
 				<p>

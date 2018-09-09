@@ -71,7 +71,7 @@
                            <a href="${path}/message.do" class="">임시</a>
                         </li>
                         <li class="dropdown submenu">
-                           <a href="${path}" class="">Contact</a>
+                           <a href="${path}/member/list.do" class="">사용x</a>
                         </li>
                       
                      </ul>
@@ -98,7 +98,7 @@
                            <a href="${path}/message.do" class="">임시</a>
                         </li>
                         <li class="dropdown submenu">
-                           <a href="${path}" class="">Contact</a>
+                           <a href="${path}/member/list.do" class="">회원목록</a>
                         </li>
                       
                      </ul>

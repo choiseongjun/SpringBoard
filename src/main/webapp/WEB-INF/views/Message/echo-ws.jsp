@@ -14,10 +14,11 @@
 <%@ include file="../Header.jsp" %>
 </head>
 <body>
+
 	<input type="text" id="roomId"/>
 	<input type="button" id="enterRoom" value="입장" />
-    <input type="text" id="message" />
-    <input type="button" id="sendBtn" value="전송" />
+    <input type="text" id="message" fixed  />
+    <input type="button" id="sendBtn" value="전송"  fixed />
     <div id="data"></div>
 </body>
 
@@ -56,11 +57,13 @@
         				        function onMessage(msg) {
         				               var data = msg.data;
         				               $("#data").append(data + "<br/>");
+        				               $(document).scrollTop($(document).height());
         				        }
         				        // 서버와 연결을 끊었을 때
         				        function onClose(evt) {
         				               $("#data").append("연결 끊김");
         				        }
+        				     
         					}//if끝
         				}
         			});

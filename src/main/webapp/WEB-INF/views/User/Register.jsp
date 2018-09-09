@@ -81,7 +81,7 @@ document.duplicate=function(e){
 <body>
 <form name="form1" method="post" onsubmit="emailCheck();" name="duplicate"
 	>
-  <table width="400" border="0" bordercolor="gray" align="center" >
+  <table width="400" border="0" class="table table-bordered" bordercolor="gray" align="center" >
 					<tr height="40">
 						<td width="150"><font face="궁서체">아이디</font><button type="button"  class="btn btn-default" id="checkbtn"  >중복확인</button>
 						</td>

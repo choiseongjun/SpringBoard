@@ -16,7 +16,7 @@ public class BoardDTO {
 	private String[] files; 
 	private int ref;//groups
 	private int ref_group;
-	private String level;
+	private String depth;
 	public int getBno() {
 		return bno;
 	}
@@ -89,18 +89,18 @@ public class BoardDTO {
 	public void setRef_group(int ref_group) {
 		this.ref_group = ref_group;
 	}
-	public String getLevel() {
-		return level;
+	public String getDepth() {
+		return depth;
 	}
-	public void setLevel(String level) {
-		this.level = level;
+	public void setDepth(String depth) {
+		this.depth = depth;
 	}
 	@Override
 	public String toString() {
 		return "BoardDTO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer
 				+ ", regdate=" + regdate + ", viewcnt=" + viewcnt + ", name=" + name + ", cnt=" + cnt + ", show=" + show
-				+ ", files=" + Arrays.toString(files) + ", ref=" + ref + ", ref_group=" + ref_group + ", level=" + level
+				+ ", files=" + Arrays.toString(files) + ", ref=" + ref + ", ref_group=" + ref_group + ", depth=" + depth
 				+ "]";
 	}
-		
+	
 }

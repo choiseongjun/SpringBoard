@@ -60,7 +60,7 @@ function list(page){
 		<td class="success">${row.bno}</td>
 		<td>
 <a href="${path}/board/view.do?bno=${row.bno}">
- <c:forEach var="a" begin="1" end="${row.level}" step="1">
+ <c:forEach var="a" begin="2" end="${row.depth}" step="1">
 					re: 
 					</c:forEach>
 ${row.title}

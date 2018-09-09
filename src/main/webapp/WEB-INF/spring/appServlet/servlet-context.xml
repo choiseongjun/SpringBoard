@@ -55,8 +55,6 @@
 		<beans:bean id="loginInterceptor"
 class="jun.st.ex.Controller.LoginInterceptor">
 </beans:bean>
-<beans:bean id="AdminInterceptor"
-class="jun.st.ex.Controller.AdminInterceptor"/>
 	<interceptors>
 		<interceptor>
 			<mapping path="/board/write.do" />
@@ -66,11 +64,6 @@ class="jun.st.ex.Controller.AdminInterceptor"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>	
-	<interceptors>
-		<interceptor>
-			<mapping path="/member/list.do" />
-			<beans:ref bean="AdminInterceptor"/>
-		</interceptor>
-	</interceptors>	
+	
 	
 </beans:beans>

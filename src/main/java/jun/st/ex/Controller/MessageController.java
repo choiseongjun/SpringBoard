@@ -12,13 +12,20 @@ public class MessageController {
 	@RequestMapping("message.do")
 	public String write() {
 		//채팅페이지로
-		return "Message/echo-ws"; 
+		return "Message/Chatroom"; 
 	}
 	
 	@ResponseBody
 	@RequestMapping("setRoomId.do")
 	public int setRoomId(String roomId, HttpSession session) {
 		session.setAttribute("roomId", roomId);
+		return 1;
+	}
+	
+	@ResponseBody
+	@RequestMapping("setOtherUserid.do")
+	public int setOtherUserid(String otherUserid, HttpSession session) {
+		session.setAttribute("otherUserid", otherUserid);
 		return 1;
 	}
 }
