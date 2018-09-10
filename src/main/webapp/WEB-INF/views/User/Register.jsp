@@ -79,7 +79,7 @@ document.duplicate=function(e){
 }
 </script>
 <body>
-<form name="form1" method="post" onsubmit="emailCheck();" name="duplicate"
+<form name="form1" method="post" onsubmit="emailCheck();" name="duplicate" enctype="multipart/form-data"
 	>
   <table width="400" border="0" class="table table-bordered" bordercolor="gray" align="center" >
 					<tr height="40">
@@ -105,13 +105,17 @@ document.duplicate=function(e){
 						<td width="150"><font face="궁서체">이메일</font></td>
 						<td width="250"><input class="form-control" type="text" name="email" id="email"><p><font face="궁서체" color="blue">정확한 이메일을 작성하세요</font></p></td>
 					</tr>
+						</tr>
+						<tr height="40">
+						<td width="150"><font face="궁서체">사진</font></td>
+						<td width="250"><input class="form-control" type="file" name="file1" id="file1"></td>
+					</tr>
 						<tr height="40">
 						<td colspan="2">	
 						<input type="submit" class="btn btn-primary" id="checkbtn" value="가입하기">
 					</td>
 					</tr>
 					<tr>
-			
 				<div id = "showdata" style = "text-align: center"></div>
 			</tr>
 						<td style="text-align:left" colspan="3"><h5 style="color:red;" id="passwordCheckMessage"></h5></td>

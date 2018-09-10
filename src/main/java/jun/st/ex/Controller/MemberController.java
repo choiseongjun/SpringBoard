@@ -1,5 +1,6 @@
 package jun.st.ex.Controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -44,24 +45,20 @@ public class MemberController {
 		service.find_pw(response, member);
 	}*/
 
-	
-	
-	
 	@RequestMapping("member/list.do") //url mapping
 	public String memberList(Model model) {
 		List<MemberDTO> list=memberService.memberList();
 		model.addAttribute("list", list);
-		//   WEB-INF/views/member/member_list.jsp�� ������
 		return "Admin/member_list";
 	}
 
-	@RequestMapping("member/userinfo.do/{userid}") //url mapping
+	@RequestMapping("member/userinfo.do/{userid}") //멤버리스트에서 들어가는 곳
 	public ModelAndView userinfo(@PathVariable String userid,ModelAndView mav) {
 		mav.addObject("list", memberService.viewMember(userid));
 		mav.setViewName("/User/userinfo");
 		return mav;
 	}
-	@RequestMapping("member/userinfoDetail.do/{userid}") //url mapping
+	@RequestMapping("member/userinfoDetail.do/{userid}") //커리어관리하기위한 곳
 	public ModelAndView userinfoDetail(@PathVariable String userid,ModelAndView mav) {
 		mav.addObject("list", memberService.viewMember(userid));
 		mav.setViewName("/User/userinfoDetail");
@@ -77,6 +74,18 @@ public class MemberController {
 	}
 	@RequestMapping("member/insert.do")
 	public String insert(@ModelAttribute MemberDTO dto) {		
+		String filename="-";
+		if(!dto.getFile1().isEmpty()) {
+			filename=dto.getFile1().getOriginalFilename();
+		try {
+			String path="C:\\Users\\ucssystem\\git\\SpringBoard\\src\\main\\webapp\\resources\\assets\\images\\ProFilePicture\\";
+			new File(path).mkdir();
+			dto.getFile1().transferTo(new File(path+filename));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		}
+		dto.setProfileimage(filename);
 		memberService.insertMember(dto);
 		return "redirect:/member/list.do";
 	}

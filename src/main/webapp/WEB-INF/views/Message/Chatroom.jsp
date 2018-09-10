@@ -262,8 +262,9 @@
 		        type:'POST',
 		        success:function(data){
 		        	var str = "";
+		        	
 		        	for(var i = 0;i<data.length;i++){
-		        		str += data[i].fromid+": "+data[i].chatcontent +"  ☆  " + data[i].chattime + "<br/>"
+		        		str += data[i].fromid+": "+data[i].chatcontent +"  시간:  " + data[i].chattime + "<br/>"
 		        	}
 		        	$("#chatList").append(str);
 		        	$("#chatList").scrollTop($("#chatList")[0].scrollHeight);

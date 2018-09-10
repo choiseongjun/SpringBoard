@@ -7,12 +7,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="memberList"
 		resultType="jun.st.ex.Persistence.DTO.MemberDTO">
-		select userid,passwd,name,email,join_date
+		select userid,passwd,name,email,join_date,profileimage
 		from member
 	</select>
 	<insert id="insertMember">
-		insert into member (userid,passwd,name,email,join_date) values
-		(#{userid}, #{passwd}, #{name}, #{email},sysdate )
+		insert into member (userid,passwd,name,email,join_date,profileimage) values
+		(#{userid}, #{passwd}, #{name}, #{email},sysdate,#{profileimage} )
 	</insert>
 		<select id="login_check" 
 	parameterType=
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
    <select id="ViewUser"
   resultType="jun.st.ex.Persistence.DTO.MemberDTO">
-  select userid,passwd,name,email
+  select userid,passwd,name,email,profileimage
   from member
   where userid=#{userid}
   </select>

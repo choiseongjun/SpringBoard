@@ -58,9 +58,15 @@
 						<td width="250"><input class="form-control" type="text" name="email" value="${dto.email}"></td>
 					</tr>
 						<tr height="40">
-						<td colspan="2"><input type="button" class="btn btn-success" value="수정하기" id="btnUpdate"><input type="button" class="btn btn-danger" value="탈퇴하기" id="btnDelete">
-					<%-- 	<div style="color:red">${message}</div> --%></td>
+						<td width="150">사진</td>
+						<td width="250"><img src="${path}/resources/assets/images/ProFilePicture/${dto.profileimage}"
+												width="250px" height="250px"></td>
 					</tr>
+						<tr height="40">
+						<td colspan="2"><input type="button" class="btn btn-success" value="수정하기" id="btnUpdate"><input type="button" class="btn btn-danger" value="탈퇴하기" id="btnDelete">
+					</td>
+					</tr>
+					
 						<td style="text-align:left" colspan="3"><h5 style="color:red;" id="passwordCheckMessage">${message}</h5></td>
 				</table>
 		</form>
