@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +54,19 @@ public class MemberController {
 		//   WEB-INF/views/member/member_list.jsp�� ������
 		return "Admin/member_list";
 	}
+
+	@RequestMapping("member/userinfo.do/{userid}") //url mapping
+	public ModelAndView userinfo(@PathVariable String userid,ModelAndView mav) {
+		mav.addObject("list", memberService.viewMember(userid));
+		mav.setViewName("/User/userinfo");
+		return mav;
+	}
+	@RequestMapping("member/userinfoDetail.do/{userid}") //url mapping
+	public ModelAndView userinfoDetail(@PathVariable String userid,ModelAndView mav) {
+		mav.addObject("list", memberService.viewMember(userid));
+		mav.setViewName("/User/userinfoDetail");
+		return mav;
+	}
 	@RequestMapping("member/register.do") 
 	public String write() {
 		return "User/Register";
@@ -63,8 +77,6 @@ public class MemberController {
 	}
 	@RequestMapping("member/insert.do")
 	public String insert(@ModelAttribute MemberDTO dto) {		
-		
-		
 		memberService.insertMember(dto);
 		return "redirect:/member/list.do";
 	}

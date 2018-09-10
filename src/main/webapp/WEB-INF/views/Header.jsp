@@ -68,10 +68,10 @@
                            <a href="${path}/board/list.do" class="">게시판</a> 
                         </li>
                         <li class="dropdown submenu">
-                           <a href="${path}/message.do" class="">임시</a>
+                           <a href="${path}/message.do" class="">생각중</a>
                         </li>
                         <li class="dropdown submenu">
-                           <a href="${path}/member/list.do" class="">사용x</a>
+                           <a href="${path }" class="">생각중</a>
                         </li>
                       
                      </ul>
@@ -86,7 +86,7 @@
                            <a href="${path}" class="">Home</a>
                         </li>
                          <li class="dropdown submenu">
-                           <a href="${path}/member/view.do?userid=${userid}" class="">회원정보보기</a>
+                           <a href="${path}/member/view.do?userid=${userid}" class="">나의 정보 </a>
                         </li>
                         <li class="dropdown submenu">
                            <a href="${path}/member/logout.do" class="">로그아웃하기</a>

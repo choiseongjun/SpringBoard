@@ -94,7 +94,7 @@ a {
                             <div class="profile-image float-md-right"> <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""> </div>
                         </div>
                         <div class="col-lg-8 col-md-8 col-12">
-                            <h4 class="m-t-0 m-b-0"><strong>이름:${row.name}</strong></h4>
+                           <a href="${path}/member/userinfo.do/${row.userid}"><h4 class="m-t-0 m-b-0"><strong>이름:${row.name}</strong></h4></a>
                             <span class="job_post" data-userid="${row.userid}">아이디:${row.userid}</span>
                             <p>이메일:${row.email}</p> 
                             <div>
