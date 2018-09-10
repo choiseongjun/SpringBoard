@@ -1,40 +1,47 @@
 package jun.st.ex.Persistence.DTO;
 
+import java.util.Date;
+
 public class ChatDTO {
 
-	int chatID;
-	String fromID;
-	String toID;
-	String chatContent;
-	String chatTime;
-	public int getChatID() {
-		return chatID;
+	int chatno;
+	String fromid;
+	String toid;//
+	Date chattime;
+	String chatcontent;
+	public int getChatno() {
+		return chatno;
 	}
-	public void setChatID(int chatID) {
-		this.chatID = chatID;
+	public void setChatno(int chatno) {
+		this.chatno = chatno;
 	}
-	public String getFromID() {
-		return fromID;
+	public String getFromid() {
+		return fromid;
 	}
-	public void setFromID(String fromID) {
-		this.fromID = fromID;
+	public void setFromid(String fromid) {
+		this.fromid = fromid;
 	}
-	public String getToID() {
-		return toID;
+	public String getToid() {
+		return toid;
 	}
-	public void setToID(String toID) {
-		this.toID = toID;
+	public void setToid(String toid) {
+		this.toid = toid;
 	}
-	public String getChatContent() {
-		return chatContent;
+	public Date getChattime() {
+		return chattime;
 	}
-	public void setChatContent(String chatContent) {
-		this.chatContent = chatContent;
+	public void setChattime(Date chattime) {
+		this.chattime = chattime;
 	}
-	public String getChatTime() {
-		return chatTime;
+	public String getChatcontent() {
+		return chatcontent;
 	}
-	public void setChatTime(String chatTime) {
-		this.chatTime = chatTime;
+	public void setChatcontent(String chatcontent) {
+		this.chatcontent = chatcontent;
+	}
+	@Override
+	public String toString() {
+		return "ChatDTO [chatno=" + chatno + ", fromid=" + fromid + ", toid=" + toid + ", chattime=" + chattime
+				+ ", chatcontent=" + chatcontent + "]";
 	}
 }

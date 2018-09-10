@@ -6,9 +6,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
 <mapper namespace="chat">
 	
-	<insert id="submit" parameterType="Integer">
-	INSERT INTO CHAT VALUES(chat.nextval, ?, ?, ?, NOW(), 0)
-	</insert>
+	<insert id="insertMessage" parameterType="jun.st.ex.Persistence.DTO.ChatDTO">
+	INSERT INTO CHAT VALUES(chat_seq.nextval,#{fromid}, #{toid},sysdate,#{chatcontent})
+	</insert> 
+	
+	<select id="GetMessageList" parameterType = "hashmap" resultType="jun.st.ex.Persistence.DTO.ChatDTO">
+			select *
+			from chat
+			where (toid=#{userid} and fromid=#{otherUserid}) or (toid=#{otherUserid} and fromid=#{userid})
+			order by chatno asc
+	</select>
 </mapper>
 
 

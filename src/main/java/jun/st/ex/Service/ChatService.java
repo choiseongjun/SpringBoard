@@ -1,6 +1,14 @@
 package jun.st.ex.Service;
 
+import java.util.List;
+import java.util.Map;
+
+import jun.st.ex.Persistence.DTO.ChatDTO;
+
 public interface ChatService {
 
-	public int submit(String fromID,String toID,String chatContent);
+	public void insertMessage(ChatDTO chatDto);
+
+	public List<ChatDTO> getMessageList(Map<String, String> data);
+
 }

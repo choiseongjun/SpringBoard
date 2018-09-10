@@ -225,37 +225,55 @@
 <script type="text/javascript">
 	$(document).ready(function() {
      		
-		// 웹소켓을 지정한 url로 연결한다.
-		let sock = new SockJS("/ex/echo");
-		sock.onmessage = onMessage;
-		sock.onclose = onClose;
-		// 메시지 전송
-		function sendMessage() {
-		       sock.send($("#chatContent").val());
-		       $('#chatContent').val('');
-		}
-		// 서버로부터 메시지를 받았을 때
-		function onMessage(msg) {
-		       var data = msg.data;
-		       $("#chatList").append(data + "<br/>");
-		       $("#chatList").scrollTop($("#chatList").height());
-		}
-		// 서버와 연결을 끊었을 때
-		function onClose(evt) {
-		       $("#chatList").append("연결 끊김");
-		}
-		
-		$("#submitBtn").on('click',function(){
-			sendMessage();
-		});
-		
-		$("#chatContent").keydown(function(key) {
-			if (key.keyCode == 13) {// 엔터
-				key.preventDefault();	
-			       sendMessage();
+		function connectSocket(){
+			// 웹소켓을 지정한 url로 연결한다.
+			let sock = new SockJS("/ex/echo");
+			sock.onmessage = onMessage;
+			sock.onclose = onClose;
+			// 메시지 전송
+			function sendMessage() {
+			       sock.send($("#chatContent").val());
+			       $('#chatContent').val('');
 			}
-		});
-     				     
+			// 서버로부터 메시지를 받았을 때
+			function onMessage(msg) {
+			       var data = msg.data;
+			       $("#chatList").append(data + "<br/>");
+			       $("#chatList").scrollTop($("#chatList")[0].scrollHeight);
+			}
+			// 서버와 연결을 끊었을 때
+			function onClose(evt) {
+			       $("#chatList").append("연결 끊김");
+			}
+			
+			$("#submitBtn").on('click',function(){
+				sendMessage();
+			});
+			
+			$("#chatContent").keydown(function(key) {
+				if (key.keyCode == 13) {// 엔터
+					key.preventDefault();	
+				       sendMessage();
+				}
+			});
+		}     	
+			$.ajax({
+		        url:'${path}/getMessageList.do',
+		        type:'POST',
+		        success:function(data){
+		        	var str = "";
+		        	for(var i = 0;i<data.length;i++){
+		        		str += data[i].fromid+": "+data[i].chatcontent +"  ☆  " + data[i].chattime + "<br/>"
+		        	}
+		        	$("#chatList").append(str);
+		        	$("#chatList").scrollTop($("#chatList")[0].scrollHeight);
+		        	
+		        	connectSocket();//마지막에성공하면 실행
+		        },
+		        error: function (XMLHttpRequest, textStatus, errorThrown){
+		        }
+			});
+			
      });
 </script>
 </body>

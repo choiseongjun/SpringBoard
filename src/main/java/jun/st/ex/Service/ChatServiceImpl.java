@@ -1,17 +1,31 @@
 package jun.st.ex.Service;
 
-import javax.inject.Inject;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import jun.st.ex.Persistence.DAO.ChatDAO;
-
+import jun.st.ex.Persistence.DTO.ChatDTO;
+@Service
 public class ChatServiceImpl implements ChatService {
 
-	@Inject
-	ChatDAO chatDao;
-	
+	@Autowired
+	private ChatDAO chatDAO;
+
 	@Override
-	public int submit(String fromID, String toID, String chatContent) {
-		return chatDao.submit(fromID, toID, chatContent);
+	public void insertMessage(ChatDTO chatDto) {
+		
+		chatDAO.insertMessage(chatDto);
 	}
 
+	@Override
+	public List<ChatDTO> getMessageList(Map<String, String> data) {
+		return chatDAO.getMessageList(data);
+	}
+
+	
+	
+	
 }
