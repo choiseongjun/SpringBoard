@@ -89,17 +89,17 @@ a {
             <div class="card profile-header">
                 <div class="body">
                     <div class="row">
-                        <c:forEach var="row" items="${list}">
                         <div class="col-lg-4 col-md-4 col-12">
                             <div class="profile-image float-md-right"> <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""> </div>
                         </div>
+                        <c:forEach var="row" items="${list}">
                         <div class="col-lg-8 col-md-8 col-12">
-                            <h4 class="m-t-0 m-b-0"><strong>이름:${row.name}</strong></h4>
-                            <span class="job_post" data-userid="${row.userid}">아이디:${row.userid}</span>
-                            <p>이메일:${row.email}</p> 
+                            <h4 class="m-t-0 m-b-0"><strong>${row.name}</strong></h4>
+                            <span class="job_post" data-userid="${row.userid}">${row.userid}</span>
+                            <p>${row.email}</p> 
                             <div>
                                 <button class="btn btn-primary btn-round">Follow</button>
-                                <button class="btn btn-primary btn-round btn-simple" onclick="sendMessage('${row.userid}')">Message</button>
+                                <button class="btn btn-primary btn-round btn-simple" onclick="sendMessage()">Message</button>
                             </div>
                             <p class="social-icon m-t-5 m-b-0">
                                 <a title="Twitter" href="javascript:void(0);"><i class="fa fa-twitter"></i></a>
@@ -117,8 +117,8 @@ a {
 </div></div></table></div>
         <script>
         
-	function sendMessage(otherUserid){//사용자 아이디를 클릭하면..
-		//var otherUserid = $(this).attr("data-userid");
+	function sendMessage(){//사용자 아이디를 클릭하면..
+		var otherUserid = $(this).attr("data-userid");
 		$.ajax({
 	        url:'${path}/setOtherUserid.do',
 	        type:'POST',

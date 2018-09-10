@@ -26,7 +26,7 @@
  		 });
  	});
  	function btnPassUpdate(){
- 		var win = window.open("${path}/member/viewPWD.do?userid=${userid}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=800,height=800");
+ 		var win = window.open("${path}/member/viewPWD.do?userid=${userid}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=500,width=800,height=800");
  	}
 
  </script>

@@ -14,6 +14,11 @@ public class MessageController {
 		//채팅페이지로
 		return "Message/Chatroom"; 
 	}
+	@RequestMapping("ChatList.do")
+	public String ChatList() {
+		//채팅페이지로
+		return "Message/MemberList"; 
+	}
 	
 	@ResponseBody
 	@RequestMapping("setRoomId.do")

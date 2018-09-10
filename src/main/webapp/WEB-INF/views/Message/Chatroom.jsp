@@ -188,18 +188,14 @@
 				<div class="portlet portlet-default">
 					<div class="portlet-heading">
 						<div class="portlet-title">
-							<h4><i class="fa fa-circle text-green"></i>실시간 채팅창</h4>
+							<h4><i class="fa fa-circle text-green"></i>채팅</h4>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 					<div id="chat" class="panel-collapse collapse in">
 						<div id="chatList" class="portlet-body chat-widget" style="overflow-y:auto;width:auto;height:600px"></div>
 						<div class="portlet-footer">
-							<div class="row">
-								<div class="form-group col-xs-4">
-									<input style="height: 40px;" type="text" id="chatName" class="form-control" placeholder="이름" maxlength="8">
-								</div>
-							</div>
+						
 							<div class="row" style="height: 90px;">
 								<div class="form-group col-xs-10">
 									<textarea style="height: 80px;" id="chatContent" class="form-control" placeholder="메세지를 입력하세요." maxlength="100"></textarea>
@@ -236,13 +232,13 @@
 		// 메시지 전송
 		function sendMessage() {
 		       sock.send($("#chatContent").val());
-		       $('#chatContent').val('')
+		       $('#chatContent').val('');
 		}
 		// 서버로부터 메시지를 받았을 때
 		function onMessage(msg) {
 		       var data = msg.data;
 		       $("#chatList").append(data + "<br/>");
-		       $(document).scrollTop($(document).height());
+		       $("#chatList").scrollTop($("#chatList").height());
 		}
 		// 서버와 연결을 끊었을 때
 		function onClose(evt) {
@@ -253,8 +249,9 @@
 			sendMessage();
 		});
 		
-		$("#submitBtn").keydown(function(key) {
+		$("#chatContent").keydown(function(key) {
 			if (key.keyCode == 13) {// 엔터
+				key.preventDefault();	
 			       sendMessage();
 			}
 		});

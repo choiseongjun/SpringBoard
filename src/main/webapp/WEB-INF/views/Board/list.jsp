@@ -15,37 +15,19 @@ $(function(){
 function list(page){
 	location.href="${path}/board/list.do?curPage="+page;
 }
+function HaveLogin(){
+	alert("로그인을 해야만 이용가능합니다");
+} 
 </script>
-<style>
- 
-</style>
+
 </head>
 <body>
-<center>
-<!-- 검색폼 -->
-<form name="form1" method="post"
-	action="${path}/board/list.do">
-	<select name="search_option">
-		<option value="name"
-<c:if test="${map.search_option == 'name'}">selected</c:if>
-		>이름</option>
-		<option value="title" 
-<c:if test="${map.search_option == 'title'}">selected</c:if>
-		>제목</option>
-		<option value="content" 
-<c:if test="${map.search_option == 'content'}">selected</c:if>
-		>내용</option>
-		<option value="all" 
-<c:if test="${map.search_option == 'all'}">selected</c:if>
-		>이름+내용+제목</option>
-	</select>
-	<input name="keyword" value="${map.keyword}">
-	<input type="submit" value="찾기">
-</form>
-
-<button type="button" id="btnWrite" class="btn btn-success">글쓰기</button>
-</center>
-<h1>${map.count}개의 게시물이 있습니다.</h1>
+	<c:if test="${sessionScope.userid==null}">
+<button type="button" id="btnWrite" class="btn btn-success" align="middle" onclick="HaveLogin()">글쓰기</button>
+ 	</c:if>
+ 	<c:if test="${sessionScope.userid!=null}">
+<button type="button" id="btnWrite" class="btn btn-success" align="middle" onclick="HaveLogin()">글쓰기</button>
+ 	</c:if>
  <table width="100%" class="table table-bordered table-striped" align="middle">
 	<tr>
 		<th>번호</th>
@@ -109,5 +91,28 @@ ${row.title}
 		</td>
 	</tr>
 </table>
+<center>
+<!-- 검색폼 -->
+<form name="form1" method="post"
+	action="${path}/board/list.do">
+	<select name="search_option">
+		<option value="name"
+<c:if test="${map.search_option == 'name'}">selected</c:if>
+		>이름</option>
+		<option value="title" 
+<c:if test="${map.search_option == 'title'}">selected</c:if>
+		>제목</option>
+		<option value="content" 
+<c:if test="${map.search_option == 'content'}">selected</c:if>
+		>내용</option>
+		<option value="all" 
+<c:if test="${map.search_option == 'all'}">selected</c:if>
+		>이름+내용+제목</option>
+	</select>
+	<input name="keyword" value="${map.keyword}">
+	<input type="submit" value="찾기">
+</form>
+</center>
+
 </body>
 </html>

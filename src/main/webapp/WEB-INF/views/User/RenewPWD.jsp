@@ -26,7 +26,6 @@ function passwordCheckFunction(){
 
     }	
    }
-
 	 $(document).ready(function(){
 		 $("#btnUpdate").click(function(){
 			 var beforePW = $('#passwd').val();
@@ -55,8 +54,7 @@ function passwordCheckFunction(){
 
 </script>
  <div id="container">
-
-		<h2 style="margin-top: 200px">회원 정보 수정 </h2>
+		<h2 style="margin-top: 200px">비밀번호 수정 </h2>
 		<form  method="post" name="form1">
 			<table width="400" border="1" bordercolor="gray">
 					<tr height="40">
@@ -71,11 +69,11 @@ function passwordCheckFunction(){
 						<td width="150">새로운패스워드확인</td>
 						<td width="250"><input class="form-control" type="password" name="passwd1"  id="passwd2"  onkeyup="passwordCheckFunction();" ></td>
 					<tr height="40">
-						<td colspan="2"><input type="button" value="수정하기" id="btnUpdate">
+						<td colspan="2"><input type="button" class="btn btn-success" value="수정하기" id="btnUpdate">
 						</td>
 					</tr>
 					<tr>
-						<td style="text-align:left" colspan="3"><h5 style="color:black;" id="passwordCheckMessage">${message}</h5></td>
+						<td style="text-align:left" colspan="3"><h5 style="color:red;" id="passwordCheckMessage">${message}</h5></td>
 					</tr>
 				</table>
 		</form>

@@ -85,11 +85,12 @@ public class MemberController {
         
         if(user == null) {//로그인 시도하려는 아이디가 존재하지 않으면..
         
-        	response.setContentType("text/html; charset=UTF-8");
+/*        	response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('로그인 정보를 확인해주세요.');</script>");
 			out.flush();
-			out.close();
+			out.close();*/
+        	mav.addObject("message","error");
 			mav.setViewName("User/Login");
         }else {//로그인 시도하려는 아이디가 존재하면..
 		
@@ -114,7 +115,7 @@ public class MemberController {
 			}
 			mav.setViewName("redirect:/");
 		}else {
-			mav.addObject("message","로그인 정보를 확인하세요");
+			mav.addObject("message","error");
 			mav.setViewName("User/Login");
 			/*response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -168,7 +169,7 @@ public class MemberController {
 			model.addAttribute("dto", dto);
 			model.addAttribute("join_date"
 					,memberService.viewMember(dto.getUserid()).getJoin_date());
-			model.addAttribute("message", "회원정보가 수정되었습니다.");
+			model.addAttribute("message", "비밀번호가 틀립니다.");
 			return "User/UpdateUser"; //forward
 		}
 	}
