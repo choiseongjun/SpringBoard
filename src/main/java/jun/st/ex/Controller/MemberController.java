@@ -46,8 +46,9 @@ public class MemberController {
 	}*/
 
 	@RequestMapping("member/list.do") //url mapping
-	public String memberList(Model model) {
-		List<MemberDTO> list=memberService.memberList();
+	public String memberList(Model model,HttpSession session) {
+		String userId=(String)session.getAttribute("userid");
+		List<MemberDTO> list=memberService.memberList(userId);
 		model.addAttribute("list", list);
 		return "Admin/member_list";
 	}
@@ -87,7 +88,7 @@ public class MemberController {
 		}
 		dto.setProfileimage(filename);
 		memberService.insertMember(dto);
-		return "redirect:/member/list.do";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("member/login_check.do")
@@ -179,23 +180,38 @@ public class MemberController {
 		String userHashedPasswd = db.getPasswd();
 		//비밀번호 일치 검사, 일치하면  true
 		boolean loginResult = passwordEncoder.matches(userPasswd, userHashedPasswd);
-		
+		String filename="-";
 	if(db!=null) {
 		if(loginResult) { //비밀번호가 맞으면
+			if(!dto.getFile1().isEmpty()) {
+			filename=dto.getFile1().getOriginalFilename();
+					try {
+						String path="C:\\Users\\ucssystem\\git\\SpringBoard\\src\\main\\webapp\\resources\\assets\\images\\ProFilePicture\\";
+						new File(path).mkdir();
+						dto.getFile1().transferTo(new File(path+filename));
+					}catch(Exception e) {
+						e.printStackTrace();
+					} 
+					dto.setProfileimage(filename);
+			}else{
+				MemberDTO dto2=memberService.viewMember(dto.getUserid());
+				dto.setProfileimage(dto2.getProfileimage());
+			}
 			//회원정보 수정
 			memberService.updateMember(dto);
 			//수정 후 목록으로 이동
 			return "redirect:/";
-		}else  { //비밀번호가 틀리면 
-			model.addAttribute("dto", dto);
-			model.addAttribute("join_date"
-					,memberService.viewMember(dto.getUserid()).getJoin_date());
-			model.addAttribute("message", "비밀번호가 틀립니다.");
-			return "User/UpdateUser"; //forward
+			}else{ //비밀번호가 틀리면 
+				model.addAttribute("dto", dto);
+				model.addAttribute("join_date"
+						,memberService.viewMember(dto.getUserid()).getJoin_date());
+				model.addAttribute("message", "비밀번호가 틀립니다.");
+				return "User/UpdateUser"; //forward
+			}
 		}
+	return filename;
 	}
-	return userHashedPasswd;
-	}
+
 	
 	@ResponseBody
 	@RequestMapping("member/update.do")
@@ -281,19 +297,16 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 	}
 	@RequestMapping(value="member/findidimpl.do",method = RequestMethod.POST)
 		public @ResponseBody String findidImpl(String name,String email)throws Exception {
-
-		System.out.println(name+email);
-	String idlist = (String) memberService.findId(name,email);
 	
+		String idlist = (String) memberService.findId(name,email);
 		return idlist;
 		}
 	@ResponseBody
     @RequestMapping(value="member/checkId.do",method = RequestMethod.POST)
 	 public String checkSignup(String userid, Model model) {
-		
-        boolean result=memberService.getUser(userid);
+
+		boolean result=memberService.getUser(userid);
 		return String.valueOf(result).trim();
-        
 	}
 	
 	@Autowired
@@ -317,7 +330,6 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 			dto.setPasswd(encryptNewPassword);
 			
 			if(memberService.MailUpdateUserPw(dto)==1) {//새로생성된 비밀번호 db 업데이트 성공 시..
-				System.out.println(newPw);
 				email.setContent("비밀번호는 "+newPw+" 입니다.");
 				email.setReceiver(u_email);
 				email.setSubject(userid+"님 비밀번호 찾기 메일입니다.");
@@ -342,7 +354,6 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 	//임시비밀번호 생성기
 	public String getNewPw() {
 		String pw = "";
-	
 		String tokenArray[] = {
 				"A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 				"K", "L", "M", "O", "P", "R", "S", "T", "U", "X",
@@ -355,6 +366,5 @@ memberService.checkPw(dto.getUserid(), dto.getPasswd());
 		}
 		return pw;
 	}
-	
 	
 }

@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <update id="updateUser" parameterType="jun.st.ex.Persistence.DTO.MemberDTO">
   update member
-  set name=#{name},email=#{email}
+  set name=#{name},email=#{email},profileimage=#{profileimage}
   where userid=#{userid}
   </update>
   <delete id="deleteMember">
@@ -83,4 +83,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		set passwd=#{newPW}
   		where userid=#{userid}
 	</update>
+	<select id="RemoveSelfId" parameterType="jun.st.ex.Persistence.DTO.MemberDTO" resultType="jun.st.ex.Persistence.DTO.MemberDTO">
+		select * 
+		from member
+		where userid!=#{userid}
+	</select>
 </mapper>

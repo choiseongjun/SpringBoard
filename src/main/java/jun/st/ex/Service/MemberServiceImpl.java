@@ -94,6 +94,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.UpdateNewPassword(data);
 	}
 
+	@Override
+	public List<MemberDTO> memberList(String userId) {
+		return memberDao.memberList(userId);
+	}
+
 	/*@Override
 	public int update_pw(MemberDTO member) throws Exception {
 		return memberDao.update_pw(member);

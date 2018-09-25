@@ -21,4 +21,5 @@ public interface MemberService {
 	public int MailUpdateUserPw(MemberDTO dto);
 	public String getUserPW(String userid);
 	public int UpdateNewPassword(Map<String, String> data);
+	public List<MemberDTO> memberList(String userId);//회원목록에 자신만뺴기
 }

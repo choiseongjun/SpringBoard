@@ -106,5 +106,10 @@ public class MemberDAOImpl implements MemberDAO {
 			return sqlSession.update("member.UpdateNewPassword",data);
 	}
 
+	@Override
+	public List<MemberDTO> memberList(String userId) {
+		return sqlSession.selectList("member.RemoveSelfId",userId);
+	}
+
 
 }

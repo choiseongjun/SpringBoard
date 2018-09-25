@@ -36,7 +36,7 @@
 <body>
 	<center>
 		<h2 style="margin-top: 200px">회원 정보 수정 </h2>
-		<form  method="post" name="form1">
+		<form  method="post" name="form1" enctype="multipart/form-data">
 			<table width="900" class="table table-bordered"  border="none" bordercolor="gray">
 					<tr height="40">
 						<td width="150">아이디
@@ -60,7 +60,8 @@
 						<tr height="40">
 						<td width="150">사진</td>
 						<td width="250"><img src="${path}/resources/assets/images/ProFilePicture/${dto.profileimage}"
-												width="250px" height="250px"></td>
+												width="250px" height="250px"> <input type="file" name="file1"
+						id="file1"></td> 
 					</tr>
 						<tr height="40">
 						<td colspan="2"><input type="button" class="btn btn-success" value="수정하기" id="btnUpdate"><input type="button" class="btn btn-danger" value="탈퇴하기" id="btnDelete">

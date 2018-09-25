@@ -22,4 +22,5 @@ public interface MemberDAO {
 	 public int MailUpdateUserPw(MemberDTO dto);
 	 public String getUserPW(String userid);
 	 public int UpdateNewPassword(Map<String, String> data);
+		public List<MemberDTO> memberList(String userId);
 }
