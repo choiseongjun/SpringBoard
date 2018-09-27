@@ -26,15 +26,15 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public int CheckreadCount(String userid) {
-		return chatDAO.CheckreadCount(userid);
+	public void updateChatRead(Map<String, String> data) {
+		chatDAO.updateChatRead(data);
 	}
 
-	@Override
-	public int updatereadCount(String userid) {
-		return chatDAO.updatereadCount(userid);
-	}
+	
 
+	
+
+	
 	
 	
 	

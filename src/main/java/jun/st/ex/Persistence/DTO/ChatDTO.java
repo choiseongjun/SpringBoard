@@ -10,8 +10,15 @@ public class ChatDTO {
 	Date chattime;
 	String stringTime;
 	String chatcontent;
+	int chatread;
 	
 	
+	public int getChatread() {
+		return chatread;
+	}
+	public void setChatread(int chatread) {
+		this.chatread = chatread;
+	}
 	public String getStringTime() {
 		return stringTime;
 	}

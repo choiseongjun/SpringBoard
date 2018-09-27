@@ -9,6 +9,5 @@ public interface ChatService {
 
 	public void insertMessage(ChatDTO chatDto);
 	public List<ChatDTO> getMessageList(Map<String, String> data);
-	public int CheckreadCount(String userid);//채팅 읽기전
-	public int updatereadCount(String userid); //채팅 읽은후
+	public void updateChatRead(Map<String, String> data);//읽음처리
 }

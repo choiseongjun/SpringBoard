@@ -27,14 +27,10 @@ public class ChatDAOImpl implements ChatDAO {
 	}
 
 	@Override
-	public int CheckreadCount(String userid) {
-		return sqlSession.selectOne("chat.readCount", userid);
+	public void updateChatRead(Map<String, String> data) {
+			sqlSession.update("chat.UpdateReadChat",data);
 	}
 
-	@Override
-	public int updatereadCount(String userid) {
-		return sqlSession.update("chat.UpdateReadChat",userid);
-	}
 
 
 }

@@ -8,11 +8,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertMessage" parameterType="jun.st.ex.Persistence.DTO.ChatDTO">
 	INSERT INTO CHAT
-	 VALUES(chat_seq.nextval,#{fromid}, #{toid},sysdate,#{chatcontent},0)
+	 VALUES(chat_seq.nextval,#{fromid}, #{toid},sysdate,#{chatcontent},#{chatread})
 	</insert> 
 	
 	<select id="GetMessageList" parameterType = "hashmap" resultType="jun.st.ex.Persistence.DTO.ChatDTO">
-			select chatno,fromid,toid,chatcontent,chattime
+			select chatno,fromid,toid,chatcontent,chattime,chatread
 			from chat
 			where (toid=#{userid} and fromid=#{otherUserid}) or (toid=#{otherUserid} and fromid=#{userid})
 			order by chatno asc
@@ -24,10 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where toid=#{userid} and chatread=0
 	</select>
 	
-	<update id="UpdateReadChat">
+	<update id="UpdateReadChat" parameterType = "hashmap">
 		update chat
 		set chatread=1
-		where (fromid=#{otherUserid} and toid=#{userid})
+		where (fromid=#{fromid} and toid=#{toid})
 	</update>
 </mapper>
 

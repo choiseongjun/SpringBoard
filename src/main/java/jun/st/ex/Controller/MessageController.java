@@ -74,12 +74,5 @@ public class MessageController {
 		
 	}
 	
-	@ResponseBody
-	public int readChat(String fromid,String toid,HttpSession session) {
-		String userid=(String)session.getAttribute("userid");
 	
-		chatService.updatereadCount(userid);//채팅 읽은후
-		return 0;
-		
-	}
 }

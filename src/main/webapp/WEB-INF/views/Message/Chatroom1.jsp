@@ -241,46 +241,57 @@ body {
 			// 서버로부터 메시지를 받았을 때
 			function onMessage(msg) {
 			       var data = msg.data;
-			       var jsonObject = JSON.parse(data);
 			       
-			       var str="";
-			       if(myid==jsonObject.senderId){
-	        			//오른쪽메시지박스
-	        			str+="<div class='message-feed right'>";
-			        	str+="	<div class='pull-right'>";
-			        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar2.png' alt='' class='img-avatar'>";
-			        	str+="	</div>";
-			        	str+="	<div>";
-			        	str+=		jsonObject.senderId;
-			        	str+="	</div>";
-			        	str+="	<div class='media-body'>";
-			        	str+="		<div class='mf-content'>";
-			        	str+=			jsonObject.message;
-			        	str+="		</div>";
-			        	str+="		<small class='mf-date'><i class='fa fa-clock-o'></i> "+jsonObject.dateTime+"</small>";
-			        	str+="	</div>";
-			        	str+="</div>";
-	        		}else{
-	        			 //왼쪽메시지박스
-			        	str+="<div class='message-feed media'>";
-			        	str+="	<div class='pull-left'>";
-			        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar1.png' alt='' class='img-avatar'>";
-			        	str+="	</div>";
-			        	str+="	<div>";
-			        	str+=		jsonObject.senderId;
-			        	str+="	</div>";
-			        	str+="	<div class='media-body'>";
-			        	str+="		<div class='mf-content'>";
-			        	str+=			jsonObject.message;
-			        	str+="		</div>";
-			        	str+="		<small class='mf-date'><i class='fa fa-clock-o'></i> "+jsonObject.dateTime+"</small>";
-			        	str+="	</div>";
-			        	str+="</div>";
-	        		}
+			       if(data=="7777"){
+			    	   $('.readCount').text("");
+			       }else{
+			    	   
 			       
-			        $("#messageListBox").append(str);
-		        	//$("#messageListBox").scrollTop($("#messageListBox")[0].scrollHeight);
-			        $(document).scrollTop($(document).height());
+			       
+				       var jsonObject = JSON.parse(data);
+				       
+				       var str="";
+				       if(myid==jsonObject.senderId){
+		        			//오른쪽메시지박스
+		        			str+="<div class='message-feed right'>";
+				        	str+="	<div class='pull-right'>";
+				        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar2.png' alt='' class='img-avatar'>";
+				        	str+="	</div>";
+				        	str+="	<div>";
+				        	str+=		jsonObject.senderId;
+				        	str+="	</div>";
+				        	str+="	<div class='media-body'>";
+				        	str+="		<span class='readCount'>";
+				        	str+=			jsonObject.chatread;
+				        	str+="		</span>";
+				        	str+="		<div class='mf-content'>";
+				        	str+=			jsonObject.message;
+				        	str+="		</div>";
+				        	str+="		<small class='mf-date'><i class='fa fa-clock-o'></i> "+jsonObject.dateTime+"</small>";
+				        	str+="	</div>";
+				        	str+="</div>";
+		        		}else{
+		        			 //왼쪽메시지박스
+				        	str+="<div class='message-feed media'>";
+				        	str+="	<div class='pull-left'>";
+				        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar1.png' alt='' class='img-avatar'>";
+				        	str+="	</div>";
+				        	str+="	<div>";
+				        	str+=		jsonObject.senderId;
+				        	str+="	</div>";
+				        	str+="	<div class='media-body'>";
+				        	str+="		<div class='mf-content'>";
+				        	str+=			jsonObject.message;
+				        	str+="		</div>";
+				        	str+="		<small class='mf-date'><i class='fa fa-clock-o'></i> "+jsonObject.dateTime+"</small>";
+				        	str+="	</div>";
+				        	str+="</div>";
+		        		}
+				       
+				        $("#messageListBox").append(str);
+			        	//$("#messageListBox").scrollTop($("#messageListBox")[0].scrollHeight);
+				        $(document).scrollTop($(document).height());
+			       }
 			}
 			// 서버와 연결을 끊었을 때
 			function onClose(evt) {
@@ -316,6 +327,11 @@ body {
 				        	str+=		data.messageList[i].fromid;
 				        	str+="	</div>";
 				        	str+="	<div class='media-body'>";
+				        	str+="		<span class='readCount'>";
+								        	if(data.messageList[i].chatread==0){
+								        		str+="1";
+								        	}
+				        	str+="		</span>";
 				        	str+="		<div class='mf-content'>";
 				        	str+=			data.messageList[i].chatcontent;
 				        	str+="		</div>";
@@ -419,7 +435,7 @@ body {
                 </ul>
             </div>
     		
-    		
+    	
     		<div id="messageListBox"></div>
 
 
