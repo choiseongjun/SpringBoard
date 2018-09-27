@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script>
 <title>Insert title here</title>
@@ -224,6 +226,7 @@ body {
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
+		var myid="";
      		
 		function connectSocket(){
 			// 웹소켓을 지정한 url로 연결한다.
@@ -232,14 +235,52 @@ body {
 			sock.onclose = onClose;
 			// 메시지 전송
 			function sendMessage() {
-			       sock.send($("#chatContent").val());
-			       $('#chatContent').val('');
+			       sock.send($("#chatEnter").val());
+			       $("#chatEnter").val('');
 			}
 			// 서버로부터 메시지를 받았을 때
 			function onMessage(msg) {
 			       var data = msg.data;
-			       $("#chatList").append(data + "<br/>");
-			       $("#chatList").scrollTop($("#chatList")[0].scrollHeight);
+			       var jsonObject = JSON.parse(data);
+			       
+			       var str="";
+			       if(myid==jsonObject.senderId){
+	        			//오른쪽메시지박스
+	        			str+="<div class='message-feed right'>";
+			        	str+="	<div class='pull-right'>";
+			        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar2.png' alt='' class='img-avatar'>";
+			        	str+="	</div>";
+			        	str+="	<div>";
+			        	str+=		jsonObject.senderId;
+			        	str+="	</div>";
+			        	str+="	<div class='media-body'>";
+			        	str+="		<div class='mf-content'>";
+			        	str+=			jsonObject.message;
+			        	str+="		</div>";
+			        	str+="		<small class='mf-date'><i class='fa fa-clock-o'></i> "+jsonObject.dateTime+"</small>";
+			        	str+="	</div>";
+			        	str+="</div>";
+	        		}else{
+	        			 //왼쪽메시지박스
+			        	str+="<div class='message-feed media'>";
+			        	str+="	<div class='pull-left'>";
+			        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar1.png' alt='' class='img-avatar'>";
+			        	str+="	</div>";
+			        	str+="	<div>";
+			        	str+=		jsonObject.senderId;
+			        	str+="	</div>";
+			        	str+="	<div class='media-body'>";
+			        	str+="		<div class='mf-content'>";
+			        	str+=			jsonObject.message;
+			        	str+="		</div>";
+			        	str+="		<small class='mf-date'><i class='fa fa-clock-o'></i> "+jsonObject.dateTime+"</small>";
+			        	str+="	</div>";
+			        	str+="</div>";
+	        		}
+			       
+			        $("#messageListBox").append(str);
+		        	//$("#messageListBox").scrollTop($("#messageListBox")[0].scrollHeight);
+			        $(document).scrollTop($(document).height());
 			}
 			// 서버와 연결을 끊었을 때
 			function onClose(evt) {
@@ -250,7 +291,7 @@ body {
 				sendMessage();
 			});
 			
-			$("#chatContent").keydown(function(key) {
+			$("#chatEnter").keydown(function(key) {
 				if (key.keyCode == 13) {// 엔터
 					key.preventDefault();	
 				       sendMessage();
@@ -262,12 +303,47 @@ body {
 		        type:'POST',
 		        success:function(data){
 		        	var str = "";
-		        	
-		        	for(var i = 0;i<data.length;i++){
-		        		str += data[i].fromid+": "+data[i].chatcontent +"  시간:  " + data[i].chattime + "<br/>"
+		        	myid=data.userid;
+		        	for(var i = 0;i<data.messageList.length;i++){
+		        		
+		        		if(myid==data.messageList[i].fromid){
+		        			//오른쪽메시지박스
+		        			str+="<div class='message-feed right'>";
+				        	str+="	<div class='pull-right'>";
+				        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar2.png' alt='' class='img-avatar'>";
+				        	str+="	</div>";
+				        	str+="	<div>";
+				        	str+=		data.messageList[i].fromid;
+				        	str+="	</div>";
+				        	str+="	<div class='media-body'>";
+				        	str+="		<div class='mf-content'>";
+				        	str+=			data.messageList[i].chatcontent;
+				        	str+="		</div>";
+				        	str+="		<small class='mf-date'><i class='fa fa-clock-o'></i> "+data.messageList[i].stringTime+"</small>";
+				        	str+="	</div>";
+				        	str+="</div>";
+		        		}else{
+		        			 //왼쪽메시지박스
+				        	str+="<div class='message-feed media'>";
+				        	str+="	<div class='pull-left'>";
+				        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar1.png' alt='' class='img-avatar'>";
+				        	str+="	</div>";
+				        	str+="	<div>";
+				        	str+=		data.messageList[i].fromid;
+				        	str+="	</div>";
+				        	str+="	<div class='media-body'>";
+				        	str+="		<div class='mf-content'>";
+				        	str+=			data.messageList[i].chatcontent;
+				        	str+="		</div>";
+				        	str+="		<small class='mf-date'><i class='fa fa-clock-o'></i> "+data.messageList[i].stringTime+"</small>";
+				        	str+="	</div>";
+				        	str+="</div>";
+		        		}
 		        	}
-		        	$("#chatList").append(str);
-		        	$("#chatList").scrollTop($("#chatList")[0].scrollHeight);
+		        	
+		        	$("#messageListBox").append(str);
+		        	//$("#messageListBox").scrollTop($("#messageListBox")[0].scrollHeight);
+		        	$(document).scrollTop($(document).height());
 		        	
 		        	connectSocket();//마지막에성공하면 실행
 		        },
@@ -342,37 +418,16 @@ body {
                     </li>
                 </ul>
             </div>
-    
-            <div class="message-feed media">
-                <div class="pull-left">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="img-avatar">
-                </div>
-                <div class="media-body">
-                    <div class="chatContent">
-                        Quisque consequat arcu eget odio cursus, ut tempor arcu vestibulum. Etiam ex arcu, porta a urna non, lacinia pellentesque orci. Proin semper sagittis erat, eget condimentum sapien viverra et. Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed turpis mi. In eu massa a sem pulvinar lobortis.
-                    </div>
-                    <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 09:00</small>
-                </div>
-            </div>
-            
-            <div class="message-feed right">
-                <div class="pull-right">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="img-avatar">
-                </div>
-                <div class="media-body">
-                    <div class="chatContent">
-                        Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed turpis mi. In eu massa a sem pulvinar lobortis.
-                    </div>
-                    <small class="mf-date"><i class="fa fa-clock-o"></i> 20/02/2015 at 09:30</small>
-                </div>
-            </div>
-            
-            
+    		
+    		
+    		<div id="messageListBox"></div>
+
+
             <div class="chatContent">
-                <textarea placeholder="What's on your mind..."></textarea>
+                <textarea id="chatEnter" placeholder="What's on your mind..."></textarea>
                 <button><i class="fa fa-paper-plane-o" id = "submitBtn"></i></button>
             </div>
         </div>
     </div>
 </body>
-</html>
+</html>    

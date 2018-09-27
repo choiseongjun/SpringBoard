@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,19 +49,24 @@ public class EchoHandler extends TextWebSocketHandler {
 			chatDto.setChatcontent(message.getPayload());
 			
 			chatService.insertMessage(chatDto);
-	
+			
+		JSONObject jsonObject = new JSONObject();
+		long nano=System.currentTimeMillis();
+		String dateTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(nano);
+		jsonObject.put("dateTime", dateTime);
+		jsonObject.put("senderId",userid);
+		jsonObject.put("message", message.getPayload());
+		String jsonString = jsonObject.toString();
 		for (Map<String, WebSocketSession> sessionMap : sessionMapList) {
 			WebSocketSession sess  = null;
-			
 			WebSocketSession sess1 = sessionMap.get(userid);
 			WebSocketSession sess2 = sessionMap.get(otherUserid);
 			
 			if(sess1!=null){sess=sess1;}
 			if(sess2!=null){sess=sess2;}
 			if(sess!=null) {
-				long nano=System.currentTimeMillis();
-				String date1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(nano);
-				sess.sendMessage(new TextMessage(userid + " : " + message.getPayload()));
+				
+				sess.sendMessage(new TextMessage(jsonString));
 			
 			}
 		}

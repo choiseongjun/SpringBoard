@@ -8,7 +8,16 @@ public class ChatDTO {
 	String fromid;
 	String toid;//
 	Date chattime;
+	String stringTime;
 	String chatcontent;
+	
+	
+	public String getStringTime() {
+		return stringTime;
+	}
+	public void setStringTime(String stringTime) {
+		this.stringTime = stringTime;
+	}
 	public int getChatno() {
 		return chatno;
 	}

@@ -1,5 +1,6 @@
 package jun.st.ex.Controller;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class MessageController {
 	@RequestMapping("message.do")
 	public String write() {
 		//채팅페이지로
-		return "Message/Chatroom"; 
+		return "Message/Chatroom1"; 
 	}
 	@RequestMapping("ChatList.do")
 	public String ChatList(HttpSession session) {
@@ -51,15 +52,26 @@ public class MessageController {
 	}
 	@ResponseBody
 	@RequestMapping("getMessageList.do")
-	public List<ChatDTO> getMessageList(HttpSession session) {
-		String userid = (String)session.getAttribute("userid");
-		String otherUserid = (String)session.getAttribute("otherUserid");
+	public Map<String,Object> getMessageList(HttpSession session) {
 		
 		Map<String,String> data = new HashMap<>();
+		String userid = (String)session.getAttribute("userid");
+		String otherUserid = (String)session.getAttribute("otherUserid");
 		data.put("userid", userid);
 		data.put("otherUserid", otherUserid);
+		List<ChatDTO> messageList = chatService.getMessageList(data);
 		
-		return chatService.getMessageList(data); 
+		for (ChatDTO chatDTO : messageList) {
+			String stringTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(chatDTO.getChattime().getTime());
+			chatDTO.setStringTime(stringTime);
+		}
+		
+		Map<String,Object> returnData = new HashMap<>();
+		returnData.put("messageList", messageList);
+		returnData.put("userid", userid);
+		
+		return returnData; 
+		
 	}
 	
 	@ResponseBody
