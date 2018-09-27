@@ -7,15 +7,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="chat">
 	
 	<insert id="insertMessage" parameterType="jun.st.ex.Persistence.DTO.ChatDTO">
-	INSERT INTO CHAT VALUES(chat_seq.nextval,#{fromid}, #{toid},sysdate,#{chatcontent})
+	INSERT INTO CHAT
+	 VALUES(chat_seq.nextval,#{fromid}, #{toid},sysdate,#{chatcontent},0)
 	</insert> 
 	
 	<select id="GetMessageList" parameterType = "hashmap" resultType="jun.st.ex.Persistence.DTO.ChatDTO">
-			select *
+			select chatno,fromid,toid,chatcontent,chattime
 			from chat
 			where (toid=#{userid} and fromid=#{otherUserid}) or (toid=#{otherUserid} and fromid=#{userid})
 			order by chatno asc
 	</select>
+	
+	<select id="readCount">
+	select count(chatno) 
+	from chat 
+	where toid=#{userid} and chatread=0
+	</select>
+	
+	<update id="UpdateReadChat">
+		update chat
+		set chatread=1
+		where (fromid=#{otherUserid} and toid=#{userid})
+	</update>
 </mapper>
 
 

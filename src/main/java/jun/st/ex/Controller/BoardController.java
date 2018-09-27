@@ -48,6 +48,9 @@ public class BoardController {
 boardService.listAll(search_option,keyword,start,end); //게시물 목록
 		ModelAndView mav=new ModelAndView();
 		HashMap<String,Object> map=new HashMap<>();
+		for (BoardDTO boardDTO : list) {
+			boardDTO.setTitle(cleanXSS(boardDTO.getTitle()));//SXX
+		}
 		map.put("list", list); //map에 자료 저장
 		map.put("count", count);
 		map.put("pager", pager); //페이지 네비게이션을 위한 변수

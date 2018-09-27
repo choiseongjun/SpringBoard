@@ -1,5 +1,6 @@
 package jun.st.ex.Controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,9 +47,6 @@ public class EchoHandler extends TextWebSocketHandler {
 			chatDto.setFromid(userid);
 			chatDto.setChatcontent(message.getPayload());
 			
-			if(chatService==null) {
-				System.out.println("chatService널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널널)(*&^%$#");
-			}
 			chatService.insertMessage(chatDto);
 	
 		for (Map<String, WebSocketSession> sessionMap : sessionMapList) {
@@ -60,6 +58,8 @@ public class EchoHandler extends TextWebSocketHandler {
 			if(sess1!=null){sess=sess1;}
 			if(sess2!=null){sess=sess2;}
 			if(sess!=null) {
+				long nano=System.currentTimeMillis();
+				String date1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(nano);
 				sess.sendMessage(new TextMessage(userid + " : " + message.getPayload()));
 			
 			}

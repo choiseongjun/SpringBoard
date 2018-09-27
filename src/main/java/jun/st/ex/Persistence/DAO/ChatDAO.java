@@ -8,4 +8,6 @@ import jun.st.ex.Persistence.DTO.ChatDTO;
 public interface ChatDAO {
 	public void insertMessage(ChatDTO chatDto);
 	public List<ChatDTO> getMessageList(Map<String, String> data);
+	public int CheckreadCount(String userid);
+	public int updatereadCount(String userid);
 }

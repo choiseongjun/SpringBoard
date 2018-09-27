@@ -95,7 +95,7 @@
                            <a href="${path}/board/list.do" class="">게시판</a> 
                         </li>
                         <li class="dropdown submenu">
-                           <a href="${path}/ChatList.do" class="">임시</a>
+                           <a href="${path}/message1.do" class="">뉴챗</a>
                         </li>
                         <li class="dropdown submenu">
                            <a href="${path}/member/list.do" class="">회원목록</a>

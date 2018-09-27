@@ -26,11 +26,16 @@ public class MessageController {
 		return "Message/Chatroom"; 
 	}
 	@RequestMapping("ChatList.do")
-	public String ChatList() {
+	public String ChatList(HttpSession session) {
+		String userid = (String)session.getAttribute("userid");
 		//채팅페이지로
 		return "Message/MemberList"; 
 	}
-	
+	@RequestMapping("message1.do")
+	public String write1() {
+		//채팅페이지로
+		return "Message/Chatroom1"; 
+	}
 	@ResponseBody
 	@RequestMapping("setRoomId.do")
 	public int setRoomId(String roomId, HttpSession session) {
@@ -55,5 +60,14 @@ public class MessageController {
 		data.put("otherUserid", otherUserid);
 		
 		return chatService.getMessageList(data); 
+	}
+	
+	@ResponseBody
+	public int readChat(String fromid,String toid,HttpSession session) {
+		String userid=(String)session.getAttribute("userid");
+	
+		chatService.updatereadCount(userid);//채팅 읽은후
+		return 0;
+		
 	}
 }

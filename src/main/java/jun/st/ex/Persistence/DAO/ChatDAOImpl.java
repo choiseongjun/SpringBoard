@@ -26,5 +26,15 @@ public class ChatDAOImpl implements ChatDAO {
 		return sqlSession.selectList("chat.GetMessageList",data);
 	}
 
+	@Override
+	public int CheckreadCount(String userid) {
+		return sqlSession.selectOne("chat.readCount", userid);
+	}
+
+	@Override
+	public int updatereadCount(String userid) {
+		return sqlSession.update("chat.UpdateReadChat",userid);
+	}
+
 
 }
