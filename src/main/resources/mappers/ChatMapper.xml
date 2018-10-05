@@ -12,9 +12,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert> 
 	
 	<select id="GetMessageList" parameterType = "hashmap" resultType="jun.st.ex.Persistence.DTO.ChatDTO">
-			select chatno,fromid,toid,chatcontent,chattime,chatread
-			from chat
-			where (toid=#{userid} and fromid=#{otherUserid}) or (toid=#{otherUserid} and fromid=#{userid})
+			select chatno,fromid,toid,chatcontent,chattime,chatread,profileimage
+			from chat c,member m
+			where ((toid=#{userid} and fromid=#{otherUserid}) or (toid=#{otherUserid} and fromid=#{userid}))
+			and c.fromid = m.userid
 			order by chatno asc
 	</select>
 	

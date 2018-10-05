@@ -11,8 +11,15 @@ public class ChatDTO {
 	String stringTime;
 	String chatcontent;
 	int chatread;
+	String profileimage;
 	
 	
+	public String getProfileimage() {
+		return profileimage;
+	}
+	public void setProfileimage(String profileimage) {
+		this.profileimage = profileimage;
+	}
 	public int getChatread() {
 		return chatread;
 	}

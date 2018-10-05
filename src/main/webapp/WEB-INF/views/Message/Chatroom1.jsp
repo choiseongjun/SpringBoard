@@ -227,7 +227,7 @@ body {
 <script type="text/javascript">
 	$(document).ready(function() {
 		var myid="";
-     		
+		var imgPath="${path}/resources/assets/images/ProFilePicture/";	
 		function connectSocket(){
 			// 웹소켓을 지정한 url로 연결한다.
 			let sock = new SockJS("/ex/echo");
@@ -241,7 +241,7 @@ body {
 			// 서버로부터 메시지를 받았을 때
 			function onMessage(msg) {
 			       var data = msg.data;
-			       
+			       var imgPath="${path}/resources/assets/images/ProFilePicture/";
 			       if(data=="7777"){
 			    	   $('.readCount').text("");
 			       }else{
@@ -255,7 +255,7 @@ body {
 		        			//오른쪽메시지박스
 		        			str+="<div class='message-feed right'>";
 				        	str+="	<div class='pull-right'>";
-				        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar2.png' alt='' class='img-avatar'>";
+				        	str+="		<img src='"+imgPath+jsonObject.profileImage+"' alt='' class='img-avatar'>";
 				        	str+="	</div>";
 				        	str+="	<div>";
 				        	str+=		jsonObject.senderId;
@@ -274,7 +274,7 @@ body {
 		        			 //왼쪽메시지박스
 				        	str+="<div class='message-feed media'>";
 				        	str+="	<div class='pull-left'>";
-				        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar1.png' alt='' class='img-avatar'>";
+				        	str+="		<img src='"+imgPath+jsonObject.profileImage+"' alt='' class='img-avatar'>";
 				        	str+="	</div>";
 				        	str+="	<div>";
 				        	str+=		jsonObject.senderId;
@@ -289,7 +289,7 @@ body {
 		        		}
 				       
 				        $("#messageListBox").append(str);
-			        	//$("#messageListBox").scrollTop($("#messageListBox")[0].scrollHeight);
+			        	$("#messageListBox").scrollTop($("#messageListBox")[0].scrollHeight);
 				        $(document).scrollTop($(document).height());
 			       }
 			}
@@ -321,7 +321,7 @@ body {
 		        			//오른쪽메시지박스
 		        			str+="<div class='message-feed right'>";
 				        	str+="	<div class='pull-right'>";
-				        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar2.png' alt='' class='img-avatar'>";
+				        	str+="		<img src='"+imgPath+data.messageList[i].profileimage+"' alt='' class='img-avatar'>";
 				        	str+="	</div>";
 				        	str+="	<div>";
 				        	str+=		data.messageList[i].fromid;
@@ -342,7 +342,7 @@ body {
 		        			 //왼쪽메시지박스
 				        	str+="<div class='message-feed media'>";
 				        	str+="	<div class='pull-left'>";
-				        	str+="		<img src='https://bootdey.com/img/Content/avatar/avatar1.png' alt='' class='img-avatar'>";
+				        	str+="		<img src='"+imgPath+data.messageList[i].profileimage+"' alt='' class='img-avatar'>";
 				        	str+="	</div>";
 				        	str+="	<div>";
 				        	str+=		data.messageList[i].fromid;
@@ -358,8 +358,8 @@ body {
 		        	}
 		        	
 		        	$("#messageListBox").append(str);
-		        	//$("#messageListBox").scrollTop($("#messageListBox")[0].scrollHeight);
-		        	$(document).scrollTop($(document).height());
+		        	$("#messageListBox").scrollTop($("#messageListBox")[0].scrollHeight);
+		        	//$(document).scrollTop($(document).height());
 		        	
 		        	connectSocket();//마지막에성공하면 실행
 		        },
@@ -436,8 +436,8 @@ body {
             </div>
     		
     	
-    		<div id="messageListBox"></div>
-
+    		<!-- <!-- <div id="messageListBox"></div> --> 
+<div id="messageListBox" class="portlet-body chat-widget" style="overflow-y:auto;width:auto;height:600px"></div>
 
             <div class="chatContent">
                 <textarea id="chatEnter" placeholder="What's on your mind..."></textarea>

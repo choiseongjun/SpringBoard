@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itextpdf.text.log.SysoCounter;
+
 import jun.st.ex.Persistence.DAO.AdminDAO;
 import jun.st.ex.Persistence.DTO.Email;
 import jun.st.ex.Persistence.DTO.MemberDTO;
@@ -104,7 +106,6 @@ public class MemberController {
         request.getSession().setAttribute(param.getUserid(), listener);  
 		
         MemberDTO user = memberService.loginCheck(dto);
-        
         if(user == null) {//로그인 시도하려는 아이디가 존재하지 않으면..
         
 /*        	response.setContentType("text/html; charset=UTF-8");
@@ -127,6 +128,8 @@ public class MemberController {
 		if(loginResult) {
 			session.setAttribute("userid", dto.getUserid());
 			session.setAttribute("name", user.getName());
+			session.setAttribute("profileImage", user.getProfileimage());
+			System.out.println(user.getProfileimage()+"(*&^%$#$%&*(*&^*%$#$*$*%$%^&11111111111111111111");
 			
 			String savePage = (String)session.getAttribute("savePage");
 			

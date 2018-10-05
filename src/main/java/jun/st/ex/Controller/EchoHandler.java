@@ -52,6 +52,23 @@ public class EchoHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
 		String userid = (String)session.getAttributes().get("userid");
+		String profileImage = (String)session.getAttributes().get("profileImage");
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println(profileImage+"*&^%$#$%&*()(*&^%$%^&*(222222222222222222222222222222222");
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		
 		String otherUserid = (String)session.getAttributes().get("otherUserid");
 		
 			ChatDTO chatDto = new ChatDTO();
@@ -71,6 +88,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		String dateTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(nano);
 		jsonObject.put("dateTime", dateTime);
 		jsonObject.put("senderId",userid);
+		jsonObject.put("profileImage",profileImage);
 		jsonObject.put("message", message.getPayload());
 		if(chatDto.getChatread()==0) {
 			jsonObject.put("chatread", 1);
