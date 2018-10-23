@@ -5,7 +5,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script>
+<script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script> 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>  -->
 <%@ page session="true"%>
 <html lang="en">
    <head>
@@ -35,10 +36,11 @@
          <div class="bg-banner-img clip-ellipse">
             <div class="ovrllay">
             
-               <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+            
             
                <!-- Header_Area -->
                <nav class="navbar navbar-default header_aera affix-top">
+                   <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
                   <div class="container m-s">
                      <!-- Brand and toggle get grouped for better mobile display -->
                      <div class="col-md-4 p0">
@@ -129,23 +131,24 @@ $(document).ready( function() {
 function connectWS() {
     console.log("tttttttttttttt")
     //var ws = new WebSocket("ws://localhost:8080/replyEcho?bno=1234");
-    var ws = new WebSocket("ws://localhost:8080/ex");
-    //var ws = new SockJS("/ex/echo");
-    socket = ws;
-
+    //var ws = new WebSocket("ws://localhost:8080/ex");
+    let ws = new SockJS("/ex/echo");
     ws.onopen = function () {
         console.log('Info: connection opened.');
     };
 
     ws.onmessage = function (event) {
-        console.log("ReceiveMessage:", event.data+'\n');
-        let $socketAlert = $('div#socketAler t');
-        $socketAlert.html(event.data);
+    	var data = event.data;
+        var jsonObject = JSON.parse(data);
+        
+        console.log("ReceiveMessage:", event.data+"이름"+jsonObject.senderId+"내용"+jsonObject.message+'\n');
+        let $socketAlert = $('div#socketAlert');
+        $socketAlert.html(jsonObject.senderId+"님이 보낸 메시지="+jsonObject.message+'\n');
         $socketAlert.css('display', 'block');
         
         setTimeout( function() {
         	$socketAlert.css('display', 'none');
-        }, 3000);
+        }, 30000);
     };
 
     ws.onclose = function (event) { 

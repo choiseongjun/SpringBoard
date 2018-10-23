@@ -26,10 +26,11 @@ listReply();
 			data: param,
 			success: function(){
 				alert("댓글이 등록되었습니다.");
-				let jsonData = getValidData( $('#replyer'), $('#replytext') );
+				//let jsonData = getValidData(  $('#replytext') );
+				console.debug("reply.js::socket>>", socket)
 				if (socket) {
 					// websocket에 보내기!! (reply,댓글작성자,게시글작성자,글번호)
-					let socketMsg = "reply," + jsonData.replyer + "," + gBoardWriter + "," + bno;
+					let socketMsg = "reply리플라이!!!!!!!!!!!!!!!!!,"  + "," +"," + "," + bno;
 					console.debug("sssssssmsg>>", socketMsg)
 					socket.send(socketMsg);
 				
