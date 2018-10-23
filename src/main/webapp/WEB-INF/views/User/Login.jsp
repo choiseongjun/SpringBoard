@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@ include file="../Header.jsp"%>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 	<script>
@@ -60,7 +62,16 @@
 					class="btn btn-primary" value="로그인하기"> <input type="button"
 					class="btn btn-primary" onclick="findid()" value="id찾기"> <input
 					type="button" class="btn btn-primary" onclick="findPw()"
-					value="비번찾기"></td>
+					value="비번찾기">
+					<!-- 구글로그인 -->
+					    <a href="${google_url}"><button id="btnJoinGoogle" class="btn btn-primary btn-round"
+                                style="width: 100%">
+                                <i class="fa fa-google" aria-hidden="true"></i>Google Login
+                            </button></a> 
+					<div id="naver_id_login" style="text-align:center"><button id="btnJoinNaver" class="btn btn-primary btn-round"
+                                style="width: 100%">Naver Login<a href="${url}"></a></div>
+<br>
+					</td>
 			</tr>
 		</table>
 	</form>

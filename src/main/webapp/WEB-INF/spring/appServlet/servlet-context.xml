@@ -7,7 +7,9 @@
 	xmlns:cache="http://www.springframework.org/schema/cache"
 	xmlns:lang="http://www.springframework.org/schema/lang"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
@@ -65,5 +67,21 @@ class="jun.st.ex.Controller.LoginInterceptor">
 		</interceptor>
 	</interceptors>	
 	
+			<!-- google Class Bean설정 추가 -->
+		<!-- 클라이언트ID와 보안비밀 세팅-->
+		<beans:bean id="googleConnectionFactory"
+			class="org.springframework.social.google.connect.GoogleConnectionFactory">
+			<beans:constructor-arg value="637642903737-40lorh4t7bdcfdv384m0vf7bt21od9es.apps.googleusercontent.com" />
+			<beans:constructor-arg value="TADuMtXj5LF25UHlC8tpowTs" />
+		</beans:bean>
+		<!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
+		<beans:bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+			<beans:property name="scope" value="https://www.googleapis.com/auth/plus.login" />
+			<beans:property name="redirectUri" value="http://localhost:8080/ex/oauth2callback" />
+		</beans:bean>
+		<!-- 네이버 -->
+	<beans:bean id="naverLoginBO" class="jun.st.ex.Controller.OAuth.NaverLoginBO"></beans:bean>
+	
+	 
 	
 </beans:beans>

@@ -26,7 +26,7 @@ function HaveLogin(){
 <button type="button" id="btnWrite" class="btn btn-success" align="middle" onclick="HaveLogin()">글쓰기</button>
  	</c:if>
  	<c:if test="${sessionScope.userid!=null}">
-<button type="button" id="btnWrite" class="btn btn-success" align="middle" onclick="HaveLogin()">글쓰기</button>
+<button type="button" id="btnWrite" class="btn btn-success" align="middle" >글쓰기</button>
  	</c:if>
  <table width="100%" class="table table-bordered table-striped" align="middle">
 	<tr>

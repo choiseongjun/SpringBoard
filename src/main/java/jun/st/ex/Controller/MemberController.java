@@ -2,7 +2,6 @@ package jun.st.ex.Controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,8 +27,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.itextpdf.text.log.SysoCounter;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import jun.st.ex.Controller.OAuth.NaverLoginBO;
 import jun.st.ex.Persistence.DAO.AdminDAO;
 import jun.st.ex.Persistence.DTO.Email;
 import jun.st.ex.Persistence.DTO.MemberDTO;
@@ -71,10 +75,78 @@ public class MemberController {
 	public String write() {
 		return "User/Register";
 	}
+	/* GoogleLogin */
+	@Autowired
+	private GoogleConnectionFactory googleConnectionFactory;
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameters;
+	private OAuth2Operations oauthOperations;
+	  private NaverLoginBO naverLoginBO;
+	    private String apiResult = null;
+    @Autowired
+    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+        this.naverLoginBO = naverLoginBO;
+    }    
+    
 	@RequestMapping("member/Login.do")
-	public String Login() {
+	public String Login(Model model, HttpSession session) {
+		
+		/* 구글code 발행 */
+		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+
+		System.out.println("구글:" + url);
+
+		model.addAttribute("google_url", url);
+		  String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	        
+	        System.out.println("네이버:" + naverAuthUrl);
+	        
+	        //네이버 
+	        model.addAttribute("url", naverAuthUrl);
+		
+		
+		
 		return "User/Login";
 	}
+	
+	@RequestMapping(value = "oauth2callback", method = { RequestMethod.GET, RequestMethod.POST })
+    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+            throws IOException {
+        System.out.println("여기는 callback");
+        OAuth2AccessToken oauthToken;
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        //로그인 사용자 정보를 읽어온다.
+        apiResult = naverLoginBO.getUserProfile(oauthToken);
+        System.out.println(naverLoginBO.getUserProfile(oauthToken).toString());
+        model.addAttribute("result", apiResult);
+        System.out.println("result"+apiResult);
+        /* 네이버 로그인 성공 페이지 View 호출 */
+//      JSONObject jsonobj = jsonparse.stringToJson(apiResult, "response");
+//      String snsId = jsonparse.JsonToString(jsonobj, "id");
+//      String name = jsonparse.JsonToString(jsonobj, "name");
+//
+//      UserVO vo = new UserVO();
+//      vo.setUser_snsId(snsId);
+//      vo.setUser_name(name);
+//
+//      System.out.println(name);
+//      try {
+//          vo = service.naverLogin(vo);
+//      } catch (Exception e) {
+//          // TODO Auto-generated catch block
+//          e.printStackTrace();
+//      }
+
+
+//      session.setAttribute("login",vo);
+//      return new ModelAndView("user/loginPost", "result", vo);
+        
+        return "naversuccess";
+    }
+
+	
+	
 	@RequestMapping("member/insert.do")
 	public String insert(@ModelAttribute MemberDTO dto) {		
 		String filename="-";

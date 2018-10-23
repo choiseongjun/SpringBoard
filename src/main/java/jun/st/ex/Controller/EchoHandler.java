@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +18,14 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import jun.st.ex.Persistence.DTO.ChatDTO;
+import jun.st.ex.Persistence.DTO.MemberDTO;
 import jun.st.ex.Service.ChatService;
 
 @Component
 public class EchoHandler extends TextWebSocketHandler {
+	
+	List<WebSocketSession> sessions=new ArrayList<>();
+	Map<String, WebSocketSession> userSessions=new HashMap<>();
 	
 	@Autowired
 	private ChatService chatService;
@@ -35,6 +40,11 @@ public class EchoHandler extends TextWebSocketHandler {
 		String userid = (String)session.getAttributes().get("userid");
 		String otherUserid = (String)session.getAttributes().get("otherUserid");
 		sessionMap.put(userid, session);
+		
+		System.out.println("afterConnectionEstablished:" + session);
+		sessions.add(session);
+		String senderId = getId(session);
+		userSessions.put(senderId, session);
 		
 		Map<String,String> data = new HashMap<>();
 		data.put("fromid", otherUserid);
@@ -51,27 +61,36 @@ public class EchoHandler extends TextWebSocketHandler {
 	
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
-		String userid = (String)session.getAttributes().get("userid");
-		String profileImage = (String)session.getAttributes().get("profileImage");
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println(profileImage+"*&^%$#$%&*()(*&^%$%^&*(222222222222222222222222222222222");
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
+		System.out.println("handleTextMessage:" + session + " : " + message);
+		String senderId = getId(session);
+//		for (WebSocketSession sess: sessions) {
+//			sess.sendMessage(new TextMessage(senderId + ": " + message.getPayload()));
+//		}
 		
+		//protocol: cmd,댓글작성자,게시글작성자,bno  (ex: reply,user2,user1,234)
+		String msg = message.getPayload();
+		if (StringUtils.isNotEmpty(msg)) {
+			String[] strs = msg.split(",");
+			if (strs != null && strs.length == 4) {
+				String cmd = strs[0];
+				String replyWriter = strs[1];
+				String boardWriter = strs[2];
+				String bno = strs[3];
+				
+				WebSocketSession boardWriterSession = userSessions.get(boardWriter);
+				if ("reply".equals(cmd) && boardWriterSession != null) {
+					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 "
+							+ "<a href='/board/view.do?bno=" + bno + "'>" + bno + "</a>번 게시글에 댓글을 달았습니다!");
+					boardWriterSession.sendMessage(tmpMsg);
+				}
+			}
+		}
+		
+		String userid = (String)session.getAttributes().get("userid");
+		String profileImage = (String)session.getAttributes().get("profileImage");//개인이미지들고오기
 		String otherUserid = (String)session.getAttributes().get("otherUserid");
 		
-			ChatDTO chatDto = new ChatDTO();
+			ChatDTO chatDto = new ChatDTO();//생성자로 넣자
 			chatDto.setToid(otherUserid);
 			chatDto.setFromid(userid);
 			chatDto.setChatcontent(message.getPayload());
@@ -115,6 +134,19 @@ public class EchoHandler extends TextWebSocketHandler {
 			if(sess!=null) {
 				sessionMap.remove(userid);
 			}
+			System.out.println("afterConnectionEstablished:" + session + ":" + status);
 		}
+	
+	private String getId(WebSocketSession session) {
+		Map<String, Object> httpSession = session.getAttributes();
+		MemberDTO loginUser = (MemberDTO)httpSession.get(SessionNames.LOGIN);
+		if (null == loginUser)
+			return session.getId();
+		else
+			return loginUser.getUserid(); 	
 	}
+	
+	}
+
+
 

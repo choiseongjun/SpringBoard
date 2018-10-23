@@ -5,6 +5,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script>
 <%@ page session="true"%>
 <html lang="en">
    <head>
@@ -33,7 +34,9 @@
       <div class="bg-grediunt">
          <div class="bg-banner-img clip-ellipse">
             <div class="ovrllay">
-           
+            
+               <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+            
                <!-- Header_Area -->
                <nav class="navbar navbar-default header_aera affix-top">
                   <div class="container m-s">
@@ -117,7 +120,42 @@
             </div>
             </div>
             
-      
+      <script>
+var socket = null;
+$(document).ready( function() {
+    connectWS();	
+});
+
+function connectWS() {
+    console.log("tttttttttttttt")
+    //var ws = new WebSocket("ws://localhost:8080/replyEcho?bno=1234");
+    var ws = new WebSocket("ws://localhost:8080/ex");
+    //var ws = new SockJS("/ex/echo");
+    socket = ws;
+
+    ws.onopen = function () {
+        console.log('Info: connection opened.');
+    };
+
+    ws.onmessage = function (event) {
+        console.log("ReceiveMessage:", event.data+'\n');
+        let $socketAlert = $('div#socketAler t');
+        $socketAlert.html(event.data);
+        $socketAlert.css('display', 'block');
+        
+        setTimeout( function() {
+        	$socketAlert.css('display', 'none');
+        }, 3000);
+    };
+
+    ws.onclose = function (event) { 
+        console.log('Info: connection closed.');
+        //setTimeout( function(){ connect(); }, 1000); // retry connection!!
+    };
+    ws.onerror = function (err) { console.log('Error:', err); };
+}
+
+</script>   
          <!-- /#banner end -->
         
         

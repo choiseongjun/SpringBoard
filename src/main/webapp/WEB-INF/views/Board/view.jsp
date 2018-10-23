@@ -26,6 +26,16 @@ listReply();
 			data: param,
 			success: function(){
 				alert("댓글이 등록되었습니다.");
+				let jsonData = getValidData( $('#replyer'), $('#replytext') );
+				if (socket) {
+					// websocket에 보내기!! (reply,댓글작성자,게시글작성자,글번호)
+					let socketMsg = "reply," + jsonData.replyer + "," + gBoardWriter + "," + bno;
+					console.debug("sssssssmsg>>", socketMsg)
+					socket.send(socketMsg);
+				
+			} else {
+				console.debug("Error on editReply>>", res);
+			}
 				listReply(); //댓글 목록 출력
 			}
 		});
@@ -200,7 +210,15 @@ function listAttach(){
 		}
 	});
 }
+gIsDirect = true;
 
+$('#btnReply').on('click', function(evt) {
+	evt.preventDefault();
+	if (socket.readyState !== 1) return;
+	
+	    let msg = $('input#msg').val();
+	    socket.send(msg);
+	});
 </script>
 <style>
 .fileDrop {
